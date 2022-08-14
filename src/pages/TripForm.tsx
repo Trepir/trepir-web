@@ -1,12 +1,12 @@
-import FormStep from '../components/FormStep';
+import FormStepper from '../components/FormStepper';
 
 function TripForm() {
 	return (
 		<div>
 			TripForm
-			<FormStep />
-			<FormStep />
-			<FormStep />
+			<FormStepper />
+			<FormStepper />
+			<FormStepper />
 		</div>
 	);
 }
