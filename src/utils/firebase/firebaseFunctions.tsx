@@ -17,11 +17,6 @@ export const createEmailUser = async (email: string, password: string) => {
 		return error;
 	}
 };
-interface user2 {
-	user: {
-		displayName: string | null;
-	};
-}
 export const loginEmailAndPassword = async (
 	email: string,
 	password: string
@@ -29,9 +24,6 @@ export const loginEmailAndPassword = async (
 	try {
 		const user = await signInWithEmailAndPassword(auth, email, password);
 		console.log(user);
-		const newUser: user2 = user;
-		newUser.user.displayName = 'hello';
-		console.log('newUser', newUser);
 		return user;
 	} catch (error) {
 		console.log(error);
