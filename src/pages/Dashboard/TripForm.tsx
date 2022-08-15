@@ -1,11 +1,8 @@
-import FormStepper from '../../components/Dashboard/FormStepper';
+import FormStepper from '../../components/Dashboard/TripForm/FormStepper';
 
 function TripForm() {
 	return (
 		<div>
-			TripForm
-			<FormStepper />
-			<FormStepper />
 			<FormStepper />
 		</div>
 	);
