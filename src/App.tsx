@@ -5,7 +5,8 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import ReduxSample from './ReduxSample';
 import Private from './pages/Private';
 import Login from './pages/Login';
-import TripForm from './pages/TripForm';
+import TripForm from './pages/Dashboard/TripForm';
+import Discover from './pages/Discover/Discover';
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/login" element={<Login />} />
+					<Route path="/discover" element={<Discover />} />
 					<Route path="/redux" element={<ReduxSample />} />
 					<Route path="/newtrip" element={<TripForm />} />
 					<Route element={<PrivateRoutes />}>

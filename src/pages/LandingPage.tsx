@@ -11,6 +11,9 @@ function LandingPage() {
 				<Link to="/redux">Redux</Link>
 			</p>
 			<p>
+				<Link to="/discover">Discover</Link>
+			</p>
+			<p>
 				<Link to="/newtrip">New Trip</Link>
 			</p>
 			<p>
