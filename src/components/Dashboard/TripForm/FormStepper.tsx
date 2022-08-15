@@ -7,17 +7,18 @@ import {
 	Typography,
 } from '@mui/material';
 // import { Send } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
 
 function FormStepper() {
-	// const submitRef: MutableRefObject<HTMLButtonElement | undefined> = useRef();
+	const submitRef: React.MutableRefObject<any> = useRef();
 	const steps = ['General Information', 'Travel Details', 'Add Activities'];
 
 	// 3: <FormStepThree />
 
+	const [validated, setValidated] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
 	const [skipped, setSkipped] = useState(new Set());
 
@@ -31,10 +32,12 @@ function FormStepper() {
 			newSkipped = new Set(newSkipped.values());
 			newSkipped.delete(activeStep);
 		}
-
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		setSkipped(newSkipped);
-		// if (submitRef.current) submitRef.current.click();
+		// submitRef.current.click() artificially clicks the submit button of the relevant form step
+		if (submitRef.current) submitRef.current.click();
+		if (validated) {
+			setSkipped(newSkipped);
+			setValidated(false);
+		}
 	};
 
 	const handleBack = () => {
@@ -60,7 +63,18 @@ function FormStepper() {
 		setActiveStep(0);
 	};
 
-	const formSteps = [<FormStepOne />, <FormStepTwo />];
+	const formSteps = [
+		<FormStepOne
+			submitRef={submitRef}
+			setValidated={setValidated}
+			setActiveStep={setActiveStep}
+		/>,
+		<FormStepTwo
+			submitRef={submitRef}
+			setValidated={setValidated}
+			setActiveStep={setActiveStep}
+		/>,
+	];
 
 	return (
 		<Box sx={{ width: '100%' }}>
