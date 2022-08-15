@@ -3,18 +3,25 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { Box, TextField } from '@mui/material';
-// import React, { MutableRefObject } from 'react';
+import React from 'react';
 
-// type Props = {
-// 	submitRef: MutableRefObject<HTMLButtonElement | undefined>;
-// };
+import { useAppDispatch } from '../../../app/hooks';
+import { submitStepOne } from '../../../features/createTrip/createTripSlice';
+
+type Props = {
+	submitRef: any;
+	setValidated: React.Dispatch<React.SetStateAction<boolean>>;
+	setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+};
 
 const TripSchema = yup.object().shape({
 	name: yup.string().required('Name is required'),
 });
 
-function FormStepOne() {
-	// const { submitRef } = props;
+function FormStepOne(props: Props) {
+	const dispatch = useAppDispatch();
+
+	const { submitRef, setValidated, setActiveStep } = props;
 
 	const {
 		register,
@@ -27,10 +34,13 @@ function FormStepOne() {
 	const onSubmit = async (data: any) => {
 		const isValid = await TripSchema.isValid(data);
 		if (isValid) {
-			console.log(data);
+			setValidated(true);
+			setActiveStep((prevActiveStep) => prevActiveStep + 1);
+			dispatch(submitStepOne(data));
 		}
 	};
 
+	// Added an invisible button that gets artificially clicked by the parent component when next is clicked.
 	return (
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
@@ -43,7 +53,7 @@ function FormStepOne() {
 						error={!!errors.name}
 					/>
 					<button
-						// ref={submitRef}
+						ref={submitRef}
 						type="submit"
 						style={{ display: 'none' }}
 						aria-label="Submit step"

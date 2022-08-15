@@ -3,12 +3,23 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { Box, TextField } from '@mui/material';
+import React from 'react';
+import { useAppDispatch } from '../../../app/hooks';
+import { submitStepTwo } from '../../../features/createTrip/createTripSlice';
+
+type Props = {
+	submitRef: any;
+	setValidated: React.Dispatch<React.SetStateAction<boolean>>;
+	setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+};
 
 const TripSchema = yup.object().shape({
 	location: yup.string().required('Location is required'),
 });
 
-function FormStepTwo() {
+function FormStepTwo(props: Props) {
+	const dispatch = useAppDispatch();
+	const { submitRef, setValidated, setActiveStep } = props;
 	const {
 		register,
 		handleSubmit,
@@ -18,7 +29,11 @@ function FormStepTwo() {
 	});
 	const onSubmit = async (data: any) => {
 		const isValid = await TripSchema.isValid(data);
-		if (isValid) console.log(data);
+		if (isValid) {
+			setValidated(true);
+			setActiveStep((prevActiveStep) => prevActiveStep + 1);
+			dispatch(submitStepTwo(data));
+		}
 	};
 	return (
 		<div>
@@ -29,7 +44,13 @@ function FormStepTwo() {
 						label="Location"
 						autoFocus
 						{...register('location')}
-						error={!!errors.name}
+						error={!!errors.location}
+					/>
+					<button
+						ref={submitRef}
+						type="submit"
+						style={{ display: 'none' }}
+						aria-label="Submit step"
 					/>
 				</Box>
 			</form>
