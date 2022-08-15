@@ -4,21 +4,21 @@ function LandingPage() {
 	return (
 		<div>
 			<h1>Trepir</h1>
-			<p>
+			<div>
 				<Link to="/login">Login</Link>
-			</p>
-			<p>
+			</div>
+			<div>
 				<Link to="/redux">Redux</Link>
-			</p>
-			<p>
+			</div>
+			<div>
 				<Link to="/discover">Discover</Link>
-			</p>
-			<p>
+			</div>
+			<div>
 				<Link to="/newtrip">New Trip</Link>
-			</p>
-			<p>
+			</div>
+			<div>
 				<Link to="/private">Private</Link>
-			</p>
+			</div>
 		</div>
 	);
 }
