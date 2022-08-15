@@ -8,13 +8,19 @@ import {
 } from '@mui/material';
 // import { Send } from '@mui/icons-material';
 import React, { useRef, useState } from 'react';
+import { useAppSelector } from '../../../app/hooks';
+import { selectNewTrip } from '../../../features/createTrip/createTripSlice';
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
+// import {
+// 	submitNewTrip,
+// } from '../../../features/createTrip/createTripSlice';
 
 function FormStepper() {
 	const submitRef: React.MutableRefObject<any> = useRef();
 	const steps = ['General Information', 'Travel Details', 'Add Activities'];
+	const newTrip = useAppSelector(selectNewTrip);
 
 	// 3: <FormStepThree />
 
@@ -37,6 +43,10 @@ function FormStepper() {
 		if (validated) {
 			setSkipped(newSkipped);
 			setValidated(false);
+			if (activeStep === steps.length - 1) {
+				console.log(newTrip);
+				setActiveStep((prevActiveStep) => prevActiveStep + 1);
+			}
 		}
 	};
 
@@ -50,13 +60,20 @@ function FormStepper() {
 			// it should never occur unless someone's actively trying to break something.
 			throw new Error("You can't skip a step that isn't optional.");
 		}
-
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		setSkipped((prevSkipped) => {
-			const newSkipped = new Set(prevSkipped.values());
-			newSkipped.add(activeStep);
-			return newSkipped;
-		});
+		// submitRef.current.click() artificially clicks the submit button of the relevant form step
+		if (submitRef.current) submitRef.current.click();
+		if (validated) {
+			setSkipped((prevSkipped) => {
+				const newSkipped = new Set(prevSkipped.values());
+				newSkipped.add(activeStep);
+				return newSkipped;
+			});
+			setValidated(false);
+		}
+		if (activeStep === steps.length - 1) {
+			console.log(newTrip);
+			setActiveStep((prevActiveStep) => prevActiveStep + 1);
+		}
 	};
 
 	const handleReset = () => {

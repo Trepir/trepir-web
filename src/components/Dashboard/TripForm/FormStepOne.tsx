@@ -5,11 +5,8 @@ import * as yup from 'yup';
 import { Box, TextField } from '@mui/material';
 import React from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import {
-	submitStepOne,
-	selectName,
-} from '../../../features/createTrip/createTripSlice';
+import { useAppDispatch } from '../../../app/hooks';
+import { submitStepOne } from '../../../features/createTrip/createTripSlice';
 
 type Props = {
 	submitRef: any;
@@ -23,7 +20,7 @@ const TripSchema = yup.object().shape({
 
 function FormStepOne(props: Props) {
 	const dispatch = useAppDispatch();
-	const tripName = useAppSelector(selectName);
+
 	const { submitRef, setValidated, setActiveStep } = props;
 
 	const {
@@ -40,7 +37,6 @@ function FormStepOne(props: Props) {
 			setValidated(true);
 			setActiveStep((prevActiveStep) => prevActiveStep + 1);
 			dispatch(submitStepOne(data));
-			console.log('redux-state', tripName);
 		}
 	};
 
