@@ -15,7 +15,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/login" element={<Login />} />
-					<Route path="/discover" element={<Discover />} />
+					<Route path="/discover/*" element={<Discover />} />
 					<Route path="/redux" element={<ReduxSample />} />
 					<Route path="/newtrip" element={<TripForm />} />
 					<Route element={<PrivateRoutes />}>
