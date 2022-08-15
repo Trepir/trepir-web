@@ -4,8 +4,8 @@ import * as yup from 'yup';
 
 import { Box, TextField } from '@mui/material';
 import React from 'react';
-import { useAppDispatch } from '../../../app/hooks';
-import { submitStepTwo } from '../../../features/createTrip/createTripSlice';
+// import { useAppDispatch } from '../../../app/hooks';
+// import { submitStepTwo } from '../../../features/createTrip/createTripSlice';
 
 type Props = {
 	submitRef: any;
@@ -18,7 +18,7 @@ const TripSchema = yup.object().shape({
 });
 
 function FormStepTwo(props: Props) {
-	const dispatch = useAppDispatch();
+	// const dispatch = useAppDispatch();
 	const { submitRef, setValidated, setActiveStep } = props;
 	const {
 		register,
@@ -32,7 +32,7 @@ function FormStepTwo(props: Props) {
 		if (isValid) {
 			setValidated(true);
 			setActiveStep((prevActiveStep) => prevActiveStep + 1);
-			dispatch(submitStepTwo(data));
+			// dispatch(submitStepTwo(data));
 		}
 	};
 	return (
