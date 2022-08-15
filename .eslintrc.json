@@ -21,6 +21,7 @@
 		"import/extensions": "off",
 		"no-promise-executor-return": "off",
 		"react/jsx-props-no-spreading": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"react/no-array-index-key": "off"
 	}
 }
