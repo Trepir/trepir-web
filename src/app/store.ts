@@ -3,6 +3,8 @@ import counterReducer from '../features/counter/counterSlice';
 import createTripReducer from '../features/createTrip/createTripSlice';
 import createAccommodationReducer from '../features/createAccommodation/createAccommodationSlice';
 import accommodationListReducer from '../features/createAccommodation/accommodationList';
+import createTravelReducer from '../features/createTravel/createTravelSlice';
+import travelListReducer from '../features/createTravel/travelListSlice';
 import mapReducer from './reducers/mapSlice';
 
 export const store = configureStore({
@@ -11,6 +13,8 @@ export const store = configureStore({
 		newTrip: createTripReducer,
 		newAccommodation: createAccommodationReducer,
 		accommodationList: accommodationListReducer,
+		newTravel: createTravelReducer,
+		travelList: travelListReducer,
 		map: mapReducer,
 	},
 	middleware: (getDefaultMiddleware) =>

@@ -6,8 +6,10 @@ import { useAppSelector } from '../../../app/hooks';
 
 import { selectNewAccommodation } from '../../../features/createAccommodation/createAccommodationSlice';
 import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
+import { selectTravelList } from '../../../features/createTravel/travelListSlice';
 import TravelEventList from './TravelEventList';
 import AddAccommodationForm from './AddAccommodationForm';
+import AddTravelForm from './AddTravelForm';
 
 type Props = {
 	submitRef: any;
@@ -19,9 +21,9 @@ function FormStepTwo(props: Props) {
 	const [showAccommodation, setShowAccommodation] = useState(false);
 	const [showTravel, setShowTravel] = useState(false);
 	const accommodationList = useAppSelector(selectAccommodationList);
+	const travelList = useAppSelector(selectTravelList);
 	const newAccommodation = useAppSelector(selectNewAccommodation);
 	console.log(newAccommodation);
-	// const newTrip = useAppSelector(selectNewTrip);
 
 	const { submitRef, setValidated, setActiveStep } = props;
 
@@ -50,7 +52,7 @@ function FormStepTwo(props: Props) {
 			{showAccommodation ? (
 				<AddAccommodationForm setShowAccommodation={setShowAccommodation} />
 			) : null}
-			{showTravel ? <p>Show travel</p> : null}
+			{showTravel ? <AddTravelForm setShowTravel={setShowTravel} /> : null}
 			<button
 				ref={submitRef}
 				type="button"
@@ -61,6 +63,8 @@ function FormStepTwo(props: Props) {
 			<Divider />
 			{accommodationList.length &&
 				accommodationList.map((event) => <TravelEventList event={event} />)}
+			{travelList.length &&
+				travelList.map((event) => <TravelEventList event={event} />)}
 		</div>
 	);
 }

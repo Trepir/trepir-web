@@ -12,6 +12,10 @@ import { getGeocode } from 'use-places-autocomplete';
 import { useDispatch } from 'react-redux';
 import { submitTripLocation } from '../../../features/createTrip/createTripSlice';
 import { submitAccommodationLocation } from '../../../features/createAccommodation/createAccommodationSlice';
+import {
+	submitTravelArrivalLocation,
+	submitTravelDepartureLocation,
+} from '../../../features/createTravel/createTravelSlice';
 
 type Props = {
 	inputLabel: string;
@@ -59,6 +63,12 @@ export default function TripLocationSearch(props: Props) {
 			}
 			if (inputLabel === 'accommodationLocation') {
 				dispatch(submitAccommodationLocation(location));
+			}
+			if (inputLabel === 'travelDepartureLocation') {
+				dispatch(submitTravelDepartureLocation(location));
+			}
+			if (inputLabel === 'travelArrivalLocation') {
+				dispatch(submitTravelArrivalLocation(location));
 			}
 		} catch (error) {
 			console.log(error);

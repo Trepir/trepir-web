@@ -5,7 +5,7 @@ import { NewAccommodationState } from './createAccommodationSlice';
 const initialState: NewAccommodationState[] = [];
 
 export const accommodationListSlice = createSlice({
-	name: 'counter',
+	name: 'accommodationList',
 	initialState,
 	reducers: {
 		addAccommodation: (state, action: PayloadAction<any>) => {

@@ -22,7 +22,7 @@ const initialState: NewAccommodationState = {
 // typically used to make async requests.
 
 export const createAccommodationSlice = createSlice({
-	name: 'counter',
+	name: 'newAccommodation',
 	initialState,
 	// The `reducers` field lets us define reducers and generate associated actions
 	reducers: {

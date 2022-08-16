@@ -12,7 +12,11 @@ function TravelEventList(props: Props) {
 			<Card
 				sx={{ display: 'fex', width: '20vw', height: '8vw', flexShrink: 0 }}
 				elevation={10}
-				key={event.location[0].place_id}
+				key={
+					event.location
+						? event.location[0].place_id
+						: event.departureLocation[0].place_id
+				}
 			>
 				<AccountBalanceIcon style={{ fontSize: '110px', color: 'grey' }} />
 				<Box
@@ -23,10 +27,12 @@ function TravelEventList(props: Props) {
 					}}
 				>
 					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
-						{event.location[0].formatted_address}
+						{event.location
+							? event.location[0].formatted_address
+							: event.departureLocation[0].formatted_address}
 					</Typography>
 					<Typography variant="subtitle1">
-						{event.startDate ? event.startDate : event.departureDateTime} -
+						{event.startDate ? event.startDate : event.departureDate} -
 						{event.endDate ? event.endDate : null}
 					</Typography>
 				</Box>

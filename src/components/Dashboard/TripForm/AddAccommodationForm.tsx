@@ -20,31 +20,15 @@ type Props = {
 	setShowAccommodation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// const AddTravelSchema = yup.object().shape({
-// 	name: yup.string().required('Name is required'),
-// 	startDate: yup.string().required('Please select a start date'),
-// 	endDate: yup.string().required('Please select an end date'),
-// });
-
 const AddAccommodationSchema = yup.object().shape({
 	checkinDate: yup.string().required('Please select a start date'),
 	checkoutDate: yup.string().required('Please select an end date'),
 });
-// const AddTravelSchema = yup.object().shape({
-// 	departureLocation: yup.mixed().required('Please select a departure location'),
-// 	arrivalLocation: yup.mixed().required('Please select an arrival location'),
-// 	departureDateTime: yup
-// 		.string()
-// 		.required('Please select departure date and time'),
-// 	flightNumber: yup.string(),
-// });
-
 function AddAccommodationForm(props: Props) {
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const { setShowAccommodation } = props;
 	const dispatch = useAppDispatch();
 	const newAccommodation = useAppSelector(selectNewAccommodation);
-	// const newTrip = useAppSelector(selectNewTrip);
 
 	const {
 		register,
