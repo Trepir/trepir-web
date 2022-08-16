@@ -1,12 +1,20 @@
-import { Link } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { setOneMarker } from '../../app/reducers/mapSlice';
 
-function Activity({ activity }: any) {
+function Activity({ activity, setSelectedActivity }: any) {
+	const dispatch = useDispatch();
+
+	function handleClick() {
+		dispatch(setOneMarker(activity.coords));
+
+		setSelectedActivity(activity);
+	}
+
 	return (
 		<Card
 			sx={{
@@ -17,8 +25,7 @@ function Activity({ activity }: any) {
 				textDecoration: 'none',
 			}}
 			elevation={10}
-			component={Link}
-			to="activity"
+			onClick={() => handleClick()}
 		>
 			<AccountBalanceIcon style={{ fontSize: '110px', color: 'grey' }} />
 			<Box

@@ -9,8 +9,7 @@ export interface mapState {
 	activities: any[] | null;
 	tagsApplied: any[];
 	filteredActivities: any[] | null | undefined;
-	markers: any[] | null;
-	viewingActivity: boolean;
+	markers: Coords[] | null;
 }
 
 const initialState: mapState = {
@@ -23,7 +22,6 @@ const initialState: mapState = {
 	tagsApplied: [],
 	filteredActivities: mock,
 	markers: [],
-	viewingActivity: false,
 };
 
 export const mapSlice = createSlice({
@@ -67,8 +65,8 @@ export const mapSlice = createSlice({
 			);
 			state.markers = markers;
 		},
-		setViewingActivity: (state, action: PayloadAction<boolean>) => {
-			state.viewingActivity = action.payload;
+		setOneMarker: (state, action: PayloadAction<Coords>) => {
+			state.markers = [action.payload];
 		},
 	},
 });
@@ -79,7 +77,7 @@ export const {
 	setTagsApplied,
 	setFilteredActivites,
 	setMarkers,
-	setViewingActivity,
+	setOneMarker,
 } = mapSlice.actions;
 
 export const selectMapCenter = (state: RootState) => state.map.mapCenter;
@@ -89,7 +87,5 @@ export const selectTagsApplied = (state: RootState) => state.map.tagsApplied;
 export const selectFilteredActivities = (state: RootState) =>
 	state.map.filteredActivities;
 export const selectMarkers = (state: RootState) => state.map.markers;
-export const selectViewingActivtiy = (state: RootState) =>
-	state.map.viewingActivity;
 
 export default mapSlice.reducer;

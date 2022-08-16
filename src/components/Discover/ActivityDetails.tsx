@@ -1,15 +1,22 @@
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { setMarkers } from '../../app/reducers/mapSlice';
 
-function ActivityDetails() {
+function ActivityDetails({ setSelectedActivity, activity }: any) {
+	const dispatch = useDispatch();
+	function handleClick() {
+		dispatch(setMarkers());
+		setSelectedActivity(false);
+	}
+
 	return (
 		<>
-			<Fab component={Link} to="../">
+			<Fab onClick={() => handleClick()}>
 				<ArrowBackIcon />
 			</Fab>
-			<div>Activity Details</div>
-			<div>Activity Name</div>
+			<div>{activity.name}</div>
+			<div>{activity.description}</div>
 		</>
 	);
 }

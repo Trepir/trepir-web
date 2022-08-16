@@ -1,34 +1,35 @@
-// import { Box } from '@mui/material';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-	selectTagsApplied,
-	selectViewingActivtiy,
-} from '../../app/reducers/mapSlice';
+import { Box } from '@mui/material';
+import { selectTagsApplied } from '../../app/reducers/mapSlice';
 import ActivitiesList from './ActivitiesList';
+import ActivityDetails from './ActivityDetails';
 import FilteredActivitiesList from './FilteredActivitiesList';
 import PanSearchGooglePlaces from './PanSearchGooglePlaces';
 import TagList from './TagList';
 
 function FilterPage() {
 	const tagsApplied = useSelector(selectTagsApplied);
-	const viewingActivity = useSelector(selectViewingActivtiy);
-	console.log(viewingActivity);
+	const [selectedActivity, setSelectedActivity] = useState(false);
 	return (
-		<>
-			<PanSearchGooglePlaces />
-			<TagList />
-			{tagsApplied.length ? (
-				<FilteredActivitiesList />
+		<Box>
+			{selectedActivity ? (
+				<ActivityDetails
+					setSelectedActivity={setSelectedActivity}
+					activity={selectedActivity}
+				/>
 			) : (
 				<>
-					<ActivitiesList />
-					<ActivitiesList />
-					<ActivitiesList />
-					<ActivitiesList />
+					<PanSearchGooglePlaces />
+					<TagList />
+					{tagsApplied.length ? (
+						<FilteredActivitiesList />
+					) : (
+						<ActivitiesList setSelectedActivity={setSelectedActivity} />
+					)}
 				</>
 			)}
-			;
-		</>
+		</Box>
 	);
 }
 

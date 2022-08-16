@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { selectFilteredActivities } from '../../app/reducers/mapSlice';
 import Activity from './Activity';
 
-function ActivitiesList() {
+function ActivitiesList({ setSelectedActivity }: any) {
 	const activities = useSelector(selectFilteredActivities);
 	console.log(activities);
 	return (
@@ -28,7 +28,10 @@ function ActivitiesList() {
 				}}
 			>
 				{activities?.map((activity) => (
-					<Activity activity={activity} />
+					<Activity
+						activity={activity}
+						setSelectedActivity={setSelectedActivity}
+					/>
 				))}
 			</Box>
 		</Box>
