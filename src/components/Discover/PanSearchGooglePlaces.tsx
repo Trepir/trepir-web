@@ -48,6 +48,7 @@ export default function PanSearchGooglePlaces() {
 		try {
 			const results = await getGeocode({ address });
 			const { lat, lng } = await getLatLng(results[0]);
+			console.log(lat, lng);
 			dispatch(setMapPan({ lat, lng }));
 		} catch (error) {
 			console.log(error);
