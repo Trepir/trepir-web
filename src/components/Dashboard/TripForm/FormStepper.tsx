@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Box,
 	Button,
 	Step,
@@ -6,10 +7,13 @@ import {
 	Stepper,
 	Typography,
 } from '@mui/material';
-// import { Send } from '@mui/icons-material';
 import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../../app/hooks';
-import { selectNewTrip } from '../../../features/createTrip/createTripSlice';
+import {
+	selectNewTrip,
+	submitTripLocation,
+} from '../../../features/createTrip/createTripSlice';
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
@@ -19,10 +23,10 @@ import FormStepTwo from './FormStepTwo';
 
 function FormStepper() {
 	const submitRef: React.MutableRefObject<any> = useRef();
-	const steps = ['General Information', 'Travel Details', 'Add Activities'];
+	const alertRef: React.MutableRefObject<boolean> = useRef(false);
+	const steps = ['Travel Details', 'Add Activities'];
 	const newTrip = useAppSelector(selectNewTrip);
-
-	// 3: <FormStepThree />
+	const dispatch = useDispatch();
 
 	const [validated, setValidated] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
@@ -40,9 +44,11 @@ function FormStepper() {
 		}
 		// submitRef.current.click() artificially clicks the submit button of the relevant form step
 		if (submitRef.current) submitRef.current.click();
+
 		if (validated) {
 			setSkipped(newSkipped);
 			setValidated(false);
+			alertRef.current = false;
 			if (activeStep === steps.length - 1) {
 				console.log(newTrip);
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -51,13 +57,14 @@ function FormStepper() {
 	};
 
 	const handleBack = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+		if (activeStep > 0) {
+			dispatch(submitTripLocation(null));
+			setActiveStep((prevActiveStep) => prevActiveStep - 1);
+		}
 	};
 
 	const handleSkip = () => {
 		if (!isStepOptional(activeStep)) {
-			// You probably want to guard against something like this,
-			// it should never occur unless someone's actively trying to break something.
 			throw new Error("You can't skip a step that isn't optional.");
 		}
 		// submitRef.current.click() artificially clicks the submit button of the relevant form step
@@ -71,7 +78,6 @@ function FormStepper() {
 			setValidated(false);
 		}
 		if (activeStep === steps.length - 1) {
-			console.log(newTrip);
 			setActiveStep((prevActiveStep) => prevActiveStep + 1);
 		}
 	};
@@ -81,11 +87,17 @@ function FormStepper() {
 	};
 
 	const formSteps = [
-		<FormStepOne
-			submitRef={submitRef}
-			setValidated={setValidated}
-			setActiveStep={setActiveStep}
-		/>,
+		<div>
+			<FormStepOne
+				submitRef={submitRef}
+				alertRef={alertRef}
+				setValidated={setValidated}
+				setActiveStep={setActiveStep}
+			/>
+			{alertRef.current ? (
+				<Alert severity="error">Please insert a location!</Alert>
+			) : null}
+		</div>,
 		<FormStepTwo
 			submitRef={submitRef}
 			setValidated={setValidated}
@@ -101,7 +113,9 @@ function FormStepper() {
 					const labelProps: any = {};
 					if (isStepOptional(index)) {
 						labelProps.optional = (
-							<Typography variant="caption">Optional</Typography>
+							<Typography component="span" variant="caption">
+								Optional
+							</Typography>
 						);
 					}
 					if (isStepSkipped(index)) {
@@ -116,7 +130,7 @@ function FormStepper() {
 			</Stepper>
 			{activeStep === steps.length ? (
 				<>
-					<Typography sx={{ mt: 2, mb: 1 }}>
+					<Typography component="span" sx={{ mt: 2, mb: 1 }}>
 						All steps completed - you&apos;re finished
 					</Typography>
 					<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
@@ -126,7 +140,9 @@ function FormStepper() {
 				</>
 			) : (
 				<>
-					<Typography sx={{ mt: 2, mb: 1 }}>{formSteps[activeStep]}</Typography>
+					<Typography component="span" sx={{ mt: 2, mb: 1 }}>
+						{formSteps[activeStep]}
+					</Typography>
 					<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
 						<Button
 							color="inherit"

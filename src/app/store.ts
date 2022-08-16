@@ -9,6 +9,10 @@ export const store = configureStore({
 		newTrip: createTripReducer,
 		map: mapReducer,
 	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: false,
+		}),
 });
 
 export type AppDispatch = typeof store.dispatch;

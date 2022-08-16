@@ -3,12 +3,17 @@ import { RootState } from '../../app/store';
 
 export interface NewTripState {
 	name: string;
-	location: string;
+	// Remove any
+	location: any;
+	startDate: string;
+	endDate: string;
 }
 
 const initialState: NewTripState = {
 	name: 'idle',
-	location: 'idle',
+	location: null,
+	startDate: 'idle',
+	endDate: 'idle',
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -32,10 +37,21 @@ export const createTripSlice = createSlice({
 		submitTripLocation: (state, action: PayloadAction<any>) => {
 			state.location = action.payload;
 		},
+		changeStartDate: (state, action: PayloadAction<any>) => {
+			state.startDate = action.payload;
+		},
+		changeEndDate: (state, action: PayloadAction<any>) => {
+			state.endDate = action.payload;
+		},
 	},
 });
 
-export const { submitStepOne, submitTripLocation } = createTripSlice.actions;
+export const {
+	submitStepOne,
+	submitTripLocation,
+	changeStartDate,
+	changeEndDate,
+} = createTripSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
