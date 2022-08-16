@@ -3,12 +3,16 @@ import React from 'react';
 import {
 	GoogleMap,
 	// useLoadScript,
-	// MarkerF,
+	MarkerF,
 	// InfoWindow,
 } from '@react-google-maps/api';
 //	REDUX IMPORTS
 import { useSelector } from 'react-redux';
-import { selectMapCenter, selectPanCoords } from '../../app/reducers/mapSlice';
+import {
+	selectMapCenter,
+	selectMarkers,
+	selectPanCoords,
+} from '../../app/reducers/mapSlice';
 import { Coords } from '../../types/MapTypes';
 
 //	We set these up outside of the googlemaps component becasue the map will accidentally rerender
@@ -51,6 +55,10 @@ function Map() {
 	React.useEffect(() => {
 		if (panCoords) panTo(panCoords);
 	}, [panCoords]);
+
+	// FOR MARKERS
+	const markers = useSelector(selectMarkers);
+	console.log(markers);
 	// if (loadError) alert('Error loading maps');
 
 	// if (!isLoaded) return <>Loading Maps</>;
@@ -62,7 +70,11 @@ function Map() {
 			center={center}
 			onLoad={onMapLoad}
 			// options={options}
-		/>
+		>
+			{markers?.map((marker) => (
+				<MarkerF position={marker} />
+			))}
+		</GoogleMap>
 	);
 }
 

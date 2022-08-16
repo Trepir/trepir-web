@@ -7,7 +7,9 @@ export interface mapState {
 	mapCenter: Coords;
 	panCoords: Coords | null;
 	activities: any[] | null;
-	markers: any[] | null;
+	tagsApplied: any[];
+	filteredActivities: any[] | null | undefined;
+	markers: Coords[] | null;
 }
 
 const initialState: mapState = {
@@ -17,7 +19,9 @@ const initialState: mapState = {
 	},
 	panCoords: null,
 	activities: mock,
-	markers: null,
+	tagsApplied: [],
+	filteredActivities: mock,
+	markers: [],
 };
 
 export const mapSlice = createSlice({
@@ -30,13 +34,58 @@ export const mapSlice = createSlice({
 		setMapPan: (state, action: PayloadAction<Coords>) => {
 			state.panCoords = action.payload;
 		},
+		setTagsApplied: (state, action: PayloadAction<any>) => {
+			//	first check if the tag is already in the array
+			const index = state.tagsApplied.indexOf(action.payload);
+			if (index === -1) {
+				//	if it does not exist, then add it
+				state.tagsApplied = [...state.tagsApplied, action.payload];
+			} else {
+				//	if it does exist, then remove it (without mutating the state)
+				state.tagsApplied = [
+					...state.tagsApplied.slice(0, index),
+					...state.tagsApplied.slice(index + 1),
+				];
+			}
+		},
+		setFilteredActivites: (state) => {
+			state.filteredActivities = state.activities?.filter((activity) => {
+				let result: boolean = true;
+				state.tagsApplied.forEach((tag) => {
+					if (activity.tags.includes(tag)) return;
+					result = false;
+				});
+				return result;
+			});
+		},
+		setMarkers: (state) => {
+			const markers: Coords[] = [];
+			state.filteredActivities?.forEach((activity) =>
+				markers.push(activity.coords)
+			);
+			state.markers = markers;
+		},
+		setOneMarker: (state, action: PayloadAction<Coords>) => {
+			state.markers = [action.payload];
+		},
 	},
 });
 
-export const { setMapCenter, setMapPan } = mapSlice.actions;
+export const {
+	setMapCenter,
+	setMapPan,
+	setTagsApplied,
+	setFilteredActivites,
+	setMarkers,
+	setOneMarker,
+} = mapSlice.actions;
 
 export const selectMapCenter = (state: RootState) => state.map.mapCenter;
 export const selectPanCoords = (state: RootState) => state.map.panCoords;
 export const selectActivities = (state: RootState) => state.map.activities;
+export const selectTagsApplied = (state: RootState) => state.map.tagsApplied;
+export const selectFilteredActivities = (state: RootState) =>
+	state.map.filteredActivities;
+export const selectMarkers = (state: RootState) => state.map.markers;
 
 export default mapSlice.reducer;

@@ -1,9 +1,7 @@
 import { Box } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import ActivitiesList from './ActivitiesList';
+import FilterPage from './FilterPage';
 import Map from './Map';
-import PanSearchGooglePlaces from './PanSearchGooglePlaces';
-import TagList from './TagList';
 
 function MapPage() {
 	return (
@@ -22,15 +20,8 @@ function MapPage() {
 					overflow: 'scroll',
 				}}
 			>
-				<PanSearchGooglePlaces />
-				<TagList />
-				<ActivitiesList />
-				<ActivitiesList />
-				<ActivitiesList />
-				<ActivitiesList />
-				<ActivitiesList />
+				<FilterPage />
 			</Paper>
-
 			<Map />
 		</Box>
 	);

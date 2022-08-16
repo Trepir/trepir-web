@@ -1,10 +1,13 @@
 import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
-import { selectFilteredActivities } from '../../app/reducers/mapSlice';
+import {
+	selectFilteredActivities,
+	selectTagsApplied,
+} from '../../app/reducers/mapSlice';
 import Activity from './Activity';
 
-function ActivitiesList({ setSelectedActivity }: any) {
+function FilteredActivitiesList() {
 	const activities = useSelector(selectFilteredActivities);
 	console.log(activities);
 	return (
@@ -17,25 +20,23 @@ function ActivitiesList({ setSelectedActivity }: any) {
 			}}
 		>
 			<Typography variant="subtitle1" style={{ alignSelf: 'flex-start' }}>
-				List Title:
+				{useSelector(selectTagsApplied)}:
 			</Typography>
 			<Box
 				sx={{
 					display: 'flex',
+					flexDirection: 'column',
 					gap: 2,
-					overflow: 'scroll',
+					// overflow: 'scroll',
 					height: '20vh',
 				}}
 			>
 				{activities?.map((activity) => (
-					<Activity
-						activity={activity}
-						setSelectedActivity={setSelectedActivity}
-					/>
+					<Activity activity={activity} />
 				))}
 			</Box>
 		</Box>
 	);
 }
 
-export default ActivitiesList;
+export default FilteredActivitiesList;

@@ -58,7 +58,31 @@ const mock: Activity[] = [
 		},
 	},
 	{
-		name: 'Club Mojito',
+		name: 'Salsa Dance',
+		duration: 30,
+		description: 'go salsa dance',
+		time: null,
+		rating: 23,
+		tags: ['Nightlife'],
+		coords: {
+			lat: 41.3931413,
+			lng: 2.156818,
+		},
+	},
+	{
+		name: 'Shots and Dance!',
+		duration: 30,
+		description: 'go salsa dance',
+		time: null,
+		rating: 23,
+		tags: ['Nightlife'],
+		coords: {
+			lat: 41.3931413,
+			lng: 2.156818,
+		},
+	},
+	{
+		name: 'Salsa Lesson',
 		duration: 30,
 		description: 'go salsa dance',
 		time: null,
@@ -76,30 +100,6 @@ const mock: Activity[] = [
 		time: null,
 		rating: 23,
 		tags: ['Nightlife'],
-		coords: {
-			lat: 41.3931413,
-			lng: 2.156818,
-		},
-	},
-	{
-		name: 'Club Mojito',
-		duration: 30,
-		description: 'go salsa dance',
-		time: null,
-		rating: 23,
-		tags: ['Nightlife'],
-		coords: {
-			lat: 41.3931413,
-			lng: 2.156818,
-		},
-	},
-	{
-		name: 'Club Mojito',
-		duration: 30,
-		description: 'go salsa dance',
-		time: null,
-		rating: 23,
-		tags: [],
 		coords: {
 			lat: 41.3931413,
 			lng: 2.156818,
