@@ -11,6 +11,11 @@ import throttle from 'lodash/throttle';
 import { getGeocode } from 'use-places-autocomplete';
 import { useDispatch } from 'react-redux';
 import { submitTripLocation } from '../../../features/createTrip/createTripSlice';
+import { submitAccommodationLocation } from '../../../features/createAccommodation/createAccommodationSlice';
+
+type Props = {
+	inputLabel: string;
+};
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
 	if (!position) {
@@ -40,16 +45,21 @@ interface PlaceType {
 	structured_formatting: StructuredFormatting;
 }
 
-export default function TripLocationSearch() {
+export default function TripLocationSearch(props: Props) {
+	const { inputLabel } = props;
 	//  FOR REDUX
 	const dispatch = useDispatch();
-
 	//  To give location coords to redux. Called by onChange
-	async function setMapPanCoordinates(address: string) {
+	async function handleLocationChange(address: string) {
 		try {
-			const results = await getGeocode({ address });
-			console.log(results);
-			dispatch(submitTripLocation(results));
+			const location = await getGeocode({ address });
+			console.log(location);
+			if (inputLabel === 'primaryLocation') {
+				dispatch(submitTripLocation(location));
+			}
+			if (inputLabel === 'accommodationLocation') {
+				dispatch(submitAccommodationLocation(location));
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -144,7 +154,7 @@ export default function TripLocationSearch() {
 			onChange={(event: any, newValue: PlaceType | null) => {
 				setOptions(newValue ? [newValue, ...options] : options);
 				setValue(newValue);
-				if (newValue) setMapPanCoordinates(newValue.description);
+				if (newValue) handleLocationChange(newValue.description);
 			}}
 			onInputChange={(event, newInputValue) => {
 				setInputValue(newInputValue);
@@ -152,7 +162,7 @@ export default function TripLocationSearch() {
 			renderInput={(params) => (
 				<TextField {...params} label="Add a location" fullWidth />
 			)}
-			renderOption={(props, option) => {
+			renderOption={(innerProps, option) => {
 				const matches =
 					option.structured_formatting.main_text_matched_substrings;
 				const parts = parse(
@@ -163,7 +173,7 @@ export default function TripLocationSearch() {
 					])
 				);
 				return (
-					<li {...props}>
+					<li {...innerProps}>
 						<Grid container alignItems="center">
 							<Grid item>
 								<Box

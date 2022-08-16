@@ -44,7 +44,6 @@ function FormStepper() {
 		}
 		// submitRef.current.click() artificially clicks the submit button of the relevant form step
 		if (submitRef.current) submitRef.current.click();
-
 		if (validated) {
 			setSkipped(newSkipped);
 			setValidated(false);
