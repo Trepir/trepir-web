@@ -76,39 +76,40 @@ function FormStepOne(props: Props) {
 						{...register('name')}
 						error={!!errors.name}
 					/>
+
+					<TripLocationSearch inputLabel="primaryLocation" />
+					<TextField
+						id="startDate"
+						label="Start date"
+						type="date"
+						sx={{ width: 220 }}
+						{...register('startDate')}
+						error={!!errors.startDate}
+						InputLabelProps={{
+							shrink: true,
+						}}
+						onChange={handleStartDate}
+					/>
+					<TextField
+						id="endDate"
+						label="End date"
+						type="date"
+						sx={{ width: 220 }}
+						{...register('endDate')}
+						error={!!errors.endDate}
+						InputLabelProps={{
+							shrink: true,
+						}}
+						onChange={handleEndDate}
+					/>
+					{/* Added an invisible button that gets artificially clicked by the parent component when next is clicked. */}
+					<button
+						ref={submitRef}
+						type="submit"
+						style={{ display: 'none' }}
+						aria-label="Submit step"
+					/>
 				</Box>
-				<TripLocationSearch />
-				<TextField
-					id="startDate"
-					label="Start date"
-					type="date"
-					sx={{ width: 220 }}
-					{...register('startDate')}
-					error={!!errors.startDate}
-					InputLabelProps={{
-						shrink: true,
-					}}
-					onChange={handleStartDate}
-				/>
-				<TextField
-					id="endDate"
-					label="End date"
-					type="date"
-					sx={{ width: 220 }}
-					{...register('endDate')}
-					error={!!errors.endDate}
-					InputLabelProps={{
-						shrink: true,
-					}}
-					onChange={handleEndDate}
-				/>
-				{/* Added an invisible button that gets artificially clicked by the parent component when next is clicked. */}
-				<button
-					ref={submitRef}
-					type="submit"
-					style={{ display: 'none' }}
-					aria-label="Submit step"
-				/>
 			</form>
 		</div>
 	);

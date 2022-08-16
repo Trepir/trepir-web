@@ -1,11 +1,15 @@
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import React, { useState } from 'react';
 
-import { Box, TextField } from '@mui/material';
-import React from 'react';
-// import { useAppDispatch } from '../../../app/hooks';
-// import { submitStepTwo } from '../../../features/createTrip/createTripSlice';
+import { Button, Divider } from '@mui/material';
+
+import { useAppSelector } from '../../../app/hooks';
+
+import { selectNewAccommodation } from '../../../features/createAccommodation/createAccommodationSlice';
+import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
+import { selectTravelList } from '../../../features/createTravel/travelListSlice';
+import TravelEventList from './TravelEventList';
+import AddAccommodationForm from './AddAccommodationForm';
+import AddTravelForm from './AddTravelForm';
 
 type Props = {
 	submitRef: any;
@@ -13,47 +17,54 @@ type Props = {
 	setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const TripSchema = yup.object().shape({
-	location: yup.string().required('Location is required'),
-});
-
 function FormStepTwo(props: Props) {
-	// const dispatch = useAppDispatch();
+	const [showAccommodation, setShowAccommodation] = useState(false);
+	const [showTravel, setShowTravel] = useState(false);
+	const accommodationList = useAppSelector(selectAccommodationList);
+	const travelList = useAppSelector(selectTravelList);
+	const newAccommodation = useAppSelector(selectNewAccommodation);
+	console.log(newAccommodation);
+
 	const { submitRef, setValidated, setActiveStep } = props;
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<any>({
-		resolver: yupResolver(TripSchema),
-	});
-	const onSubmit = async (data: any) => {
-		const isValid = await TripSchema.isValid(data);
-		if (isValid) {
-			setValidated(true);
-			setActiveStep((prevActiveStep) => prevActiveStep + 1);
-			// dispatch(submitStepTwo(data));
-		}
+
+	const handleClick = () => {
+		console.log('hello');
+		setValidated(true);
+		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
+
 	return (
 		<div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<Box mb={2}>
-					<TextField
-						variant="filled"
-						label="Location"
-						autoFocus
-						{...register('location')}
-						error={!!errors.location}
-					/>
-					<button
-						ref={submitRef}
-						type="submit"
-						style={{ display: 'none' }}
-						aria-label="Submit step"
-					/>
-				</Box>
-			</form>
+			<Button
+				variant="contained"
+				disabled={showTravel}
+				onClick={() => setShowAccommodation(true)}
+			>
+				Add Accommodation
+			</Button>
+			<Button
+				variant="contained"
+				disabled={showAccommodation}
+				onClick={() => setShowTravel(true)}
+			>
+				Add Travel Details
+			</Button>
+			{showAccommodation ? (
+				<AddAccommodationForm setShowAccommodation={setShowAccommodation} />
+			) : null}
+			{showTravel ? <AddTravelForm setShowTravel={setShowTravel} /> : null}
+			<button
+				ref={submitRef}
+				type="button"
+				onClick={handleClick}
+				style={{ display: 'none' }}
+				aria-label="Submit step"
+			/>
+			<Divider />
+			{accommodationList.length &&
+				accommodationList.map((event) => <TravelEventList event={event} />)}
+			{travelList.length &&
+				travelList.map((event) => <TravelEventList event={event} />)}
 		</div>
 	);
 }
