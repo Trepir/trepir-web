@@ -131,7 +131,7 @@ export default function PanSearchGooglePlaces() {
 	return (
 		<Autocomplete
 			id="google-map-demo"
-			sx={{ width: 300 }}
+			sx={{ width: 500 }}
 			getOptionLabel={(option) =>
 				typeof option === 'string' ? option : option.description
 			}
@@ -150,7 +150,11 @@ export default function PanSearchGooglePlaces() {
 				setInputValue(newInputValue);
 			}}
 			renderInput={(params) => (
-				<TextField {...params} label="Add a location" fullWidth />
+				<TextField
+					{...params}
+					label="In the mood for some salsa classes?"
+					fullWidth
+				/>
 			)}
 			renderOption={(props, option) => {
 				const matches =
