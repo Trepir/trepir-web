@@ -26,13 +26,16 @@ export const createTripSlice = createSlice({
 		submitStepOne: (state, action: PayloadAction<string>) => {
 			state.name = action.payload;
 		},
-		submitStepTwo: (state, action: PayloadAction<string>) => {
+		// submitStepTwo: (state, action: PayloadAction<string>) => {
+		// 	state.location = action.payload;
+		// },
+		submitTripLocation: (state, action: PayloadAction<any>) => {
 			state.location = action.payload;
 		},
 	},
 });
 
-export const { submitStepOne, submitStepTwo } = createTripSlice.actions;
+export const { submitStepOne, submitTripLocation } = createTripSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

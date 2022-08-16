@@ -7,6 +7,7 @@ import React from 'react';
 
 import { useAppDispatch } from '../../../app/hooks';
 import { submitStepOne } from '../../../features/createTrip/createTripSlice';
+import TripLocationSearch from './TripLocationSearch';
 
 type Props = {
 	submitRef: any;
@@ -59,6 +60,7 @@ function FormStepOne(props: Props) {
 						aria-label="Submit step"
 					/>
 				</Box>
+				<TripLocationSearch />
 			</form>
 		</div>
 	);
