@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import createTripReducer from '../features/createTrip/createTripSlice';
 import createAccommodationReducer from '../features/createAccommodation/createAccommodationSlice';
+import accommodationListReducer from '../features/createAccommodation/accommodationList';
 import mapReducer from './reducers/mapSlice';
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
 		counter: counterReducer,
 		newTrip: createTripReducer,
 		newAccommodation: createAccommodationReducer,
+		accommodationList: accommodationListReducer,
 		map: mapReducer,
 	},
 	middleware: (getDefaultMiddleware) =>

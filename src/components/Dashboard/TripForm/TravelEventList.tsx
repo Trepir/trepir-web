@@ -1,0 +1,38 @@
+import { Box, Card, Typography } from '@mui/material';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+
+type Props = {
+	event: any;
+};
+
+function TravelEventList(props: Props) {
+	const { event } = props;
+	return (
+		<div>
+			<Card
+				sx={{ display: 'fex', width: '20vw', height: '8vw', flexShrink: 0 }}
+				elevation={10}
+				key={event.location[0].place_id}
+			>
+				<AccountBalanceIcon style={{ fontSize: '110px', color: 'grey' }} />
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						gap: 3,
+					}}
+				>
+					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
+						{event.location[0].formatted_address}
+					</Typography>
+					<Typography variant="subtitle1">
+						{event.startDate ? event.startDate : event.departureDateTime} -
+						{event.endDate ? event.endDate : null}
+					</Typography>
+				</Box>
+			</Card>
+		</div>
+	);
+}
+
+export default TravelEventList;

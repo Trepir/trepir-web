@@ -33,14 +33,25 @@ export const createAccommodationSlice = createSlice({
 		submitAccommodationLocation: (state, action: PayloadAction<any>) => {
 			state.location = action.payload;
 		},
+		changeAccommodationStartDate: (state, action: PayloadAction<any>) => {
+			state.startDate = action.payload;
+		},
+		changeAccommodationEndDate: (state, action: PayloadAction<any>) => {
+			state.endDate = action.payload;
+		},
 	},
 });
 
-export const { submitAccommodationLocation } = createAccommodationSlice.actions;
+export const {
+	submitAccommodationLocation,
+	changeAccommodationStartDate,
+	changeAccommodationEndDate,
+} = createAccommodationSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectNewTrip = (state: RootState) => state.newTrip;
+export const selectNewAccommodation = (state: RootState) =>
+	state.newAccommodation;
 
 export default createAccommodationSlice.reducer;

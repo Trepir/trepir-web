@@ -32,7 +32,7 @@ function FormStepper() {
 	const [activeStep, setActiveStep] = useState(0);
 	const [skipped, setSkipped] = useState(new Set());
 
-	const isStepOptional = (step: number) => step === 2;
+	const isStepOptional = (step: number) => step === 0;
 
 	const isStepSkipped = (step: number) => skipped.has(step);
 
@@ -67,15 +67,15 @@ function FormStepper() {
 			throw new Error("You can't skip a step that isn't optional.");
 		}
 		// submitRef.current.click() artificially clicks the submit button of the relevant form step
-		if (submitRef.current) submitRef.current.click();
-		if (validated) {
-			setSkipped((prevSkipped) => {
-				const newSkipped = new Set(prevSkipped.values());
-				newSkipped.add(activeStep);
-				return newSkipped;
-			});
-			setValidated(false);
-		}
+
+		setSkipped((prevSkipped) => {
+			const newSkipped = new Set(prevSkipped.values());
+			setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+			newSkipped.add(activeStep);
+			return newSkipped;
+		});
+		setValidated(false);
 		if (activeStep === steps.length - 1) {
 			setActiveStep((prevActiveStep) => prevActiveStep + 1);
 		}
