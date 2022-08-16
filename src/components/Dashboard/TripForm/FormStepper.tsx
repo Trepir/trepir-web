@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Box,
 	Button,
 	Step,
@@ -8,8 +9,12 @@ import {
 } from '@mui/material';
 // import { Send } from '@mui/icons-material';
 import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../../app/hooks';
-import { selectNewTrip } from '../../../features/createTrip/createTripSlice';
+import {
+	selectNewTrip,
+	submitTripLocation,
+} from '../../../features/createTrip/createTripSlice';
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
@@ -19,8 +24,10 @@ import FormStepTwo from './FormStepTwo';
 
 function FormStepper() {
 	const submitRef: React.MutableRefObject<any> = useRef();
+	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const steps = ['General Information', 'Travel Details', 'Add Activities'];
 	const newTrip = useAppSelector(selectNewTrip);
+	const dispatch = useDispatch();
 
 	// 3: <FormStepThree />
 
@@ -40,9 +47,17 @@ function FormStepper() {
 		}
 		// submitRef.current.click() artificially clicks the submit button of the relevant form step
 		if (submitRef.current) submitRef.current.click();
+		console.log(newTrip.location);
+		if (!newTrip.location) {
+			alertRef.current = true;
+			setActiveStep((prevActiveStep) => prevActiveStep - 1);
+			return;
+		}
 		if (validated) {
+			console.log('location is not null');
 			setSkipped(newSkipped);
 			setValidated(false);
+			alertRef.current = false;
 			if (activeStep === steps.length - 1) {
 				console.log(newTrip);
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -51,6 +66,7 @@ function FormStepper() {
 	};
 
 	const handleBack = () => {
+		if (activeStep === 1) dispatch(submitTripLocation(null));
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
@@ -81,11 +97,16 @@ function FormStepper() {
 	};
 
 	const formSteps = [
-		<FormStepOne
-			submitRef={submitRef}
-			setValidated={setValidated}
-			setActiveStep={setActiveStep}
-		/>,
+		<div>
+			<FormStepOne
+				submitRef={submitRef}
+				setValidated={setValidated}
+				setActiveStep={setActiveStep}
+			/>
+			{alertRef.current ? (
+				<Alert severity="error">Please insert a location!</Alert>
+			) : null}
+		</div>,
 		<FormStepTwo
 			submitRef={submitRef}
 			setValidated={setValidated}

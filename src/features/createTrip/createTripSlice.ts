@@ -3,12 +3,13 @@ import { RootState } from '../../app/store';
 
 export interface NewTripState {
 	name: string;
-	location: string;
+	// Remove any
+	location: any;
 }
 
 const initialState: NewTripState = {
 	name: 'idle',
-	location: 'idle',
+	location: null,
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
