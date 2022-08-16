@@ -183,7 +183,11 @@ export default function PanSearchGooglePlaces() {
 										{part.text}
 									</span>
 								))}
-								<Typography variant="body2" color="text.secondary">
+								<Typography
+									component="span"
+									variant="body2"
+									color="text.secondary"
+								>
 									{option.structured_formatting.secondary_text}
 								</Typography>
 							</Grid>

@@ -9,16 +9,8 @@ import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import { getGeocode } from 'use-places-autocomplete';
-//  REDUX IMPORTS
-// import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
-// import { useForm } from 'react-hook-form';
-// import { setMapPan } from '../../../app/reducers/mapSlice';
 import { submitTripLocation } from '../../../features/createTrip/createTripSlice';
-
-// const LocationSchema = yup.object().shape({
-// 	location: yup.string().required('Location is required'),
-// });
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
 	if (!position) {
@@ -51,13 +43,6 @@ interface PlaceType {
 export default function TripLocationSearch() {
 	//  FOR REDUX
 	const dispatch = useDispatch();
-
-	// const {
-	// 	register,
-	// 	formState: { errors },
-	// } = useForm<any>({
-	// 	resolver: yupResolver(LocationSchema),
-	// });
 
 	//  To give location coords to redux. Called by onChange
 	async function setMapPanCoordinates(address: string) {
@@ -143,15 +128,6 @@ export default function TripLocationSearch() {
 		};
 	}, [value, inputValue, fetch]);
 
-	// const onSubmit = async (data: any) => {
-	// 	const isValid = await LocationSchema.isValid(data);
-	// 	const results = await getGeocode(data);
-	// 	if (isValid) {
-	// 		dispatch(submitTripLocation(results));
-	// 		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	// 	}
-	// };
-
 	return (
 		<Autocomplete
 			id="location"
@@ -206,7 +182,11 @@ export default function TripLocationSearch() {
 										{part.text}
 									</span>
 								))}
-								<Typography variant="body2" color="text.secondary">
+								<Typography
+									component="span"
+									variant="body2"
+									color="text.secondary"
+								>
 									{option.structured_formatting.secondary_text}
 								</Typography>
 							</Grid>
