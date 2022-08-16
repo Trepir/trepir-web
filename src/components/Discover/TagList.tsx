@@ -1,4 +1,5 @@
-import { Box, Chip } from '@mui/material';
+import { Box } from '@mui/material';
+import Tag from './Tag';
 
 function TagList() {
 	const tags = [
@@ -28,7 +29,7 @@ function TagList() {
 			}}
 		>
 			{tags.map((tag) => (
-				<Chip label={tag} variant="filled" />
+				<Tag label={tag} />
 			))}
 		</Box>
 	);
