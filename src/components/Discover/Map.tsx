@@ -15,7 +15,7 @@ import { Coords } from '../../types/MapTypes';
 //	otherwise
 // const libraries = ['places'];
 const mapContainerStyle = {
-	width: '50vw',
+	width: '51vw',
 	height: '100vh',
 };
 

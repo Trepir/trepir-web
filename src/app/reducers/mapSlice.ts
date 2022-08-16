@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Coords } from '../../types/MapTypes';
+import mock from '../../utils/mockActivities';
 import { RootState } from '../store';
 
 export interface mapState {
 	mapCenter: Coords;
 	panCoords: Coords | null;
-	activites: any[] | null;
+	activities: any[] | null;
 	markers: any[] | null;
 }
 
@@ -15,7 +16,7 @@ const initialState: mapState = {
 		lng: 2.173404,
 	},
 	panCoords: null,
-	activites: null,
+	activities: mock,
 	markers: null,
 };
 
@@ -36,5 +37,6 @@ export const { setMapCenter, setMapPan } = mapSlice.actions;
 
 export const selectMapCenter = (state: RootState) => state.map.mapCenter;
 export const selectPanCoords = (state: RootState) => state.map.panCoords;
+export const selectActivities = (state: RootState) => state.map.activities;
 
 export default mapSlice.reducer;

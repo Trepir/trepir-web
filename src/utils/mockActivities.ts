@@ -15,7 +15,7 @@ const mock: Activity[] = [
 		description: 'go see the cool church',
 		time: null,
 		rating: 33,
-		tags: [],
+		tags: ['Landmark', 'Relax'],
 		coords: {
 			lat: 41.4036299,
 			lng: 2.1743558,
@@ -27,7 +27,7 @@ const mock: Activity[] = [
 		description: 'go see the cool park',
 		time: null,
 		rating: 43,
-		tags: [],
+		tags: ['Landmark', 'Tour'],
 		coords: {
 			lat: 41.4144948,
 			lng: 2.1526945,
@@ -39,7 +39,7 @@ const mock: Activity[] = [
 		description: 'go see the cool beach',
 		time: null,
 		rating: 14,
-		tags: [],
+		tags: ['Nature', 'Beach', 'Relax'],
 		coords: {
 			lat: 41.3943735,
 			lng: 2.2070109,
@@ -51,7 +51,7 @@ const mock: Activity[] = [
 		description: 'go salsa dance',
 		time: null,
 		rating: 23,
-		tags: [],
+		tags: ['Nightlife'],
 		coords: {
 			lat: 41.3931413,
 			lng: 2.156818,
@@ -63,7 +63,7 @@ const mock: Activity[] = [
 		description: 'go salsa dance',
 		time: null,
 		rating: 23,
-		tags: [],
+		tags: ['Nightlife'],
 		coords: {
 			lat: 41.3931413,
 			lng: 2.156818,
@@ -75,7 +75,7 @@ const mock: Activity[] = [
 		description: 'go salsa dance',
 		time: null,
 		rating: 23,
-		tags: [],
+		tags: ['Nightlife'],
 		coords: {
 			lat: 41.3931413,
 			lng: 2.156818,
@@ -87,7 +87,7 @@ const mock: Activity[] = [
 		description: 'go salsa dance',
 		time: null,
 		rating: 23,
-		tags: [],
+		tags: ['Nightlife'],
 		coords: {
 			lat: 41.3931413,
 			lng: 2.156818,
