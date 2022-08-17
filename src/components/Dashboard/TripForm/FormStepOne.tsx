@@ -10,7 +10,7 @@ import {
 	changeEndDate,
 	changeStartDate,
 	selectNewTrip,
-	submitStepOne,
+	submitTripName,
 } from '../../../features/createTrip/createTripSlice';
 import TripLocationSearch from './TripLocationSearch';
 
@@ -57,7 +57,7 @@ function FormStepOne(props: Props) {
 			setValidated(true);
 
 			setActiveStep((prevActiveStep) => prevActiveStep + 1);
-			dispatch(submitStepOne(data));
+			dispatch(submitTripName(data.name));
 		}
 		if (isValid && !newTrip.location) {
 			setValidated(true);

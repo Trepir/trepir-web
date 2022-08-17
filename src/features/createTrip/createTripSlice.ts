@@ -23,12 +23,12 @@ const initialState: NewTripState = {
 // typically used to make async requests.
 
 export const createTripSlice = createSlice({
-	name: 'counter',
+	name: 'newTrip',
 	initialState,
 	// The `reducers` field lets us define reducers and generate associated actions
 	reducers: {
 		// Use the PayloadAction type to declare the contents of `action.payload`
-		submitStepOne: (state, action: PayloadAction<string>) => {
+		submitTripName: (state, action: PayloadAction<string>) => {
 			state.name = action.payload;
 		},
 		// submitStepTwo: (state, action: PayloadAction<string>) => {
@@ -47,7 +47,7 @@ export const createTripSlice = createSlice({
 });
 
 export const {
-	submitStepOne,
+	submitTripName,
 	submitTripLocation,
 	changeStartDate,
 	changeEndDate,
