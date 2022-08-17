@@ -23,7 +23,7 @@ function FilterPage() {
 					<PanSearchGooglePlaces />
 					<TagList />
 					{tagsApplied.length ? (
-						<FilteredActivitiesList />
+						<FilteredActivitiesList setSelectedActivity={setSelectedActivity} />
 					) : (
 						<ActivitiesList setSelectedActivity={setSelectedActivity} />
 					)}

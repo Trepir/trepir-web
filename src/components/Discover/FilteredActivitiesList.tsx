@@ -7,9 +7,8 @@ import {
 } from '../../app/reducers/mapSlice';
 import Activity from './Activity';
 
-function FilteredActivitiesList() {
+function FilteredActivitiesList({ setSelectedActivity }: any) {
 	const activities = useSelector(selectFilteredActivities);
-	console.log(activities);
 	return (
 		<Box
 			sx={{
@@ -32,7 +31,10 @@ function FilteredActivitiesList() {
 				}}
 			>
 				{activities?.map((activity) => (
-					<Activity activity={activity} />
+					<Activity
+						activity={activity}
+						setSelectedActivity={setSelectedActivity}
+					/>
 				))}
 			</Box>
 		</Box>
