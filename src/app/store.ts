@@ -5,6 +5,7 @@ import createAccommodationReducer from '../features/createAccommodation/createAc
 import accommodationListReducer from '../features/createAccommodation/accommodationList';
 import createTravelReducer from '../features/createTravel/createTravelSlice';
 import travelListReducer from '../features/createTravel/travelListSlice';
+import tripListReducer from '../features/createTrip/tripListSlice';
 import mapReducer from './reducers/mapSlice';
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
 		accommodationList: accommodationListReducer,
 		newTravel: createTravelReducer,
 		travelList: travelListReducer,
+		tripList: tripListReducer,
 		map: mapReducer,
 	},
 	middleware: (getDefaultMiddleware) =>

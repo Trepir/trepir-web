@@ -3,15 +3,14 @@ import { RootState } from '../../app/store';
 
 export interface NewTripState {
 	name: string;
-	// Remove any
-	location: any;
+	placeDetails: any;
 	startDate: string;
 	endDate: string;
 }
 
 const initialState: NewTripState = {
 	name: 'idle',
-	location: null,
+	placeDetails: null,
 	startDate: 'idle',
 	endDate: 'idle',
 };
@@ -35,7 +34,7 @@ export const createTripSlice = createSlice({
 		// 	state.location = action.payload;
 		// },
 		submitTripLocation: (state, action: PayloadAction<any>) => {
-			state.location = action.payload;
+			state.placeDetails = action.payload;
 		},
 		changeStartDate: (state, action: PayloadAction<any>) => {
 			state.startDate = action.payload;

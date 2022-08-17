@@ -12,6 +12,7 @@ import Private from './pages/Private';
 import Login from './pages/Login';
 import TripForm from './pages/Dashboard/TripForm';
 import Discover from './pages/Discover/Discover';
+import TripPlanner from './pages/Dashboard/TripPlanner';
 
 const primaryColor = '#1CB985';
 
@@ -47,6 +48,7 @@ function App() {
 							<Route path="/discover/*" element={<Discover />} />
 							<Route path="/redux" element={<ReduxSample />} />
 							<Route path="/newtrip" element={<TripForm />} />
+							<Route path="/trip" element={<TripPlanner />} />
 							<Route element={<PrivateRoutes />}>
 								<Route path="/private" element={<Private />} />
 							</Route>

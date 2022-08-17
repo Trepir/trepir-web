@@ -53,13 +53,13 @@ function FormStepOne(props: Props) {
 
 	const onSubmit = async (data: any) => {
 		const isValid = await TripSchema.isValid(data);
-		if (isValid && newTrip.location) {
+		if (isValid && newTrip.placeDetails) {
 			setValidated(true);
 
 			setActiveStep((prevActiveStep) => prevActiveStep + 1);
 			dispatch(submitTripName(data.name));
 		}
-		if (isValid && !newTrip.location) {
+		if (isValid && !newTrip.placeDetails) {
 			setValidated(true);
 			alertRef.current = true;
 		}
