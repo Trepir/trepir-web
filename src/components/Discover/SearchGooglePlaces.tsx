@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-import { getGeocode, getLatLng } from 'use-places-autocomplete';
+import { getDetails, getGeocode, getLatLng } from 'use-places-autocomplete';
 import { useNavigate } from 'react-router-dom';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
@@ -47,8 +47,12 @@ export default function SearchGooglePlaces() {
 	const navigate = useNavigate();
 	//  To give location coords to redux. Called by onChange
 	async function setMapCenterCoordinates(address: string) {
+		//	//////////////API CALL FUNCTION //////////////////////////////
+
 		try {
 			const results = await getGeocode({ address });
+
+			console.log(results);
 			const { lat, lng } = await getLatLng(results[0]);
 			dispatch(setMapCenter({ lat, lng }));
 			navigate('./map');
@@ -56,7 +60,7 @@ export default function SearchGooglePlaces() {
 			console.log(error);
 		}
 	}
-	//
+	//	////////////////////////////////////////////////////////////////
 	const [value, setValue] = React.useState<PlaceType | null>(null);
 	const [inputValue, setInputValue] = React.useState('');
 	const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
@@ -143,10 +147,19 @@ export default function SearchGooglePlaces() {
 			includeInputInList
 			filterSelectedOptions
 			value={value}
-			onChange={(event: any, newValue: PlaceType | null) => {
+			onChange={async (event: any, newValue: any) => {
 				setOptions(newValue ? [newValue, ...options] : options);
 				setValue(newValue);
-				if (newValue) setMapCenterCoordinates(newValue.description);
+				//	//////////////ADDED DETAILS LOGIC HERE //////////////////////////////
+				if (newValue) {
+					const details = await getDetails({
+						placeId: newValue.place_id.toString(),
+					});
+					console.log(details);
+					//	////////////// ///////////////////////////////////////////////////////
+
+					setMapCenterCoordinates(newValue.description);
+				}
 			}}
 			onInputChange={(event, newInputValue) => {
 				setInputValue(newInputValue);
