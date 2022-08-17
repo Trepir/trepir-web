@@ -57,6 +57,7 @@ export default function TripLocationSearch(props: Props) {
 	async function handleLocationChange(address: string) {
 		try {
 			const location = await getGeocode({ address });
+			console.log(address);
 			console.log(location);
 			if (inputLabel === 'primaryLocation') {
 				dispatch(submitTripLocation(location));

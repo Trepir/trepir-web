@@ -21,6 +21,7 @@ import FormStepTwo from './FormStepTwo';
 import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
 import { selectTravelList } from '../../../features/createTravel/travelListSlice';
 import TravelEventList from './TravelEventList';
+import createTrip from '../../../features/createTrip/createTripService';
 
 // import {
 // 	submitNewTrip,
@@ -58,6 +59,7 @@ function FormStepper() {
 			if (activeStep === steps.length - 1) {
 				console.log(newTrip);
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
+				createTrip(newTrip);
 			}
 		}
 	};
