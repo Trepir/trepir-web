@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 
-import { Button, Divider } from '@mui/material';
+import { Button } from '@mui/material';
 
 import { useAppSelector } from '../../../app/hooks';
 
 import { selectNewAccommodation } from '../../../features/createAccommodation/createAccommodationSlice';
-import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
-import { selectTravelList } from '../../../features/createTravel/travelListSlice';
-import TravelEventList from './TravelEventList';
+
 import AddAccommodationForm from './AddAccommodationForm';
 import AddTravelForm from './AddTravelForm';
 
@@ -20,8 +18,7 @@ type Props = {
 function FormStepTwo(props: Props) {
 	const [showAccommodation, setShowAccommodation] = useState(false);
 	const [showTravel, setShowTravel] = useState(false);
-	const accommodationList = useAppSelector(selectAccommodationList);
-	const travelList = useAppSelector(selectTravelList);
+
 	const newAccommodation = useAppSelector(selectNewAccommodation);
 	console.log(newAccommodation);
 
@@ -62,21 +59,6 @@ function FormStepTwo(props: Props) {
 				style={{ display: 'none' }}
 				aria-label="Submit step"
 			/>
-			<Divider />
-			<div className="travel-event-container">
-				<div className="travel-event-list">
-					{accommodationList.length
-						? accommodationList.map((event) => (
-								<TravelEventList event={event} />
-						  ))
-						: null}
-				</div>
-				<div className="travel-event-list">
-					{travelList.length
-						? travelList.map((event) => <TravelEventList event={event} />)
-						: null}
-				</div>
-			</div>
 		</div>
 	);
 }

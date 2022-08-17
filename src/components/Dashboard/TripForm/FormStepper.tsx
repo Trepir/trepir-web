@@ -6,6 +6,7 @@ import {
 	StepLabel,
 	Stepper,
 	Typography,
+	Divider,
 } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -17,11 +18,17 @@ import {
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
+import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
+import { selectTravelList } from '../../../features/createTravel/travelListSlice';
+import TravelEventList from './TravelEventList';
+
 // import {
 // 	submitNewTrip,
 // } from '../../../features/createTrip/createTripSlice';
 
 function FormStepper() {
+	const accommodationList = useAppSelector(selectAccommodationList);
+	const travelList = useAppSelector(selectTravelList);
 	const submitRef: React.MutableRefObject<any> = useRef();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const steps = ['Travel Details', 'Add Activities'];
@@ -165,6 +172,21 @@ function FormStepper() {
 					</>
 				)}
 			</Box>
+			<Divider />
+			<div className="travel-event-container">
+				<div className="travel-event-list">
+					{accommodationList.length
+						? accommodationList.map((event) => (
+								<TravelEventList event={event} />
+						  ))
+						: null}
+				</div>
+				<div className="travel-event-list">
+					{travelList.length
+						? travelList.map((event) => <TravelEventList event={event} />)
+						: null}
+				</div>
+			</div>
 		</div>
 	);
 }
