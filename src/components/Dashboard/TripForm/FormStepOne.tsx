@@ -68,9 +68,9 @@ function FormStepOne(props: Props) {
 	return (
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Box mb={2}>
+				<Box mb={2} className="step-container">
 					<TextField
-						variant="filled"
+						variant="outlined"
 						label="Name of the trip"
 						autoFocus
 						{...register('name')}

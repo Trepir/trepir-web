@@ -6,6 +6,7 @@ import {
 	StepLabel,
 	Stepper,
 	Typography,
+	Divider,
 } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -17,11 +18,17 @@ import {
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
+import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
+import { selectTravelList } from '../../../features/createTravel/travelListSlice';
+import TravelEventList from './TravelEventList';
+
 // import {
 // 	submitNewTrip,
 // } from '../../../features/createTrip/createTripSlice';
 
 function FormStepper() {
+	const accommodationList = useAppSelector(selectAccommodationList);
+	const travelList = useAppSelector(selectTravelList);
 	const submitRef: React.MutableRefObject<any> = useRef();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const steps = ['Travel Details', 'Add Activities'];
@@ -105,66 +112,82 @@ function FormStepper() {
 	];
 
 	return (
-		<Box sx={{ width: '100%' }}>
-			<Stepper activeStep={activeStep}>
-				{steps.map((label, index) => {
-					const stepProps: StepProps = { completed: false };
-					const labelProps: any = {};
-					if (isStepOptional(index)) {
-						labelProps.optional = (
-							<Typography component="span" variant="caption">
-								Optional
-							</Typography>
+		<div className="trip-form-container">
+			<Box sx={{ width: '100%' }}>
+				<Stepper activeStep={activeStep}>
+					{steps.map((label, index) => {
+						const stepProps: StepProps = { completed: false };
+						const labelProps: any = {};
+						if (isStepOptional(index)) {
+							labelProps.optional = (
+								<Typography component="span" variant="caption">
+									Optional
+								</Typography>
+							);
+						}
+						if (isStepSkipped(index)) {
+							stepProps.completed = false;
+						}
+						return (
+							<Step key={label} {...stepProps}>
+								<StepLabel {...labelProps}>{label}</StepLabel>
+							</Step>
 						);
-					}
-					if (isStepSkipped(index)) {
-						stepProps.completed = false;
-					}
-					return (
-						<Step key={label} {...stepProps}>
-							<StepLabel {...labelProps}>{label}</StepLabel>
-						</Step>
-					);
-				})}
-			</Stepper>
-			{activeStep === steps.length ? (
-				<>
-					<Typography component="span" sx={{ mt: 2, mb: 1 }}>
-						All steps completed - you&apos;re finished
-					</Typography>
-					<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-						<Box sx={{ flex: '1 1 auto' }} />
-						<Button onClick={handleReset}>Reset</Button>
-					</Box>
-				</>
-			) : (
-				<>
-					<Typography component="span" sx={{ mt: 2, mb: 1 }}>
-						{formSteps[activeStep]}
-					</Typography>
-					<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-						<Button
-							color="inherit"
-							disabled={activeStep === 0}
-							onClick={handleBack}
-							sx={{ mr: 1 }}
-						>
-							Back
-						</Button>
-						<Box sx={{ flex: '1 1 auto' }} />
-						{isStepOptional(activeStep) && (
-							<Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-								Skip
+					})}
+				</Stepper>
+				{activeStep === steps.length ? (
+					<>
+						<Typography component="span" sx={{ mt: 2, mb: 1 }}>
+							All steps completed - you&apos;re finished
+						</Typography>
+						<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+							<Box sx={{ flex: '1 1 auto' }} />
+							<Button onClick={handleReset}>Reset</Button>
+						</Box>
+					</>
+				) : (
+					<>
+						<Typography component="span" sx={{ mt: 2, mb: 1 }}>
+							{formSteps[activeStep]}
+						</Typography>
+						<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+							<Button
+								color="inherit"
+								disabled={activeStep === 0}
+								onClick={handleBack}
+								sx={{ mr: 1 }}
+							>
+								Back
 							</Button>
-						)}
-
-						<Button onClick={handleNext}>
-							{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-						</Button>
-					</Box>
-				</>
-			)}
-		</Box>
+							<Box sx={{ flex: '1 1 auto' }} />
+							{isStepOptional(activeStep) && (
+								<Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+									Skip
+								</Button>
+							)}
+							<Button onClick={handleNext}>
+								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+							</Button>
+						</Box>
+					</>
+				)}
+			</Box>
+			<Divider />
+			<div className="travel-event-container">
+				<div className="travel-event-list">
+					{accommodationList.length
+						? accommodationList.map((event) => (
+								<TravelEventList event={event} />
+						  ))
+						: null}
+				</div>
+				<div className="travel-event-list">
+					{travelList.length
+						? travelList.map((event) => <TravelEventList event={event} />)
+						: null}
+				</div>
+			</div>
+		</div>
 	);
 }
 

@@ -7,10 +7,15 @@ type Props = {
 
 function TravelEventList(props: Props) {
 	const { event } = props;
+	let classTag = '';
+	if (event.location) {
+		classTag = 'accommodation-event';
+	} else classTag = 'travel-event';
+
 	return (
 		<div>
 			<Card
-				sx={{ display: 'fex', width: '20vw', height: '8vw', flexShrink: 0 }}
+				sx={{ display: 'flex', width: '20vw', height: '8vw', flexShrink: 0 }}
 				elevation={10}
 				key={
 					event.location
@@ -20,6 +25,7 @@ function TravelEventList(props: Props) {
 			>
 				<AccountBalanceIcon style={{ fontSize: '110px', color: 'grey' }} />
 				<Box
+					className={classTag}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
