@@ -34,21 +34,23 @@ function FormStepTwo(props: Props) {
 	};
 
 	return (
-		<div>
-			<Button
-				variant="contained"
-				disabled={showTravel}
-				onClick={() => setShowAccommodation(true)}
-			>
-				Add Accommodation
-			</Button>
-			<Button
-				variant="contained"
-				disabled={showAccommodation}
-				onClick={() => setShowTravel(true)}
-			>
-				Add Travel Details
-			</Button>
+		<div className="step-container">
+			<div className="modal-buttons-container">
+				<Button
+					variant="contained"
+					disabled={showTravel}
+					onClick={() => setShowAccommodation(true)}
+				>
+					Add Accommodation
+				</Button>
+				<Button
+					variant="contained"
+					disabled={showAccommodation}
+					onClick={() => setShowTravel(true)}
+				>
+					Add Travel Details
+				</Button>
+			</div>
 			{showAccommodation ? (
 				<AddAccommodationForm setShowAccommodation={setShowAccommodation} />
 			) : null}
@@ -61,10 +63,20 @@ function FormStepTwo(props: Props) {
 				aria-label="Submit step"
 			/>
 			<Divider />
-			{accommodationList.length &&
-				accommodationList.map((event) => <TravelEventList event={event} />)}
-			{travelList.length &&
-				travelList.map((event) => <TravelEventList event={event} />)}
+			<div className="travel-event-container">
+				<div className="travel-event-list">
+					{accommodationList.length
+						? accommodationList.map((event) => (
+								<TravelEventList event={event} />
+						  ))
+						: null}
+				</div>
+				<div className="travel-event-list">
+					{travelList.length
+						? travelList.map((event) => <TravelEventList event={event} />)
+						: null}
+				</div>
+			</div>
 		</div>
 	);
 }

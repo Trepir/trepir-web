@@ -1,0 +1,36 @@
+.trip-form-container {
+	width: 50vw;
+	height: 40vh;
+	border-radius: 4px;
+}
+
+.step-container {
+	display: flex;
+	height: 30vh;
+	flex-direction: column;
+	align-items: center;
+	gap: 2rem;
+}
+
+.modal-buttons-container {
+	display: flex;
+	gap: 2rem;
+}
+.modal-form-container {
+	display: flex;
+	gap: 2rem;
+}
+
+.travel-event-container {
+	background-color: aqua;
+	padding: 2rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2rem;
+}
+
+.travel-event-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}

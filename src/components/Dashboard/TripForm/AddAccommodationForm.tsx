@@ -67,9 +67,9 @@ function AddAccommodationForm(props: Props) {
 	};
 
 	return (
-		<div className="add-accommodation-form">
+		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Box mb={2}>
+				<Box mb={2} className="modal-form-container">
 					<TripLocationSearch inputLabel="accommodationLocation" />
 					{alertRef.current ? (
 						<Alert severity="error">Please insert a location!</Alert>
