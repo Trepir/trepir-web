@@ -6,7 +6,6 @@ import Activity from './Activity';
 
 function ActivitiesList({ setSelectedActivity }: any) {
 	const activities = useSelector(selectFilteredActivities);
-	console.log(activities);
 	return (
 		<Box
 			sx={{
