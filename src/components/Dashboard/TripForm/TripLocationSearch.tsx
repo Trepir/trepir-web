@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-import { getGeocode } from 'use-places-autocomplete';
+import { getDetails } from 'use-places-autocomplete';
 import { useDispatch } from 'react-redux';
 import { submitTripLocation } from '../../../features/createTrip/createTripSlice';
 import { submitAccommodationLocation } from '../../../features/createAccommodation/createAccommodationSlice';
@@ -54,22 +54,19 @@ export default function TripLocationSearch(props: Props) {
 	//  FOR REDUX
 	const dispatch = useDispatch();
 	//  To give location coords to redux. Called by onChange
-	async function handleLocationChange(address: string) {
+	async function handleLocationChange(placeDetails: any) {
 		try {
-			const location = await getGeocode({ address });
-			console.log(address);
-			console.log(location);
 			if (inputLabel === 'primaryLocation') {
-				dispatch(submitTripLocation(location));
+				dispatch(submitTripLocation(placeDetails));
 			}
 			if (inputLabel === 'accommodationLocation') {
-				dispatch(submitAccommodationLocation(location));
+				dispatch(submitAccommodationLocation(placeDetails));
 			}
 			if (inputLabel === 'travelDepartureLocation') {
-				dispatch(submitTravelDepartureLocation(location));
+				dispatch(submitTravelDepartureLocation(placeDetails));
 			}
 			if (inputLabel === 'travelArrivalLocation') {
-				dispatch(submitTravelArrivalLocation(location));
+				dispatch(submitTravelArrivalLocation(placeDetails));
 			}
 		} catch (error) {
 			console.log(error);
@@ -162,10 +159,15 @@ export default function TripLocationSearch(props: Props) {
 			includeInputInList
 			filterSelectedOptions
 			value={value}
-			onChange={(event: any, newValue: PlaceType | null) => {
+			onChange={async (event: any, newValue: any | null) => {
 				setOptions(newValue ? [newValue, ...options] : options);
 				setValue(newValue);
-				if (newValue) handleLocationChange(newValue.description);
+				if (newValue) {
+					const details = await getDetails({
+						placeId: newValue.place_id.toString(),
+					});
+					handleLocationChange(details);
+				}
 			}}
 			onInputChange={(event, newInputValue) => {
 				setInputValue(newInputValue);

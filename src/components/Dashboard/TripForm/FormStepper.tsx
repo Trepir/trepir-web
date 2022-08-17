@@ -9,6 +9,7 @@ import {
 	Divider,
 } from '@mui/material';
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../../app/hooks';
 import {
@@ -22,6 +23,7 @@ import { selectAccommodationList } from '../../../features/createAccommodation/a
 import { selectTravelList } from '../../../features/createTravel/travelListSlice';
 import TravelEventList from './TravelEventList';
 import createTrip from '../../../features/createTrip/createTripService';
+import { addTrip } from '../../../features/createTrip/tripListSlice';
 
 // import {
 // 	submitNewTrip,
@@ -35,6 +37,7 @@ function FormStepper() {
 	const steps = ['Travel Details', 'Add Activities'];
 	const newTrip = useAppSelector(selectNewTrip);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [validated, setValidated] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
@@ -44,7 +47,7 @@ function FormStepper() {
 
 	const isStepSkipped = (step: number) => skipped.has(step);
 
-	const handleNext = () => {
+	const handleNext = async () => {
 		let newSkipped = skipped;
 		if (isStepSkipped(activeStep)) {
 			newSkipped = new Set(newSkipped.values());
@@ -57,9 +60,11 @@ function FormStepper() {
 			setValidated(false);
 			alertRef.current = false;
 			if (activeStep === steps.length - 1) {
-				console.log(newTrip);
+				const createdTrip = await createTrip(newTrip);
+				dispatch(addTrip(createdTrip));
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
-				createTrip(newTrip);
+				// Pending call to backend and use trip id for params
+				navigate('/trip', { replace: true });
 			}
 		}
 	};
