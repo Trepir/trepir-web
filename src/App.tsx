@@ -5,13 +5,14 @@ import './App.css';
 import { ThemeProvider } from '@emotion/react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { createTheme } from '@mui/material';
-import LandingPage from './pages/LandingPage';
+import TopNavigation from './pages/TopNavigation';
 import PrivateRoutes from './utils/PrivateRoutes';
 import ReduxSample from './ReduxSample';
 import Private from './pages/Private';
 import Login from './pages/Login';
 import TripForm from './pages/Dashboard/TripForm';
 import Discover from './pages/Discover/Discover';
+import LeftDrawer from './pages/LeftDrawer';
 
 const primaryColor = '#1CB985';
 
@@ -30,8 +31,10 @@ function App() {
 			<LocalizationProvider dateAdapter={AdapterLuxon}>
 				<ThemeProvider theme={appTheme}>
 					<Router>
+						<TopNavigation />
+						<LeftDrawer />
 						<Routes>
-							<Route path="/" element={<LandingPage />} />
+							<Route path="/" element={<Login />} />
 							<Route path="/login" element={<Login />} />
 							<Route path="/discover/*" element={<Discover />} />
 							<Route path="/redux" element={<ReduxSample />} />
