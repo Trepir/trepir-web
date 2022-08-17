@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-import { getGeocode, getLatLng } from 'use-places-autocomplete';
+import { getDetails, getGeocode, getLatLng } from 'use-places-autocomplete';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
 import { setMapPan } from '../../app/reducers/mapSlice';
@@ -141,10 +141,20 @@ export default function PanSearchGooglePlaces() {
 			includeInputInList
 			filterSelectedOptions
 			value={value}
-			onChange={(event: any, newValue: PlaceType | null) => {
+			onChange={async (event: any, newValue: any | null) => {
 				setOptions(newValue ? [newValue, ...options] : options);
 				setValue(newValue);
-				if (newValue) setMapPanCoordinates(newValue.description);
+				if (newValue) {
+					//	//////////////ADDED DETAILS LOGIC HERE //////////////////////////////
+
+					const details = await getDetails({
+						placeId: newValue.place_id.toString(),
+					});
+					console.log(details);
+					//	////////////// ///////////////////////////////////////////////////////
+
+					setMapPanCoordinates(newValue.description);
+				}
 			}}
 			onInputChange={(event, newInputValue) => {
 				setInputValue(newInputValue);
