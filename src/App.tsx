@@ -12,7 +12,6 @@ import Private from './pages/Private';
 import Login from './pages/Login';
 import TripForm from './pages/Dashboard/TripForm';
 import Discover from './pages/Discover/Discover';
-import LeftDrawer from './pages/LeftDrawer';
 
 const primaryColor = '#1CB985';
 
@@ -21,6 +20,16 @@ const appTheme = createTheme({
 		primary: {
 			main: primaryColor,
 			contrastText: '#fff',
+		},
+	},
+	components: {
+		MuiAppBar: {
+			styleOverrides: {
+				colorPrimary: {
+					backgroundColor: 'white',
+					color: primaryColor,
+				},
+			},
 		},
 	},
 });
@@ -32,7 +41,6 @@ function App() {
 				<ThemeProvider theme={appTheme}>
 					<Router>
 						<TopNavigation />
-						<LeftDrawer />
 						<Routes>
 							<Route path="/" element={<Login />} />
 							<Route path="/login" element={<Login />} />

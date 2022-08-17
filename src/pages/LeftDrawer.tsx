@@ -10,10 +10,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import MenuIcon from '@mui/icons-material/Menu';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-export default function LeftDrawer() {
+export default function SwipeableTemporaryDrawer() {
 	const [state, setState] = React.useState({
 		top: false,
 		left: false,
@@ -73,9 +74,11 @@ export default function LeftDrawer() {
 
 	return (
 		<div>
-			{(['left', 'right', 'top', 'bottom'] as const).map((anchor) => (
+			{(['left'] as const).map((anchor) => (
 				<React.Fragment key={anchor}>
-					<Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+					<Button onClick={toggleDrawer(anchor, true)}>
+						<MenuIcon />
+					</Button>
 					<SwipeableDrawer
 						anchor={anchor}
 						open={state[anchor]}

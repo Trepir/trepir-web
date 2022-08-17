@@ -13,6 +13,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { AppBar, Box } from '@mui/material';
+import LeftDrawer from './LeftDrawer';
 
 const pages = [
 	<Link to="/login">Login</Link>,
@@ -50,6 +51,7 @@ function TopNavigation() {
 		<AppBar position="static">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
+					<LeftDrawer />
 					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 					<Typography
 						variant="h6"
@@ -62,7 +64,7 @@ function TopNavigation() {
 							fontFamily: 'monospace',
 							fontWeight: 700,
 							letterSpacing: '.3rem',
-							color: 'inherit',
+							color: 'primary',
 							textDecoration: 'none',
 						}}
 					>
