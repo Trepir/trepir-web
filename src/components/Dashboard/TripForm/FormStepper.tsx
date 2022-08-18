@@ -61,10 +61,11 @@ function FormStepper() {
 			alertRef.current = false;
 			if (activeStep === steps.length - 1) {
 				const createdTrip = await createTrip(newTrip);
+				console.log(createdTrip);
 				dispatch(addTrip(createdTrip));
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				// Pending call to backend and use trip id for params
-				navigate('/trip', { replace: true });
+				navigate(`/trip/${createdTrip.id}`, { replace: true });
 			}
 		}
 	};
