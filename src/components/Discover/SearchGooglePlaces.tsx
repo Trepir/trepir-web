@@ -154,6 +154,7 @@ export default function SearchGooglePlaces() {
 				if (newValue) {
 					const details = await getDetails({
 						placeId: newValue.place_id.toString(),
+						fields: ['name', 'formatted_address', 'photos', 'geometry'],
 					});
 					console.log(details);
 					//	////////////// ///////////////////////////////////////////////////////
