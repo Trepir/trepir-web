@@ -7,13 +7,12 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import { useDispatch, useSelector } from 'react-redux';
 import ListItemText from '@mui/material/ListItemText';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectTripList } from '../features/createTrip/tripListSlice';
 import { setSelectedTripId } from '../features/createTrip/selectedTripSlice';
-import { useDispatch } from 'react-redux';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
