@@ -19,6 +19,7 @@ const pages = [
 	<Link to="/redux">Redux</Link>,
 	<Link to="/discover">Discover</Link>,
 	<Link to="/dashboard">Dashboard</Link>,
+
 	<Link to="/private">Private</Link>,
 ];
 const settings = ['Profile', 'Account', 'Logout'];
