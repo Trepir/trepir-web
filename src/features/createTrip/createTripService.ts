@@ -1,6 +1,6 @@
 import { getLatLng } from 'use-places-autocomplete';
 
-const BASE_URL = 'https://trepir.herokuapp.com/';
+export const BASE_URL = 'https://trepir.herokuapp.com/';
 
 const createTrip = async (tripInput: any) => {
 	// console.log('pre-fetch', tripInput);
