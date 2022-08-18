@@ -26,6 +26,8 @@ console.log('trip days:', tripDays);
 function EditTripPage() {
 	//  eslint-disable-next-line
 	const [savedActivities, setSavedActivities] = useState(favoritedActivities);
+	//  eslint-disable-next-line
+	const [days, setDays] = useState(tripDays);
 
 	return (
 		<DragDropContext
@@ -40,7 +42,7 @@ function EditTripPage() {
 					width: '100vw',
 				}}
 			>
-				<SelectedTrip />
+				<SelectedTrip days={days} />
 				<EditTripActivitiesContainer savedActivities={savedActivities} />
 			</Box>
 		</DragDropContext>
