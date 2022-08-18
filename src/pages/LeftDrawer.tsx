@@ -9,14 +9,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectTripList } from '../features/createTrip/tripListSlice';
+import { setSelectedTripId } from '../features/createTrip/selectedTripSlice';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function SwipeableTemporaryDrawer() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { userTrips } = useSelector(selectTripList);
 	const [state, setState] = React.useState({
 		top: false,
@@ -55,9 +57,10 @@ export default function SwipeableTemporaryDrawer() {
 							<ListItem key={trip.startDate} disablePadding>
 								<ListItemButton>
 									<ListItemText
-										onClick={() =>
-											navigate(`/trip/${trip.id}`, { replace: true })
-										}
+										onClick={() => {
+											dispatch(setSelectedTripId(trip.id));
+											navigate(`/trip/${trip.id}`, { replace: true });
+										}}
 										primary={trip.name}
 									/>
 								</ListItemButton>

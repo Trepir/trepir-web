@@ -1,6 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
+export interface selectedTripState {
+	name: string;
+	placeDetails: any;
+	startDate: string;
+	endDate: string;
+}
+
 const initialState: any = { userTrips: [] };
 
 export const tripListSlice = createSlice({
@@ -13,7 +20,6 @@ export const tripListSlice = createSlice({
 		addAllTrips: (state, action: PayloadAction<any>) => {
 			console.log('reducer', [...action.payload]);
 			state.userTrips = action.payload;
-			console.log('state', state);
 		},
 	},
 });
