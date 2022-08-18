@@ -55,9 +55,7 @@ export default function SwipeableTemporaryDrawer() {
 							<ListItem key={trip.startDate} disablePadding>
 								<ListItemButton>
 									<ListItemText
-										onClick={() =>
-											navigate(`/trip/${trip.id}`, { replace: true })
-										}
+										onClick={() => navigate('trip')}
 										primary={trip.name}
 									/>
 								</ListItemButton>

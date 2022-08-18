@@ -11,6 +11,7 @@ import {
 } from '../../features/createTrip/tripListSlice';
 import TripForm from './TripForm';
 import DashboardHome from '../../components/Dashboard/DashboardHome/DashboardHome';
+import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
 
 function Dashboard() {
 	const dispatch = useDispatch();
@@ -47,7 +48,7 @@ function Dashboard() {
 			<Routes>
 				<Route path="/" element={<DashboardHome />} />
 				<Route path="/createtrip" element={<TripForm />} />
-				<Route path="/edittrip/*" element={<TripForm />} />
+				<Route path="/trip" element={<EditTripPage />} />
 			</Routes>
 		</>
 	);
