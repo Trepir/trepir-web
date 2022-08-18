@@ -5,27 +5,70 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 } from 'firebase/auth';
-// import { User } from '../../types/UserTypes';
 import auth from './firebaseConfig';
 
-export const createEmailUser = async (email: string, password: string) => {
+const baseURL = 'https://trepir.herokuapp.com';
+
+export const createEmailUser = async (
+	email: string,
+	password: string,
+	displayName: string
+) => {
 	try {
-		const user = await createUserWithEmailAndPassword(auth, email, password);
+		//	firebase create user
+		const { user } = await createUserWithEmailAndPassword(
+			auth,
+			email,
+			password
+		);
 		console.log(user);
-		return user;
+
+		//	send formatted user to backend
+		const result = await fetch(`${baseURL}/user/signup`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				firstName: displayName,
+				lastName: displayName,
+				displayName,
+				email: user.email,
+				uid: user.uid,
+				photoUrl: 'no pic',
+				emailVerified: user.emailVerified,
+			}),
+		});
+		const jsonResult = await result.json();
+		console.log(jsonResult);
+		return jsonResult;
 	} catch (error) {
 		console.log(error);
 		return error;
 	}
 };
+
 export const loginEmailAndPassword = async (
 	email: string,
 	password: string
 ) => {
 	try {
-		const user = await signInWithEmailAndPassword(auth, email, password);
+		//	authenitcate user from firebase
+		const { user } = await signInWithEmailAndPassword(auth, email, password);
 		console.log(user);
-		return user;
+		//	send uid to backend
+		const result = await fetch(`${baseURL}/user/signin`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				uid: user.uid,
+			}),
+		});
+		const jsonResult = await result.json();
+		console.log(jsonResult);
+		return jsonResult;
 	} catch (error) {
 		console.log(error);
 		return error;
@@ -39,8 +82,8 @@ export const loginGoogle = async () => {
 		console.log('googleuser:', googleUser);
 		//	google does not split the first and last name for us
 		const user: any = {
-			firstName: googleUser.user.displayName,
-			lastName: googleUser.user.displayName,
+			firstName: '',
+			lastName: '',
 			displayName: googleUser.user.displayName,
 			email: googleUser.user.email,
 			uid: googleUser.user.uid,

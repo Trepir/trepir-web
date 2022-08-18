@@ -20,7 +20,8 @@ function Login() {
 		e.preventDefault();
 		createEmailUser(
 			e.target.registerEmail.value,
-			e.target.registerPassword.value
+			e.target.registerPassword.value,
+			e.target.registerUserName.value
 		);
 	};
 	return (
@@ -45,8 +46,13 @@ function Login() {
 						alignItems: 'center',
 					}}
 				>
-					<TextField label="Email" name="loginEmail" />
-					<TextField label="Password" name="loginPassword" type="password" />
+					<TextField label="Email" name="loginEmail" required />
+					<TextField
+						label="Password"
+						name="loginPassword"
+						type="password"
+						required
+					/>
 
 					<Button type="submit" variant="contained" color="secondary">
 						Login
@@ -61,14 +67,20 @@ function Login() {
 						alignItems: 'center',
 					}}
 				>
-					<TextField label="Email" name="registerEmail" />
-					<TextField label="Password" name="registerPassword" type="password" />
+					<TextField label="user name" name="registerUserName" required />
+					<TextField label="Email" name="registerEmail" required />
+					<TextField
+						label="Password"
+						name="registerPassword"
+						type="password"
+						required
+					/>
 
 					<Button type="submit" variant="contained" color="secondary">
 						Register
 					</Button>
 				</form>
-				<Fab variant="extended" onClick={loginGoogle}>
+				<Fab variant="extended" onClick={loginGoogle} disabled>
 					Login With Google
 				</Fab>
 			</Box>
