@@ -48,7 +48,7 @@ function App() {
 							<Route path="/discover/*" element={<Discover />} />
 							<Route path="/redux" element={<ReduxSample />} />
 							<Route path="/newtrip" element={<TripForm />} />
-							<Route path="/trip" element={<TripPlanner />} />
+							<Route path="/trip/:id" element={<TripPlanner />} />
 							<Route element={<PrivateRoutes />}>
 								<Route path="/private" element={<Private />} />
 							</Route>
