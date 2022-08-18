@@ -10,11 +10,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { selectTripList } from '../features/createTrip/tripListSlice';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function SwipeableTemporaryDrawer() {
+	const navigate = useNavigate();
 	const { userTrips } = useSelector(selectTripList);
 	const [state, setState] = React.useState({
 		top: false,
@@ -52,7 +54,12 @@ export default function SwipeableTemporaryDrawer() {
 					? userTrips.map((trip: any) => (
 							<ListItem key={trip.startDate} disablePadding>
 								<ListItemButton>
-									<ListItemText primary={trip.name} />
+									<ListItemText
+										onClick={() =>
+											navigate(`/trip/${trip.id}`, { replace: true })
+										}
+										primary={trip.name}
+									/>
 								</ListItemButton>
 							</ListItem>
 					  ))
