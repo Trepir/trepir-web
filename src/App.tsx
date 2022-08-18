@@ -20,7 +20,6 @@ import { setUid } from './app/reducers/authSlice';
 
 import Dashboard from './pages/Dashboard/Dashboard';
 
-
 const primaryColor = '#1CB985';
 
 const appTheme = createTheme({
@@ -63,7 +62,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Login />} />
 							<Route path="/login" element={<Login />} />
-							<Route path="/dashboard" element={<Dashboard />} />
+							<Route path="/dashboard/*" element={<Dashboard />} />
 							<Route path="/discover/*" element={<Discover />} />
 							<Route path="/redux" element={<ReduxSample />} />
 							<Route path="/newtrip" element={<TripForm />} />

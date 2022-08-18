@@ -1,4 +1,5 @@
 type Activity = {
+	id: string;
 	name: string;
 	duration?: number;
 	description: string;
@@ -10,6 +11,7 @@ type Activity = {
 
 const mock: Activity[] = [
 	{
+		id: '342664361',
 		name: 'Sagrada Familia',
 		duration: 10,
 		description: 'go see the cool church',
@@ -22,6 +24,7 @@ const mock: Activity[] = [
 		},
 	},
 	{
+		id: '786537542',
 		name: 'Park Guell',
 		duration: 40,
 		description: 'go see the cool park',
@@ -34,6 +37,7 @@ const mock: Activity[] = [
 		},
 	},
 	{
+		id: '6453765473',
 		name: 'Playa de Bogatel',
 		duration: 22,
 		description: 'go see the cool beach',
@@ -46,6 +50,7 @@ const mock: Activity[] = [
 		},
 	},
 	{
+		id: '3245674',
 		name: 'Club Mojito',
 		duration: 30,
 		description: 'go salsa dance',
@@ -58,6 +63,7 @@ const mock: Activity[] = [
 		},
 	},
 	{
+		id: '9876585',
 		name: 'Salsa Dance',
 		duration: 30,
 		description: 'go salsa dance',
@@ -70,6 +76,7 @@ const mock: Activity[] = [
 		},
 	},
 	{
+		id: '6654785',
 		name: 'Shots and Dance!',
 		duration: 30,
 		description: 'go salsa dance',
@@ -82,6 +89,7 @@ const mock: Activity[] = [
 		},
 	},
 	{
+		id: '76383467',
 		name: 'Salsa Lesson',
 		duration: 30,
 		description: 'go salsa dance',
@@ -94,6 +102,7 @@ const mock: Activity[] = [
 		},
 	},
 	{
+		id: '824567856',
 		name: 'Club Mojito',
 		duration: 30,
 		description: 'go salsa dance',
