@@ -63,7 +63,6 @@ function FormStepper() {
 			setValidated(false);
 			alertRef.current = false;
 			if (activeStep === steps.length - 1) {
-
 				//	UID FAIL CHECK
 				if (!uid) {
 					alert('not logged in');
