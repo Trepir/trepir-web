@@ -13,14 +13,12 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { AppBar, Box } from '@mui/material';
-import LeftDrawer from './LeftDrawer';
 
 const pages = [
 	<Link to="/login">Login</Link>,
 	<Link to="/redux">Redux</Link>,
 	<Link to="/discover">Discover</Link>,
 	<Link to="/dashboard">Dashboard</Link>,
-	<Link to="/newtrip">New Trip</Link>,
 	<Link to="/private">Private</Link>,
 ];
 const settings = ['Profile', 'Account', 'Logout'];
@@ -52,7 +50,6 @@ function TopNavigation() {
 		<AppBar position="static">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<LeftDrawer />
 					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 					<Typography
 						variant="h6"

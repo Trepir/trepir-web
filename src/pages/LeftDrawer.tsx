@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectTripList } from '../features/createTrip/tripListSlice';
@@ -69,11 +69,11 @@ export default function SwipeableTemporaryDrawer() {
 	);
 
 	return (
-		<div>
+		<div style={{ position: 'absolute', top: '45vh', left: 0 }}>
 			{(['left'] as const).map((anchor) => (
 				<React.Fragment key={anchor}>
 					<Button onClick={toggleDrawer(anchor, true)}>
-						<MenuIcon />
+						<ArrowForwardIosIcon />
 					</Button>
 					<SwipeableDrawer
 						anchor={anchor}
