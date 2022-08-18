@@ -6,6 +6,7 @@ import accommodationListReducer from '../features/createAccommodation/accommodat
 import createTravelReducer from '../features/createTravel/createTravelSlice';
 import travelListReducer from '../features/createTravel/travelListSlice';
 import tripListReducer from '../features/createTrip/tripListSlice';
+import selectedTripReducer from '../features/createTrip/selectedTripSlice';
 import mapReducer from './reducers/mapSlice';
 import authReducer from './reducers/authSlice';
 
@@ -18,6 +19,7 @@ export const store = configureStore({
 		newTravel: createTravelReducer,
 		travelList: travelListReducer,
 		tripList: tripListReducer,
+		selectedTrip: selectedTripReducer,
 		map: mapReducer,
 		auth: authReducer,
 	},
