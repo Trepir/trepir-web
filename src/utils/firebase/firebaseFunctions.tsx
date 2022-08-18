@@ -55,7 +55,6 @@ export const loginEmailAndPassword = async (
 	try {
 		//	authenitcate user from firebase
 		const { user } = await signInWithEmailAndPassword(auth, email, password);
-		console.log(user);
 		//	send uid to backend
 		const result = await fetch(`${baseURL}/user/signin`, {
 			method: 'POST',
@@ -66,7 +65,9 @@ export const loginEmailAndPassword = async (
 				uid: user.uid,
 			}),
 		});
+
 		const jsonResult = await result.json();
+
 		console.log(jsonResult);
 		return jsonResult;
 	} catch (error) {

@@ -5,6 +5,8 @@ import './App.css';
 import { ThemeProvider } from '@emotion/react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { createTheme } from '@mui/material';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
 import TopNavigation from './pages/TopNavigation';
 import PrivateRoutes from './utils/PrivateRoutes';
 import ReduxSample from './ReduxSample';
@@ -13,7 +15,11 @@ import Login from './pages/Login';
 import TripForm from './pages/Dashboard/TripForm';
 import Discover from './pages/Discover/Discover';
 import TripPlanner from './pages/Dashboard/TripPlanner';
+
+import { setUid } from './app/reducers/authSlice';
+
 import Dashboard from './pages/Dashboard/Dashboard';
+
 
 const primaryColor = '#1CB985';
 
@@ -37,6 +43,17 @@ const appTheme = createTheme({
 });
 
 function App() {
+	const dispatch = useDispatch();
+	const auth = getAuth();
+	onAuthStateChanged(auth, (user) => {
+		if (user) {
+			console.log(user);
+			dispatch(setUid(user.uid));
+		} else {
+			console.log('not logged in');
+		}
+	});
+
 	return (
 		<div className="App">
 			<LocalizationProvider dateAdapter={AdapterLuxon}>

@@ -2,7 +2,7 @@ import { getLatLng } from 'use-places-autocomplete';
 
 export const BASE_URL = 'https://trepir.herokuapp.com/';
 
-const createTrip = async (tripInput: any) => {
+const createTrip = async (tripInput: any, uid: string) => {
 	// console.log('pre-fetch', tripInput);
 	// const formattedLocation = await parseLocationDetails(tripInput.location[0]);
 	// console.log(tripInput);
@@ -14,6 +14,9 @@ const createTrip = async (tripInput: any) => {
 	const formattedTrip = {
 		startDate: tripInput.startDate,
 		endDate: tripInput.endDate,
+
+		uid,
+
 		name: tripInput.name,
 		uid: '123456789',
 		/* eslint-disable-next-line */
@@ -26,6 +29,10 @@ const createTrip = async (tripInput: any) => {
 		googleLocationName: name,
 		accommodation: [],
 	};
+
+	/* eslint-disable-next-line */
+	return formattedTrip;
+
 
 	const createdTrip = await fetch(`${BASE_URL}trip/create`, {
 		method: 'POST',
