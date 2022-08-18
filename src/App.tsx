@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import TripForm from './pages/Dashboard/TripForm';
 import Discover from './pages/Discover/Discover';
 import TripPlanner from './pages/Dashboard/TripPlanner';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 const primaryColor = '#1CB985';
 
@@ -45,6 +46,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Login />} />
 							<Route path="/login" element={<Login />} />
+							<Route path="/dashboard" element={<Dashboard />} />
 							<Route path="/discover/*" element={<Discover />} />
 							<Route path="/redux" element={<ReduxSample />} />
 							<Route path="/newtrip" element={<TripForm />} />

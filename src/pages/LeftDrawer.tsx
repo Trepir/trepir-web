@@ -15,7 +15,7 @@ import { selectTripList } from '../features/createTrip/tripListSlice';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function SwipeableTemporaryDrawer() {
-	const tripList = useSelector(selectTripList);
+	const { userTrips } = useSelector(selectTripList);
 	const [state, setState] = React.useState({
 		top: false,
 		left: false,
@@ -48,13 +48,15 @@ export default function SwipeableTemporaryDrawer() {
 			<Typography>Your trips</Typography>
 			<Divider />
 			<List>
-				{tripList.map((trip: any) => (
-					<ListItem key={trip.startDate} disablePadding>
-						<ListItemButton>
-							<ListItemText primary={trip.name} />
-						</ListItemButton>
-					</ListItem>
-				))}
+				{userTrips.length
+					? userTrips.map((trip: any) => (
+							<ListItem key={trip.startDate} disablePadding>
+								<ListItemButton>
+									<ListItemText primary={trip.name} />
+								</ListItemButton>
+							</ListItem>
+					  ))
+					: null}
 			</List>
 		</Box>
 	);
