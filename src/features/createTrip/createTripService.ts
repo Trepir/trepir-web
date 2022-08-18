@@ -18,7 +18,6 @@ const createTrip = async (tripInput: any, uid: string) => {
 		uid,
 
 		name: tripInput.name,
-		uid: '123456789',
 		/* eslint-disable-next-line */
 		googlePlaceId: place_id,
 		latitude: lat,
@@ -31,8 +30,7 @@ const createTrip = async (tripInput: any, uid: string) => {
 	};
 
 	/* eslint-disable-next-line */
-	return formattedTrip;
-
+	// return formattedTrip;
 
 	const createdTrip = await fetch(`${BASE_URL}trip/create`, {
 		method: 'POST',
