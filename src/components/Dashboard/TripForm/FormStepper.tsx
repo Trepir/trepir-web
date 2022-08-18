@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAppSelector } from '../../../app/hooks';
 import {
 	selectNewTrip,
@@ -24,6 +24,7 @@ import { selectTravelList } from '../../../features/createTravel/travelListSlice
 import TravelEventList from './TravelEventList';
 import createTrip from '../../../features/createTrip/createTripService';
 import { addTrip } from '../../../features/createTrip/tripListSlice';
+import { selectUid } from '../../../app/reducers/authSlice';
 
 // import {
 // 	submitNewTrip,
@@ -38,6 +39,8 @@ function FormStepper() {
 	const newTrip = useAppSelector(selectNewTrip);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	///	ADDING UID LOGIC AND FAIL CHECK
+	const uid = useSelector(selectUid);
 
 	const [validated, setValidated] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
@@ -60,7 +63,12 @@ function FormStepper() {
 			setValidated(false);
 			alertRef.current = false;
 			if (activeStep === steps.length - 1) {
-				const createdTrip = await createTrip(newTrip);
+				//	UID FAIL CHECK
+				if (!uid) {
+					alert('not logged in');
+					return;
+				}
+				const createdTrip = await createTrip(newTrip, uid);
 				dispatch(addTrip(createdTrip));
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				// Pending call to backend and use trip id for params

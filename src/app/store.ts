@@ -7,6 +7,7 @@ import createTravelReducer from '../features/createTravel/createTravelSlice';
 import travelListReducer from '../features/createTravel/travelListSlice';
 import tripListReducer from '../features/createTrip/tripListSlice';
 import mapReducer from './reducers/mapSlice';
+import authReducer from './reducers/authSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
 		travelList: travelListReducer,
 		tripList: tripListReducer,
 		map: mapReducer,
+		auth: authReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
