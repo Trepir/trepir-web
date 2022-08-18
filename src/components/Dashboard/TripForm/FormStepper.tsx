@@ -63,16 +63,18 @@ function FormStepper() {
 			setValidated(false);
 			alertRef.current = false;
 			if (activeStep === steps.length - 1) {
+
 				//	UID FAIL CHECK
 				if (!uid) {
 					alert('not logged in');
 					return;
 				}
 				const createdTrip = await createTrip(newTrip, uid);
+
 				dispatch(addTrip(createdTrip));
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				// Pending call to backend and use trip id for params
-				navigate('/trip', { replace: true });
+				navigate(`/trip/${createdTrip.id}`, { replace: true });
 			}
 		}
 	};

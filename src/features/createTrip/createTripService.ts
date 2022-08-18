@@ -1,6 +1,6 @@
 import { getLatLng } from 'use-places-autocomplete';
 
-// const BASE_URL = 'http://localhost:3333/';
+export const BASE_URL = 'https://trepir.herokuapp.com/';
 
 const createTrip = async (tripInput: any, uid: string) => {
 	// console.log('pre-fetch', tripInput);
@@ -14,29 +14,35 @@ const createTrip = async (tripInput: any, uid: string) => {
 	const formattedTrip = {
 		startDate: tripInput.startDate,
 		endDate: tripInput.endDate,
+
 		uid,
+
 		name: tripInput.name,
+		uid: '123456789',
 		/* eslint-disable-next-line */
-		googleId: place_id,
+		googlePlaceId: place_id,
 		latitude: lat,
 		longitude: lng,
 		photoUrl,
 		/* eslint-disable-next-line */
 		formattedAddress: formatted_address,
-		locationName: name,
+		googleLocationName: name,
 		accommodation: [],
 	};
+
 	/* eslint-disable-next-line */
 	return formattedTrip;
 
-	// const createdTrip = await fetch('http://localhost:3333/trip/create', {
-	// 	mode: 'no-cors',
-	// 	method: 'POST',
-	// 	headers: { 'Content-Type': 'application/json' },
-	// 	body: JSON.stringify(formattedTrip),
-	// });
-	// const jsonCreatedTrip = await createdTrip.json();
-	// console.log('hello', jsonCreatedTrip);
+
+	const createdTrip = await fetch(`${BASE_URL}trip/create`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(formattedTrip),
+	});
+	const jsonCreatedTrip = await createdTrip.json();
+	console.log('hello', jsonCreatedTrip);
+
+	return jsonCreatedTrip;
 };
 
 export default createTrip;

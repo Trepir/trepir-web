@@ -19,6 +19,7 @@ const pages = [
 	<Link to="/login">Login</Link>,
 	<Link to="/redux">Redux</Link>,
 	<Link to="/discover">Discover</Link>,
+	<Link to="/dashboard">Dashboard</Link>,
 	<Link to="/newtrip">New Trip</Link>,
 	<Link to="/private">Private</Link>,
 ];
