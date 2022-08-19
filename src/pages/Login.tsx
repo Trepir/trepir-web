@@ -1,5 +1,8 @@
 import { Box } from '@mui/material';
 import Fab from '@mui/material/Fab';
+// import { useDispatch } from 'react-redux';
+// import { getAuth } from 'firebase/auth';
+
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {
@@ -9,12 +12,19 @@ import {
 } from '../utils/firebase/firebaseFunctions';
 
 function Login() {
+	// const dispatch = useDispatch();
+
 	const handleSubmitLogin = async (e: any) => {
 		e.preventDefault();
-		loginEmailAndPassword(
-			e.target.loginEmail.value,
-			e.target.loginPassword.value
-		);
+		try {
+			loginEmailAndPassword(
+				e.target.loginEmail.value,
+				e.target.loginPassword.value
+			);
+			// dispatch(setUid(user.uid));
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	const handleSubmitRegister = async (e: any) => {
 		e.preventDefault();
