@@ -14,6 +14,7 @@ import {
 	MenuItem,
 } from '@mui/material';
 
+import { useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 import TripLocationSearch from './TripLocationSearch';
@@ -21,15 +22,14 @@ import {
 	changeTravelType,
 	changeTravelDepartureDate,
 	selectNewTravel,
-	submitTravelDepartureLocation,
-	submitTravelArrivalLocation,
+	// submitTravelDepartureLocation,
+	// submitTravelArrivalLocation,
 	submitFlightNumber,
 } from '../../../features/createTravel/createTravelSlice';
 import { addTravel } from '../../../features/createTravel/travelListSlice';
-
-type Props = {
-	setShowTravel: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import { selectTripId } from '../../../features/createTrip/selectedTripSlice';
+import createTravel from '../../../features/createTravel/createTravelService';
+import { selectUid } from '../../../app/reducers/authSlice';
 
 const AddTravelSchema = yup.object().shape({
 	travelType: yup.string().required('Please select a travel type'),
@@ -39,11 +39,12 @@ const AddTravelSchema = yup.object().shape({
 	flightNumber: yup.string(),
 });
 
-function AddTravelForm(props: Props) {
+function AddTravelForm() {
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
-	const { setShowTravel } = props;
 	const dispatch = useAppDispatch();
-	const newTravel = useAppSelector(selectNewTravel);
+	const newTravel: any = useAppSelector(selectNewTravel);
+	const uid: string | null = useSelector(selectUid);
+	const tripId = useSelector(selectTripId);
 
 	const {
 		register,
@@ -78,13 +79,15 @@ function AddTravelForm(props: Props) {
 		if (isValid && newTravel.departureLocation && newTravel.arrivalLocation) {
 			dispatch(submitFlightNumber(data.flightNumber));
 			dispatch(addTravel(newTravel));
-			setShowTravel(false);
-			dispatch(submitTravelDepartureLocation(null));
-			dispatch(submitTravelArrivalLocation(null));
-			dispatch(changeTravelType(null));
-			dispatch(submitFlightNumber(null));
-			dispatch(changeTravelDepartureDate(null));
-			setValue('departureDate', undefined);
+			if (tripId && uid) {
+				await createTravel(data, newTravel, uid, tripId);
+			}
+			// dispatch(submitTravelDepartureLocation(null));
+			// dispatch(submitTravelArrivalLocation(null));
+			// dispatch(changeTravelType(null));
+			// dispatch(submitFlightNumber(null));
+			// dispatch(changeTravelDepartureDate(null));
+			// setValue('departureDate', undefined);
 		}
 	};
 

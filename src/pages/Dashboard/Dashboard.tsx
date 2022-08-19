@@ -13,8 +13,9 @@ import {
 import TripForm from './TripForm';
 import DashboardHome from '../../components/Dashboard/DashboardHome/DashboardHome';
 import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
-import CreateActivityForm from '../../components/Dashboard/EditTripPage/CreateActivity';
+// import CreateActivityForm from '../../components/Dashboard/EditTripPage/CreateActivity';
 import CalendarView from './CalendarView';
+import AddTravelForm from '../../components/Dashboard/TripForm/AddTravelForm';
 
 function Dashboard() {
 	// ACTIVITY FORM MODAL LOGIC TO BE REUSED ANYWHERE
@@ -71,7 +72,7 @@ function Dashboard() {
 				<Route path="/tripplan" element={<CalendarView />} />
 			</Routes>
 			{/* Create Activity Modal render */}
-			<Button onClick={handleOpen}>Create Activity</Button>
+			{/* <Button onClick={handleOpen}>Create Activity</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -80,6 +81,17 @@ function Dashboard() {
 			>
 				<Box sx={style}>
 					<CreateActivityForm />
+				</Box>
+			</Modal> */}
+			<Button onClick={handleOpen}>Create Travel Event</Button>
+			<Modal
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="create-activity-modal"
+				aria-describedby="create-activity-modal"
+			>
+				<Box sx={style}>
+					<AddTravelForm />
 				</Box>
 			</Modal>
 		</>

@@ -8,7 +8,7 @@ import {
 	Typography,
 	Divider,
 } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppSelector } from '../../../app/hooks';
@@ -25,6 +25,10 @@ import TravelEventList from './TravelEventList';
 import createTrip from '../../../features/createTrip/createTripService';
 import { addTrip } from '../../../features/createTrip/tripListSlice';
 import { selectUid } from '../../../app/reducers/authSlice';
+import {
+	setSelectedTrip,
+	setSelectedTripId,
+} from '../../../features/createTrip/selectedTripSlice';
 
 // import {
 // 	submitNewTrip,
@@ -49,6 +53,12 @@ function FormStepper() {
 	const isStepOptional = (step: number) => step === 0;
 
 	const isStepSkipped = (step: number) => skipped.has(step);
+
+	// DO NOT REMOVE! THIS DETERMINES WHETHER THE TRAVEL/ACCOMMODATION SHOULD BE SENT TO BACK END
+	useEffect(() => {
+		dispatch(setSelectedTripId(null));
+		dispatch(setSelectedTrip(null));
+	}, []);
 
 	const handleNext = async () => {
 		let newSkipped = skipped;

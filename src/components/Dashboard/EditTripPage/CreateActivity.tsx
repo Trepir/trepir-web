@@ -81,8 +81,8 @@ const AddActivitySchema = yup.object().shape({
 });
 
 function CreateActivityForm() {
-	const uid = useSelector(selectUid);
-	const newActivity = useAppSelector(selectNewActivity);
+	const uid: string | null = useSelector(selectUid);
+	const newActivity: any = useAppSelector(selectNewActivity);
 	const theme = useTheme();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
@@ -134,7 +134,7 @@ function CreateActivityForm() {
 	return (
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Box mb={2} className="activity-form-container">
+				<Box mb={2} className="modal-form-container">
 					<h2>Create an activity</h2>
 					<TextField
 						id="activityName"

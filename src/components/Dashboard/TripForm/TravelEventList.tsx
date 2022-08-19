@@ -19,8 +19,8 @@ function TravelEventList(props: Props) {
 				elevation={10}
 				key={
 					event.location
-						? event.location[0].place_id
-						: event.departureLocation[0].place_id
+						? event.location.place_id
+						: event.departureLocation.place_id
 				}
 			>
 				<AccountBalanceIcon style={{ fontSize: '110px', color: 'grey' }} />
@@ -34,8 +34,8 @@ function TravelEventList(props: Props) {
 				>
 					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
 						{event.location
-							? event.location[0].formatted_address
-							: event.departureLocation[0].formatted_address}
+							? event.location.formatted_address
+							: event.departureLocation.formatted_address}
 					</Typography>
 					<Typography variant="subtitle1">
 						{event.startDate ? event.startDate : event.departureDate} -
