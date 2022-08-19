@@ -1,9 +1,10 @@
 // import { Card, Typography } from '@mui/material';
 // import Box from '@mui/material/Box';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+// import Activity from '../../Discover/Activity';
 // import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
-// import Activity from '../../Discover/Activity';
+import Activity from '../../Discover/Activity';
 
 function EditTripActivitiesContainer({ savedActivities }: any) {
 	return (
@@ -15,6 +16,7 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 			{/* eslint-disable-next-line */}
 			{(provided) => {
 				return (
+					// THIS DIV IS THE CONTAINER
 					<div
 						{...provided.droppableProps}
 						ref={provided.innerRef}
@@ -23,6 +25,7 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 							width: '50vw',
 							display: 'flex',
 							flexWrap: 'wrap',
+							height: 0,
 							gap: 10,
 						}}
 					>
@@ -42,19 +45,23 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
 												style={{
-													userSelect: 'none',
-													padding: 4,
-													height: '6rem',
-													minHeight: '6rem',
-													width: '4rem',
-													minWidth: '4rem',
-													backgroundColor: '#456C86',
-													color: 'white',
-													border: '1px solid black',
+													// userSelect: 'none',
+													// padding: 4,
+													// height: '6rem',
+													// minHeight: '6rem',
+													// width: '4rem',
+													// minWidth: '4rem',
+													// backgroundColor: '#456C86',
+													// color: 'white',
+													// border: '1px solid black',
 													...provided.draggableProps.style,
 												}}
 											>
-												{activity.name}
+												<Activity
+													activity={activity}
+													setSelectedActivity={() => console.log('placeholder')}
+												/>
+												{/* {activity.name} */}
 											</div>
 										);
 									}}
