@@ -82,10 +82,10 @@ const AddActivitySchema = yup.object().shape({
 
 function CreateActivityForm() {
 	const uid = useSelector(selectUid);
+	const newActivity = useAppSelector(selectNewActivity);
 	const theme = useTheme();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
-	const newActivity = useAppSelector(selectNewActivity);
 
 	const {
 		register,
@@ -113,12 +113,19 @@ function CreateActivityForm() {
 		}
 		if (isValid && newActivity.location) {
 			console.log('clicked');
-			dispatch(submitActivityName(data.activityName));
-			dispatch(submitActivityDescription(data.activityDescription));
-			dispatch(submitActivityDurationHours(Number(data.durationHours)));
-			dispatch(submitActivityDurationMinutes(Number(data.durationMinutes)));
+			const {
+				activityName,
+				activityDescription,
+				durationHours,
+				durationMinutes,
+			} = data;
+			await dispatch(submitActivityName(activityName));
+			await dispatch(submitActivityDescription(activityDescription));
+			await dispatch(submitActivityDurationHours(Number(durationHours)));
+			await dispatch(submitActivityDurationMinutes(Number(durationMinutes)));
+			console.log('idle?', newActivity);
 			if (uid) {
-				const createdActivity = await createActivity(newActivity, uid);
+				const createdActivity = await createActivity(data, newActivity, uid);
 				console.log('response', createdActivity);
 			}
 		}
