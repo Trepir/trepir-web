@@ -76,11 +76,22 @@ const onDragEnd = (
 	savedActivities: any,
 	setSavedActivities: any
 ) => {
+	const { source, destination } = result;
 	//	/////////FAIL CHECKS/////////////////////
 	//	CHECK: DROPPING AT A DROPPPABLE LOCATION
 	console.log(result);
-	if (!result.destination) return;
-	const { source, destination } = result;
+	if (!result.destination) {
+		const dayActivities = [...days[source.droppableId]];
+
+		dayActivities.splice(source.index, 1);
+		setDays({
+			...days,
+			[source.droppableId]: dayActivities,
+		});
+
+		console.log('remove me!');
+		return;
+	}
 
 	//	IF SOURCE & DEST IS SAVED ACTIVITIES
 
@@ -109,7 +120,11 @@ const onDragEnd = (
 		const destActivities = [...days[destination.droppableId]];
 		//	remove act from source, and add to dest
 		const [removed] = sourceActivities.splice(source.index, 1);
+		const removedCopy = { ...removed, id: removed.id.concat('x') };
+		//	add the activity that was removed to the dest activities
 		destActivities.splice(destination.index, 0, removed);
+		// add the copy of the removed activity, with a new id, to the source activities
+		sourceActivities.push(removedCopy);
 		//	set the days
 		console.log('destdropid:', destination.droppableId);
 		setDays({
@@ -118,8 +133,6 @@ const onDragEnd = (
 		});
 		//	set your act list
 		setSavedActivities({
-			// ...savedActivities,
-			// [source.droppableId]: sourceActivities,
 			ActivitiesList: sourceActivities,
 		});
 
@@ -171,6 +184,8 @@ function EditTripPage() {
 		useState<any>(favoritedActivities);
 	//  eslint-disable-next-line
 	const [days, setDays] = useState<any>(null);
+
+	//	//////////////////1. GET DETAILS OF TRIP /////////////////
 	useEffect(() => {
 		const getTripDetails = async () => {
 			//	TRIPID FAIL CHECK DO NOT REMOVE
@@ -190,6 +205,7 @@ function EditTripPage() {
 		};
 		getTripDetails();
 	}, [id]);
+	//	//////////////////2. SET YOUR TRIP DAYS STATE /////////////////
 
 	useEffect(() => {
 		if (!tripDetails) return;
@@ -205,6 +221,23 @@ function EditTripPage() {
 		});
 		setDays(tripDayMap);
 	}, [tripDetails]);
+
+	//	//////////////////3. SET YOUR TRIP ACTIVITIES STATE /////////////////
+
+	useEffect(() => {
+		const getActivities = async () => {
+			try {
+				const activities = await fetch(`${BASE_URL}activity/all`);
+				const jsonActivities = await activities.json();
+				setSavedActivities({
+					ActivitiesList: jsonActivities,
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		};
+		getActivities();
+	}, []);
 
 	return (
 		<>

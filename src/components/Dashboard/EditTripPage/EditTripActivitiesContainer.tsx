@@ -7,6 +7,13 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Activity from '../../Discover/Activity';
 
 function EditTripActivitiesContainer({ savedActivities }: any) {
+	//	the ids are so that this list will always contain unique draggable ids. Activity id was not going to work
+	const ids: any = [];
+	//	eslint-disable-next-line
+	for (let i = 0; i <= savedActivities.ActivitiesList.length; i++) {
+		ids.push(String(Math.random()));
+	}
+	console.log(ids);
 	return (
 		<Droppable
 			droppableId="favoritedActivities"
@@ -33,8 +40,8 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 						{savedActivities.ActivitiesList.map((activity: any, index: any) => {
 							return (
 								<Draggable
-									key={activity.id}
-									draggableId={activity.id}
+									key={ids[index]}
+									draggableId={ids[index]}
 									index={index}
 								>
 									{/* eslint-disable-next-line */}

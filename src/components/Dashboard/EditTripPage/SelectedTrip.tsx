@@ -5,7 +5,19 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Activity from '../../Discover/Activity';
 
 function SelectedTrip({ days }: any) {
-	console.log(days);
+	console.log('days', days);
+	const idMap: any = {};
+	//	eslint-disable-next-line
+	for (const [key, value] of Object.entries(days)) {
+		console.log(key, value);
+		const idArray = [];
+		//	eslint-disable-next-line
+		for (let i = 0; i < (value as []).length; i++) {
+			idArray.push(String(Math.random()));
+		}
+		idMap[key] = idArray;
+	}
+	console.log(idMap);
 	return (
 		// <Box
 		// 	sx={{
@@ -23,6 +35,8 @@ function SelectedTrip({ days }: any) {
 				display: 'flex',
 				flexDirection: 'column',
 				// border: 'solid',
+				height: '90vh',
+				overflowY: 'scroll',
 				width: '50vw',
 			}}
 		>
@@ -38,6 +52,8 @@ function SelectedTrip({ days }: any) {
 								ref={provided.innerRef}
 								style={{
 									// background: 'lightblue',
+									flexShrink: 0,
+
 									padding: 4,
 									display: 'flex',
 									flexDirection: 'row',
@@ -52,8 +68,8 @@ function SelectedTrip({ days }: any) {
 							>
 								{(activities as any[]).map((activity, index) => (
 									<Draggable
-										key={activity.id}
-										draggableId={activity.id}
+										key={idMap[day][index]}
+										draggableId={idMap[day][index]}
 										index={index}
 									>
 										{/* eslint-disable-next-line */}
