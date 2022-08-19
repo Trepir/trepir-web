@@ -19,8 +19,8 @@ function Activity({ activity, setSelectedActivity }: any) {
 		<Card
 			sx={{
 				display: 'flex',
-				width: '20vw',
-				height: '11vw',
+				width: 250,
+				height: 140,
 				flexShrink: 0,
 				textDecoration: 'none',
 			}}

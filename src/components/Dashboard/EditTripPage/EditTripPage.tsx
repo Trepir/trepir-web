@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { DragDropContext } from 'react-beautiful-dnd';
 import EditTripActivitiesContainer from './EditTripActivitiesContainer';
 import SelectedTrip from './SelectedTrip';
@@ -32,10 +33,12 @@ const onDragEnd = (
 ) => {
 	//	/////////FAIL CHECKS/////////////////////
 	//	CHECK: DROPPING AT A DROPPPABLE LOCATION
+	console.log(result);
 	if (!result.destination) return;
 	const { source, destination } = result;
 
 	//	IF SOURCE & DEST IS SAVED ACTIVITIES
+
 	if (
 		source.droppableId === 'favoritedActivities' &&
 		destination.droppableId === 'favoritedActivities'
@@ -121,7 +124,7 @@ function EditTripPage() {
 		userId: 'cl6yvhyd600475zuop6gba6xg',
 		startDate: '2023-07-02T00:00:00.000Z',
 		endDate: '2023-07-06T00:00:00.000Z',
-		name: 'Kern River',
+		name: 'Euro Trip - Barcelona',
 		tripDay: [
 			{
 				id: 'cl6yzxnjx03895zuo323oyknm',
@@ -174,7 +177,11 @@ function EditTripPage() {
 
 	return (
 		<>
-			<div>{tripDetails.name ? <h2>{tripDetails.name}</h2> : null}</div>
+			<div>
+				{tripDetails.name ? (
+					<Typography variant="h2">{tripDetails.name}</Typography>
+				) : null}
+			</div>
 
 			<DragDropContext
 				onDragEnd={(result) =>
