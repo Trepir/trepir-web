@@ -10,11 +10,14 @@ import {
 	TextField,
 	Alert,
 	FormControl,
-	InputLabel,
 	Select,
 	MenuItem,
+	OutlinedInput,
+	Chip,
+	SelectChangeEvent,
 } from '@mui/material';
 
+import { useTheme } from '@emotion/react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 import TripLocationSearch from '../TripForm/TripLocationSearch';
@@ -24,9 +27,9 @@ import {
 	selectNewActivity,
 	submitActivityDescription,
 	submitActivityName,
-	submitActivityTimeEnd,
-	submitActivityTimeStart,
-	toggleActivityTags,
+	// submitActivityTimeEnd,
+	// submitActivityTimeStart,
+	submitActivityTag,
 } from '../../../features/createActivity/createActivitySlice';
 
 // Object {
@@ -52,42 +55,90 @@ import {
 // "uid": "1",
 // }
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+			width: 250,
+		},
+	},
+};
+
+const tags = [
+	'Relax',
+	'Landmark',
+	'Entertainment',
+	'Drinks',
+	'Restaurant',
+	'Adventure',
+	'Museum',
+	'Outdoors',
+	'Tour',
+	'Beach',
+	'Culture',
+	'Nightlife',
+	'Nature',
+	'Festivity',
+	'Sport',
+];
+
+function getStyles(name: string, tag: readonly string[], theme: any) {
+	return {
+		fontWeight:
+			tag.indexOf(name) === -1
+				? theme.typography.fontWeightRegular
+				: theme.typography.fontWeightMedium,
+	};
+}
+
 const AddActivitySchema = yup.object().shape({
 	name: yup.string().required('Please add a name'),
 	description: yup.string().required('Please add a short description'),
-	duration: yup.number().required('Please add an approximate duration'),
+	durationHours: yup.number().required('Please add an approximate duration'),
+	durationMinutes: yup.number().required('Please add an approximate duration'),
 	tags: yup.mixed().required('Please add up to 3 tags'),
-	timeStart: yup.number(),
-	timeEnd: yup.number(),
+	// timeStart: yup.number(),
+	// timeEnd: yup.number(),
 });
 
 function CreateActivityForm() {
+	const theme = useTheme();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
 	const newActivity = useAppSelector(selectNewActivity);
 
 	const {
 		register,
-		setValue,
+		// setValue,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<any>({
 		resolver: yupResolver(AddActivitySchema),
 	});
 
-	const handleActivityTags = (event: any) => {
-		dispatch(toggleActivityTags(event.target.value));
-		setValue('activityTags', newActivity.tags, { shouldValidate: true });
+	const handleActivityTags = (event: SelectChangeEvent<any>) => {
+		const {
+			target: { value },
+		} = event;
+		dispatch(
+			submitActivityTag(typeof value === 'string' ? value.split(',') : value)
+		);
+		// setValue('activityTags', newActivity.tag, {
+		// 	shouldValidate: true,
+		// });
 	};
 
-	const handleTimeStart = (event: any) => {
-		dispatch(submitActivityTimeStart(event.target.value));
-		setValue('timeStart', event.target.value, { shouldValidate: true });
-	};
-	const handleTimeEnd = (event: any) => {
-		dispatch(submitActivityTimeEnd(event.target.value));
-		setValue('timeEnd', event.target.value, { shouldValidate: true });
-	};
+	// To be ins
+	// const handleTimeStart = (event: any) => {
+	// 	dispatch(submitActivityTimeStart(event.target.value));
+	// 	setValue('timeStart', event.target.value, { shouldValidate: true });
+	// };
+	// const handleTimeEnd = (event: any) => {
+	// 	dispatch(submitActivityTimeEnd(event.target.value));
+	// 	setValue('timeEnd', event.target.value, { shouldValidate: true });
+	// };
 
 	const onSubmit = async (data: any) => {
 		const isValid = await AddActivitySchema.isValid(data);
@@ -136,18 +187,7 @@ function CreateActivityForm() {
 					{alertRef.current ? (
 						<Alert severity="error">Please insert a location!</Alert>
 					) : null}
-					<TextField
-						id="activityDuration"
-						label="Duration"
-						type="text"
-						sx={{ width: 220 }}
-						{...register('activityDuration')}
-						error={!!errors.activityDuration}
-						InputLabelProps={{
-							shrink: true,
-						}}
-					/>
-					<TextField
+					{/* <TextField
 						id="timeStart"
 						label="Start time"
 						type="date"
@@ -170,22 +210,54 @@ function CreateActivityForm() {
 							shrink: true,
 						}}
 						onChange={handleTimeEnd}
-					/>
-					<FormControl {...register('activityTags')}>
-						<InputLabel id="activityTags">Activity Tags</InputLabel>
-						<Select
+					/> */}
+					<div className="form-row">
+						<TextField
+							type="number"
+							InputProps={{ inputProps: { min: 0, max: 12 } }}
 							variant="filled"
-							labelId="travelType"
-							id="travelType"
-							value={newActivity.tags}
-							label="travelType"
+							label="Duration (hours)"
+							fullWidth
+							{...register('durationHours')}
+							error={!!errors.durationHours}
+						/>
+						{/* 'YEAR-END-DAY' */}
+						<TextField
+							type="number"
+							InputProps={{ inputProps: { min: 0, max: 60, step: 15 } }}
+							variant="filled"
+							label="Duration (min)"
+							fullWidth
+							{...register('durationMinutes')}
+							error={!!errors.durationMinutes}
+						/>
+					</div>
+					<FormControl {...register('activityTags')}>
+						<Select
+							labelId="activityTags"
+							id="activityTags"
+							multiple
+							value={newActivity.tag}
 							onChange={handleActivityTags}
+							input={<OutlinedInput id="activityTags" label="Activities" />}
+							renderValue={(selected) => (
+								<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+									{selected.map((value: string) => (
+										<Chip key={value} label={value} />
+									))}
+								</Box>
+							)}
+							MenuProps={MenuProps}
 						>
-							<MenuItem value="Flight">Flight</MenuItem>
-							<MenuItem value="Bus">Bus</MenuItem>
-							<MenuItem value="Boat">Boat</MenuItem>
-							<MenuItem value="Car">Car</MenuItem>
-							<MenuItem value="Train">Train</MenuItem>
+							{tags.map((tag) => (
+								<MenuItem
+									key={tag}
+									value={tag}
+									style={getStyles(tag, newActivity.tag, theme)}
+								>
+									{tag}
+								</MenuItem>
+							))}
 						</Select>
 					</FormControl>
 

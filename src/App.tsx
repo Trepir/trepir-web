@@ -19,6 +19,7 @@ import TripPlanner from './pages/Dashboard/TripPlanner';
 import { setUid } from './app/reducers/authSlice';
 
 import Dashboard from './pages/Dashboard/Dashboard';
+import CalendarView from './pages/Dashboard/CalendarView';
 
 const primaryColor = '#1CB985';
 
@@ -60,6 +61,7 @@ function App() {
 					<Router>
 						<TopNavigation />
 						<Routes>
+							<Route path="/calendar" element={<CalendarView />} />
 							<Route path="/" element={<Login />} />
 							<Route path="/login" element={<Login />} />
 							<Route path="/dashboard/*" element={<Dashboard />} />

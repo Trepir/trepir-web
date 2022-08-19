@@ -6,3 +6,10 @@
 	gap: 2rem;
 	padding: 2rem;
 }
+
+.form-row {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	width: fit-content;
+}
