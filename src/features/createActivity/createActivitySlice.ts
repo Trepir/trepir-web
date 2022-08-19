@@ -5,8 +5,8 @@ export interface NewActivityState {
 	name: string;
 	description: string;
 	location: any;
-	duration: number;
-	tags: string[];
+	duration: { hours: number; minutes: number };
+	tag: readonly string[];
 	timeStart: number;
 	timeEnd: number;
 }
@@ -15,8 +15,8 @@ const initialState: NewActivityState = {
 	name: 'idle',
 	description: 'idle',
 	location: null,
-	duration: 0,
-	tags: [],
+	duration: { hours: 0, minutes: 0 },
+	tag: [],
 	timeStart: 0,
 	timeEnd: 0,
 };
@@ -34,15 +34,14 @@ export const createActivitySlice = createSlice({
 		submitActivityDescription: (state, action: PayloadAction<string>) => {
 			state.description = action.payload;
 		},
-		submitActivityDuration: (state, action: PayloadAction<number>) => {
-			state.duration = action.payload;
+		submitActivityDurationHours: (state, action: PayloadAction<number>) => {
+			state.duration.hours = action.payload;
 		},
-		toggleActivityTags: (state, action: PayloadAction<string>) => {
-			if (state.tags.indexOf(action.payload) !== -1) {
-				state.tags.splice(state.tags.indexOf(action.payload), 1);
-			} else {
-				state.tags.push(action.payload);
-			}
+		submitActivityDurationMinutes: (state, action: PayloadAction<number>) => {
+			state.duration.minutes = action.payload;
+		},
+		submitActivityTag: (state, action: PayloadAction<string[]>) => {
+			state.tag = action.payload;
 		},
 		submitActivityTimeStart: (state, action: PayloadAction<number>) => {
 			state.timeStart = action.payload;
@@ -56,9 +55,10 @@ export const createActivitySlice = createSlice({
 export const {
 	submitActivityName,
 	submitActivityDescription,
-	submitActivityDuration,
+	submitActivityDurationHours,
+	submitActivityDurationMinutes,
 	submitActivityLocation,
-	toggleActivityTags,
+	submitActivityTag,
 	submitActivityTimeStart,
 	submitActivityTimeEnd,
 } = createActivitySlice.actions;
