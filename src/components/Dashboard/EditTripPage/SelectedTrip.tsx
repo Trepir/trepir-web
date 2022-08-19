@@ -28,54 +28,58 @@ function SelectedTrip({ days }: any) {
 			{Object.entries(days).map(([day, activities]) => (
 				<Droppable droppableId={day} key={day} direction="horizontal">
 					{(provided) => (
-						<div
-							{...provided.droppableProps}
-							ref={provided.innerRef}
-							style={{
-								background: 'lightblue',
-								padding: 4,
-								display: 'flex',
-								flexDirection: 'row',
-								overflowX: 'auto',
-								width: '49.3vw',
-								justifyContent: 'flex-start',
-								minHeight: '8rem',
-							}}
-						>
-							{(activities as any[]).map((activity, index) => (
-								<Draggable
-									key={activity.id}
-									draggableId={activity.id}
-									index={index}
-								>
-									{/* eslint-disable-next-line */}
-									{(provided) => {
-										return (
-											<div
-												ref={provided.innerRef}
-												{...provided.draggableProps}
-												{...provided.dragHandleProps}
-												style={{
-													userSelect: 'none',
-													padding: 4,
-													height: '6rem',
-													minHeight: '6rem',
-													width: '4rem',
-													minWidth: '4rem',
-													backgroundColor: '#456C86',
-													color: 'white',
-													border: '1px solid black',
-													...provided.draggableProps.style,
-												}}
-											>
-												{activity.name}
-											</div>
-										);
-									}}
-								</Draggable>
-							))}
-							{provided.placeholder}
-						</div>
+						<>
+							<div>{day}</div>
+
+							<div
+								{...provided.droppableProps}
+								ref={provided.innerRef}
+								style={{
+									background: 'lightblue',
+									padding: 4,
+									display: 'flex',
+									flexDirection: 'row',
+									overflowX: 'auto',
+									width: '49.3vw',
+									justifyContent: 'flex-start',
+									minHeight: '8rem',
+								}}
+							>
+								{(activities as any[]).map((activity, index) => (
+									<Draggable
+										key={activity.id}
+										draggableId={activity.id}
+										index={index}
+									>
+										{/* eslint-disable-next-line */}
+										{(provided) => {
+											return (
+												<div
+													ref={provided.innerRef}
+													{...provided.draggableProps}
+													{...provided.dragHandleProps}
+													style={{
+														userSelect: 'none',
+														padding: 4,
+														height: '6rem',
+														minHeight: '6rem',
+														width: '4rem',
+														minWidth: '4rem',
+														backgroundColor: '#456C86',
+														color: 'white',
+														border: '1px solid black',
+														...provided.draggableProps.style,
+													}}
+												>
+													{activity.name}
+												</div>
+											);
+										}}
+									</Draggable>
+								))}
+								{provided.placeholder}
+							</div>
+						</>
 					)}
 				</Droppable>
 			))}
