@@ -31,6 +31,7 @@ const createActivity = async (data: any, activityInput: any, uid: string) => {
 			locationName: name,
 			photoUrl,
 		},
+		tags: activityInput.tag,
 		uid,
 	};
 
