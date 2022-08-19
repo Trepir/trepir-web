@@ -18,42 +18,21 @@ import {
 } from '@mui/material';
 
 import { useTheme } from '@emotion/react';
+import { useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-
 import TripLocationSearch from '../TripForm/TripLocationSearch';
 
-// import { addTravel } from '../../../features/createTravel/travelListSlice';
 import {
 	selectNewActivity,
 	submitActivityDescription,
+	submitActivityDurationHours,
+	submitActivityDurationMinutes,
 	submitActivityName,
-	// submitActivityTimeEnd,
-	// submitActivityTimeStart,
 	submitActivityTag,
 } from '../../../features/createActivity/createActivitySlice';
-
-// Object {
-// "description": "Una buena prueba",
-// "duration": 5,
-// "location": Object {
-//   "city": "Barcelona",
-//   "country": "Spain",
-//   "googleId": "ChIJPRSERxGjpBIRSYRw_OI00Zw",
-//   "latitude": 41.39496620000001,
-//   "latitude": 41.39496620000001,
-//   "locationName": "Codeworks",
-//   "longitude": 2.1977755,
-//   "state": "Catalunya",
-// },
-// "name": "Sergio Activity",
-// "tags": Array [
-//   "Entertainment",
-//   "Landmark",
-// ],
-// "timeEnd": 1660843440000,
-// "timeStart": 1660832640000,
-// "uid": "1",
-// }
+import createActivity from '../../../features/createActivity/createActivityService';
+import { selectUid } from '../../../app/reducers/authSlice';
+// import { selectUid } from '../../../app/reducers/authSlice';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -94,16 +73,15 @@ function getStyles(name: string, tag: readonly string[], theme: any) {
 }
 
 const AddActivitySchema = yup.object().shape({
-	name: yup.string().required('Please add a name'),
-	description: yup.string().required('Please add a short description'),
+	activityName: yup.string().required('Please add a name'),
+	activityDescription: yup.string().required('Please add a short description'),
 	durationHours: yup.number().required('Please add an approximate duration'),
 	durationMinutes: yup.number().required('Please add an approximate duration'),
-	tags: yup.mixed().required('Please add up to 3 tags'),
-	// timeStart: yup.number(),
-	// timeEnd: yup.number(),
+	activityTags: yup.mixed().required('Please add up to 3 tags'),
 });
 
 function CreateActivityForm() {
+	const uid = useSelector(selectUid);
 	const theme = useTheme();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
@@ -125,34 +103,24 @@ function CreateActivityForm() {
 		dispatch(
 			submitActivityTag(typeof value === 'string' ? value.split(',') : value)
 		);
-		// setValue('activityTags', newActivity.tag, {
-		// 	shouldValidate: true,
-		// });
 	};
 
-	// To be ins
-	// const handleTimeStart = (event: any) => {
-	// 	dispatch(submitActivityTimeStart(event.target.value));
-	// 	setValue('timeStart', event.target.value, { shouldValidate: true });
-	// };
-	// const handleTimeEnd = (event: any) => {
-	// 	dispatch(submitActivityTimeEnd(event.target.value));
-	// 	setValue('timeEnd', event.target.value, { shouldValidate: true });
-	// };
-
 	const onSubmit = async (data: any) => {
+		console.log('in');
 		const isValid = await AddActivitySchema.isValid(data);
 		if (!isValid || !newActivity.location) {
 			alertRef.current = true;
 		}
 		if (isValid && newActivity.location) {
-			dispatch(submitActivityName(data.name));
-			dispatch(submitActivityDescription(data.description));
-			//   dispatch(submitActivityDuration),
-			//  dispatch(toggleActivityTags),
-			// dispatch(submitActivityTimeStart),
-			//  dispatch(submitActivityTimeEnd),
-			// 	setValue('departureDate', undefined);
+			console.log('clicked');
+			dispatch(submitActivityName(data.activityName));
+			dispatch(submitActivityDescription(data.activityDescription));
+			dispatch(submitActivityDurationHours(Number(data.durationHours)));
+			dispatch(submitActivityDurationMinutes(Number(data.durationMinutes)));
+			if (uid) {
+				const createdActivity = await createActivity(newActivity, uid);
+				console.log('response', createdActivity);
+			}
 		}
 	};
 
@@ -187,30 +155,7 @@ function CreateActivityForm() {
 					{alertRef.current ? (
 						<Alert severity="error">Please insert a location!</Alert>
 					) : null}
-					{/* <TextField
-						id="timeStart"
-						label="Start time"
-						type="date"
-						sx={{ width: 220 }}
-						{...register('timeStart')}
-						error={!!errors.timeStart}
-						InputLabelProps={{
-							shrink: true,
-						}}
-						onChange={handleTimeStart}
-					/>
-					<TextField
-						id="timeEnd"
-						label="End time"
-						type="date"
-						sx={{ width: 220 }}
-						{...register('timeEnd')}
-						error={!!errors.timeEnd}
-						InputLabelProps={{
-							shrink: true,
-						}}
-						onChange={handleTimeEnd}
-					/> */}
+
 					<div className="form-row">
 						<TextField
 							type="number"
@@ -221,7 +166,6 @@ function CreateActivityForm() {
 							{...register('durationHours')}
 							error={!!errors.durationHours}
 						/>
-						{/* 'YEAR-END-DAY' */}
 						<TextField
 							type="number"
 							InputProps={{ inputProps: { min: 0, max: 60, step: 15 } }}

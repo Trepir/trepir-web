@@ -16,11 +16,11 @@ import { AppBar, Box } from '@mui/material';
 
 const pages = [
 	<Link to="/login">Login</Link>,
-	<Link to="/redux">Redux</Link>,
+	// <Link to="/redux">Redux</Link>,
 	<Link to="/discover">Discover</Link>,
 	<Link to="/dashboard">Dashboard</Link>,
 
-	<Link to="/private">Private</Link>,
+	// <Link to="/private">Private</Link>,
 ];
 const settings = ['Profile', 'Account', 'Logout'];
 
@@ -51,7 +51,7 @@ function TopNavigation() {
 		<AppBar position="static">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+					{/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
 					<Typography
 						variant="h6"
 						noWrap
@@ -60,7 +60,7 @@ function TopNavigation() {
 						sx={{
 							mr: 2,
 							display: { xs: 'none', md: 'flex' },
-							fontFamily: 'monospace',
+							fontFamily: 'arial',
 							fontWeight: 700,
 							letterSpacing: '.3rem',
 							color: 'primary',
