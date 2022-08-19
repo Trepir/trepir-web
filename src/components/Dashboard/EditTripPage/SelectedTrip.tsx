@@ -35,7 +35,7 @@ function SelectedTrip({ days }: any) {
 				display: 'flex',
 				flexDirection: 'column',
 				// border: 'solid',
-				height: '90vh',
+				height: '85vh',
 				overflowY: 'scroll',
 				width: '50vw',
 			}}

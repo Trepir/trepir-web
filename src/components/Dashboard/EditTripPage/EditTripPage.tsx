@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
+import { Button, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { DragDropContext } from 'react-beautiful-dnd';
 import EditTripActivitiesContainer from './EditTripActivitiesContainer';
 import SelectedTrip from './SelectedTrip';
-import mock from '../../../utils/mockActivities';
+// import mock from '../../../utils/mockActivities';
 import { tripDateFormatter } from '../../../utils/dateUtils';
 import {
 	selectTripDetails,
@@ -55,9 +56,9 @@ import { BASE_URL } from '../../../features/createTrip/createTripService';
 // 	],
 // };
 //  Your Saved Activities
-const favoritedActivities = {
-	ActivitiesList: mock,
-};
+// const favoritedActivities = {
+// 	ActivitiesList: mock,
+// };
 
 //  Your Trip Days
 // const tripDays = {
@@ -180,8 +181,7 @@ function EditTripPage() {
 	const id = useSelector(selectTripId);
 	const { tripDetails } = useSelector(selectTripDetails);
 	//  eslint-disable-next-line
-	const [savedActivities, setSavedActivities] =
-		useState<any>(favoritedActivities);
+	const [savedActivities, setSavedActivities] = useState<any>(null);
 	//  eslint-disable-next-line
 	const [days, setDays] = useState<any>(null);
 
@@ -242,39 +242,63 @@ function EditTripPage() {
 	return (
 		<>
 			{/* eslint-disable-next-line */}
-			{days ? (
-				<>
-					<div>
-						{tripDetails.name ? (
-							<Typography variant="h2">{tripDetails.name}</Typography>
-						) : null}
-					</div>
-
-					<DragDropContext
-						onDragEnd={(result) =>
-							onDragEnd(
-								result,
-								days,
-								setDays,
-								savedActivities,
-								setSavedActivities
-							)
-						}
+			{days && savedActivities ? (
+				<DragDropContext
+					onDragEnd={(result) =>
+						onDragEnd(
+							result,
+							days,
+							setDays,
+							savedActivities,
+							setSavedActivities
+						)
+					}
+				>
+					<Box
+						style={{
+							display: 'flex',
+							width: '100vw',
+						}}
 					>
-						<Box
-							style={{
-								display: 'flex',
-								justifyContent: 'center',
-								width: '100vw',
+						<Paper
+							elevation={20}
+							sx={{
+								borderRadius: 3,
+								padding: '1vw 0 0 2vw',
 							}}
 						>
+							<Typography variant="h3" style={{ margin: '0 0 2.5vw 0' }}>
+								{tripDetails.name}
+							</Typography>
 							<SelectedTrip days={days} />
-							<EditTripActivitiesContainer savedActivities={savedActivities} />
+						</Paper>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'column',
+								width: '50vw',
+								alignItems: 'center',
+							}}
+						>
+							<Box sx={{ display: 'flex', gap: 10, margin: '1vw 0 0 0' }}>
+								<Button>Activities</Button>
+								<Button>Map</Button>
+							</Box>
+							<Box sx={{ display: 'flex', gap: 10, margin: '0.5vw 0 0 0' }}>
+								<Button variant="contained">Add Activity</Button>
+								<Button variant="contained">Add Travel</Button>
+								<Button variant="contained">Add Accomodation</Button>
+							</Box>
+							<div style={{ margin: '3vw 0 0 5vw' }}>
+								<EditTripActivitiesContainer
+									savedActivities={savedActivities}
+								/>
+							</div>
 						</Box>
-					</DragDropContext>
-				</>
+					</Box>
+				</DragDropContext>
 			) : (
-				<>hi</>
+				<>nope</>
 			)}
 		</>
 	);

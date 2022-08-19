@@ -28,11 +28,11 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 						style={{
-							backgroundColor: 'pink',
-							width: '50vw',
+							// backgroundColor: 'pink',
+							// width: '50vw',
 							display: 'flex',
 							flexWrap: 'wrap',
-							height: 0,
+							// height: 0,
 							gap: 10,
 						}}
 					>

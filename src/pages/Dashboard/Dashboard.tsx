@@ -14,7 +14,6 @@ import TripForm from './TripForm';
 import DashboardHome from '../../components/Dashboard/DashboardHome/DashboardHome';
 import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
 import CreateActivityForm from '../../components/Dashboard/EditTripPage/CreateActivity';
-import CalendarView from './CalendarView';
 
 function Dashboard() {
 	// ACTIVITY FORM MODAL LOGIC TO BE REUSED ANYWHERE
@@ -68,7 +67,6 @@ function Dashboard() {
 				<Route path="/" element={<DashboardHome />} />
 				<Route path="/createtrip" element={<TripForm />} />
 				<Route path="/trip" element={<EditTripPage />} />
-				<Route path="/tripplan" element={<CalendarView />} />
 			</Routes>
 			{/* Create Activity Modal render */}
 			<Button onClick={handleOpen}>Create Activity</Button>
