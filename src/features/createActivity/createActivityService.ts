@@ -21,6 +21,8 @@ const createActivity = async (activityInput: any, uid: string) => {
 		imageUrl: photoUrl,
 		location: {
 			/* eslint-disable-next-line */
+			formattedAddress: formatted_address,
+			/* eslint-disable-next-line */
 			country: formatted_address,
 			/* eslint-disable-next-line */
 			googleId: place_id,
