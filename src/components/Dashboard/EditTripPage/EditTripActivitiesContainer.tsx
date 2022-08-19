@@ -1,7 +1,7 @@
-import { Card, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+// import { Card, Typography } from '@mui/material';
+// import Box from '@mui/material/Box';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+// import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 // import Activity from '../../Discover/Activity';
 
@@ -15,20 +15,20 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 			{/* eslint-disable-next-line */}
 			{(provided) => {
 				return (
-					<Box
+					<div
 						{...provided.droppableProps}
 						ref={provided.innerRef}
-						sx={{
-							display: 'flex',
+						style={{
+							backgroundColor: 'pink',
 							width: '50vw',
-							height: 0,
-							backgroundColor: 'blue',
+							display: 'flex',
 							flexWrap: 'wrap',
-							gap: 3,
+							gap: 10,
 						}}
 					>
-						{savedActivities.ActivitiesList.map(
-							(activity: any, index: number) => (
+						{/* eslint-disable-next-line */}
+						{savedActivities.ActivitiesList.map((activity: any, index: any) => {
+							return (
 								<Draggable
 									key={activity.id}
 									draggableId={activity.id}
@@ -37,42 +37,32 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 									{/* eslint-disable-next-line */}
 									{(provided) => {
 										return (
-											<Card
+											<div
 												ref={provided.innerRef}
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
 												style={{
-													display: 'flex',
-													width: '20vw',
-													height: '11vw',
+													userSelect: 'none',
+													padding: 4,
+													height: '6rem',
+													minHeight: '6rem',
+													width: '4rem',
+													minWidth: '4rem',
+													backgroundColor: '#456C86',
+													color: 'white',
+													border: '1px solid black',
 													...provided.draggableProps.style,
 												}}
 											>
-												<AccountBalanceIcon
-													style={{ fontSize: '110px', color: 'grey' }}
-												/>
-												<Box
-													sx={{
-														display: 'flex',
-														flexDirection: 'column',
-														gap: 3,
-													}}
-												>
-													<Typography
-														variant="h6"
-														style={{ alignSelf: 'flex-start' }}
-													>
-														{activity.name}
-													</Typography>
-												</Box>
-											</Card>
+												{activity.name}
+											</div>
 										);
 									}}
 								</Draggable>
-							)
-						)}
+							);
+						})}
 						{provided.placeholder}
-					</Box>
+					</div>
 				);
 			}}
 		</Droppable>

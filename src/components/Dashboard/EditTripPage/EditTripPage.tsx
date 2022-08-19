@@ -29,7 +29,6 @@ const onDragEnd = (
 	savedActivities: any,
 	setSavedActivities: any
 ) => {
-	console.log(result);
 	//	/////////FAIL CHECKS/////////////////////
 	//	CHECK: DROPPING AT A DROPPPABLE LOCATION
 	if (!result.destination) return;
@@ -59,20 +58,24 @@ const onDragEnd = (
 	//	IF SOURCE=SAVED ACTIVITES & DEST=DAY
 	if (source.droppableId === 'favoritedActivities') {
 		//	identify source and dest activities
-		const sourceActivities: any = [...savedActivities.ActivitiesList];
-		const destActivities: any = days[destination.droppableId];
+		const sourceActivities = [...savedActivities.ActivitiesList];
+		console.log('source before:', sourceActivities);
+		const destActivities = days[destination.droppableId];
 		//	remove act from source, and add to dest
 		const [removed] = sourceActivities.splice(source.index, 1);
+		console.log('source after:', sourceActivities);
 		destActivities.splice(destination.index, 0, removed);
 		//	set the days
 		setDays({
 			...days,
 			[destination.droppableId]: destActivities,
 		});
+		console.log('source dID', source.droppableId);
 		//	set your act list
 		setSavedActivities({
-			...savedActivities,
-			[source.droppableId]: sourceActivities,
+			// ...savedActivities,
+			// [source.droppableId]: sourceActivities,
+			ActivitiesList: sourceActivities,
 		});
 
 		return;
