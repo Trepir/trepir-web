@@ -133,7 +133,7 @@ function AddTravelForm(props: Props) {
 						<TextField
 							id="flightNumber"
 							label="Flight Number"
-							type="date"
+							type="text"
 							sx={{ width: 220 }}
 							{...register('flightNumber')}
 							error={!!errors.flightNumber}

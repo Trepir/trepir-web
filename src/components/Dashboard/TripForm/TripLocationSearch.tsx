@@ -16,6 +16,7 @@ import {
 	submitTravelArrivalLocation,
 	submitTravelDepartureLocation,
 } from '../../../features/createTravel/createTravelSlice';
+import { submitActivityLocation } from '../../../features/createActivity/createActivitySlice';
 
 type Props = {
 	inputLabel: string;
@@ -67,6 +68,9 @@ export default function TripLocationSearch(props: Props) {
 			}
 			if (inputLabel === 'travelArrivalLocation') {
 				dispatch(submitTravelArrivalLocation(placeDetails));
+			}
+			if (inputLabel === 'activityLocation') {
+				dispatch(submitActivityLocation(placeDetails));
 			}
 		} catch (error) {
 			console.log(error);
