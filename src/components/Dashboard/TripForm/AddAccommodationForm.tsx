@@ -16,11 +16,16 @@ import {
 } from '../../../features/createAccommodation/createAccommodationSlice';
 import { addAccommodation } from '../../../features/createAccommodation/accommodationList';
 
+type Props = {
+	handleCloseAccommodation: () => void;
+};
+
 const AddAccommodationSchema = yup.object().shape({
 	checkinDate: yup.string().required('Please select a start date'),
 	checkoutDate: yup.string().required('Please select an end date'),
 });
-function AddAccommodationForm() {
+function AddAccommodationForm(props: Props) {
+	const { handleCloseAccommodation } = props;
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
 	const newAccommodation: any = useAppSelector(selectNewAccommodation);
@@ -57,6 +62,7 @@ function AddAccommodationForm() {
 			// dispatch(changeAccommodationEndDate(null));
 			setValue('checkinDate', null);
 			setValue('checkoutDate', null);
+			handleCloseAccommodation();
 		}
 	};
 

@@ -31,6 +31,10 @@ import { selectTripId } from '../../../features/createTrip/selectedTripSlice';
 import createTravel from '../../../features/createTravel/createTravelService';
 import { selectUid } from '../../../app/reducers/authSlice';
 
+type Props = {
+	handleCloseTravel: () => void;
+};
+
 const AddTravelSchema = yup.object().shape({
 	travelType: yup.string().required('Please select a travel type'),
 	departureDate: yup
@@ -39,7 +43,8 @@ const AddTravelSchema = yup.object().shape({
 	flightNumber: yup.string(),
 });
 
-function AddTravelForm() {
+function AddTravelForm(props: Props) {
+	const { handleCloseTravel } = props;
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
 	const newTravel: any = useAppSelector(selectNewTravel);
@@ -81,6 +86,7 @@ function AddTravelForm() {
 			dispatch(addTravel(newTravel));
 			if (tripId && uid) {
 				await createTravel(data, newTravel, uid, tripId);
+				handleCloseTravel();
 			}
 			// dispatch(submitTravelDepartureLocation(null));
 			// dispatch(submitTravelArrivalLocation(null));

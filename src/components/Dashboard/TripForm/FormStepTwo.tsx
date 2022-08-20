@@ -60,7 +60,7 @@ function FormStepTwo(props: Props) {
 					aria-describedby="create-accommodation-modal"
 				>
 					<Box sx={style}>
-						<AddAccommodationForm />
+						<AddAccommodationForm handleCloseAccommodation={() => null} />
 					</Box>
 				</Modal>
 				<Button variant="contained" onClick={handleOpenTravel}>
@@ -73,7 +73,7 @@ function FormStepTwo(props: Props) {
 					aria-describedby="create-travel-modal"
 				>
 					<Box sx={style}>
-						<AddTravelForm />
+						<AddTravelForm handleCloseTravel={() => null} />
 					</Box>
 				</Modal>
 			</div>
