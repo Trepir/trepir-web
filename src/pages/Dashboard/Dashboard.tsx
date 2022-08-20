@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUid } from '../../app/reducers/authSlice';
 import { BASE_URL } from '../../features/createTrip/createTripService';
 import LeftDrawer from '../LeftDrawer';
+import { loadGoogleApi } from '../../utils/googleMaps/googleService';
 
 import {
 	addAllTrips,
@@ -16,6 +17,8 @@ import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
 import CreateActivityForm from '../../components/Dashboard/EditTripPage/CreateActivity';
 
 function Dashboard() {
+	// LOAD MAP
+	const map = loadGoogleApi();
 	// ACTIVITY FORM MODAL LOGIC TO BE REUSED ANYWHERE
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
@@ -61,26 +64,32 @@ function Dashboard() {
 	}, [uid]);
 
 	return (
-		<>
-			<LeftDrawer />
-			<Routes>
-				<Route path="/" element={<DashboardHome />} />
-				<Route path="/createtrip" element={<TripForm />} />
-				<Route path="/trip" element={<EditTripPage />} />
-			</Routes>
-			{/* Create Activity Modal render */}
-			<Button onClick={handleOpen}>Create Activity</Button>
-			<Modal
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="create-activity-modal"
-				aria-describedby="create-activity-modal"
-			>
-				<Box sx={style}>
-					<CreateActivityForm />
-				</Box>
-			</Modal>
-		</>
+		<div>
+			{map ? (
+				<>
+					<LeftDrawer />
+					<Routes>
+						<Route path="/" element={<DashboardHome />} />
+						<Route path="/createtrip" element={<TripForm />} />
+						<Route path="/trip" element={<EditTripPage />} />
+					</Routes>
+					{/* Create Activity Modal render */}
+					<Button onClick={handleOpen}>Create Activity</Button>
+					<Modal
+						open={open}
+						onClose={handleClose}
+						aria-labelledby="create-activity-modal"
+						aria-describedby="create-activity-modal"
+					>
+						<Box sx={style}>
+							<CreateActivityForm />
+						</Box>
+					</Modal>
+				</>
+			) : (
+				<>loadingmap</>
+			)}
+		</div>
 	);
 }
 

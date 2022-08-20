@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
-import { Button, Paper } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 import EditTripActivitiesContainer from './EditTripActivitiesContainer';
 import SelectedTrip from './SelectedTrip';
@@ -14,6 +13,7 @@ import {
 	setSelectedTrip,
 } from '../../../features/createTrip/selectedTripSlice';
 import { BASE_URL } from '../../../features/createTrip/createTripService';
+import AddEventsControls from './addEventsControls';
 
 // const tripDetails = {
 // 	id: 'cl6yzxnjx03885zuohu5zw6kk',
@@ -109,7 +109,15 @@ const onDragEnd = (
 		source.droppableId !== 'favoritedActivities' &&
 		destination.droppableId === 'favoritedActivities'
 	) {
-		console.log('Dont Drop Here');
+		const dayActivities = [...days[source.droppableId]];
+
+		dayActivities.splice(source.index, 1);
+		setDays({
+			...days,
+			[source.droppableId]: dayActivities,
+		});
+
+		console.log('remove me!');
 		return;
 	}
 	//	/////////SUCCESS/////////////////////
@@ -260,18 +268,7 @@ function EditTripPage() {
 							width: '100vw',
 						}}
 					>
-						<Paper
-							elevation={20}
-							sx={{
-								borderRadius: 3,
-								padding: '1vw 0 0 2vw',
-							}}
-						>
-							<Typography variant="h3" style={{ margin: '0 0 2.5vw 0' }}>
-								{tripDetails.name}
-							</Typography>
-							<SelectedTrip days={days} />
-						</Paper>
+						<SelectedTrip days={days} tripName={tripDetails.name} />
 						<Box
 							sx={{
 								display: 'flex',
@@ -280,15 +277,16 @@ function EditTripPage() {
 								alignItems: 'center',
 							}}
 						>
-							<Box sx={{ display: 'flex', gap: 10, margin: '1vw 0 0 0' }}>
+							<Box
+								sx={{
+									display: 'flex',
+									gap: 10,
+								}}
+							>
 								<Button>Activities</Button>
 								<Button>Map</Button>
 							</Box>
-							<Box sx={{ display: 'flex', gap: 10, margin: '0.5vw 0 0 0' }}>
-								<Button variant="contained">Add Activity</Button>
-								<Button variant="contained">Add Travel</Button>
-								<Button variant="contained">Add Accomodation</Button>
-							</Box>
+							<AddEventsControls />
 							<div style={{ margin: '3vw 0 0 5vw' }}>
 								<EditTripActivitiesContainer
 									savedActivities={savedActivities}
