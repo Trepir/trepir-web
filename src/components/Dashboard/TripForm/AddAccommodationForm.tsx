@@ -12,23 +12,18 @@ import {
 	changeAccommodationEndDate,
 	changeAccommodationStartDate,
 	selectNewAccommodation,
-	submitAccommodationLocation,
+	// submitAccommodationLocation,
 } from '../../../features/createAccommodation/createAccommodationSlice';
 import { addAccommodation } from '../../../features/createAccommodation/accommodationList';
-
-type Props = {
-	setShowAccommodation: React.Dispatch<React.SetStateAction<boolean>>;
-};
 
 const AddAccommodationSchema = yup.object().shape({
 	checkinDate: yup.string().required('Please select a start date'),
 	checkoutDate: yup.string().required('Please select an end date'),
 });
-function AddAccommodationForm(props: Props) {
+function AddAccommodationForm() {
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
-	const { setShowAccommodation } = props;
 	const dispatch = useAppDispatch();
-	const newAccommodation = useAppSelector(selectNewAccommodation);
+	const newAccommodation: any = useAppSelector(selectNewAccommodation);
 
 	const {
 		register,
@@ -57,10 +52,9 @@ function AddAccommodationForm(props: Props) {
 		}
 		if (isValid && newAccommodation.location) {
 			dispatch(addAccommodation(newAccommodation));
-			setShowAccommodation(false);
-			dispatch(submitAccommodationLocation(null));
-			dispatch(changeAccommodationStartDate(null));
-			dispatch(changeAccommodationEndDate(null));
+			// dispatch(submitAccommodationLocation(null));
+			// dispatch(changeAccommodationStartDate(null));
+			// dispatch(changeAccommodationEndDate(null));
 			setValue('checkinDate', null);
 			setValue('checkoutDate', null);
 		}

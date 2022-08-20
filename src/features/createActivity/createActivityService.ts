@@ -1,8 +1,13 @@
 import { getLatLng } from 'use-places-autocomplete';
+import { Coords } from '../../types/MapTypes';
 
 export const BASE_URL = 'https://trepir.herokuapp.com/';
 
-const createActivity = async (data: any, activityInput: any, uid: string) => {
+export const createActivity = async (
+	data: any,
+	activityInput: any,
+	uid: string
+) => {
 	console.log('pre-fetch', activityInput);
 	const { activityName, activityDescription, durationHours, durationMinutes } =
 		data;
@@ -47,8 +52,28 @@ const createActivity = async (data: any, activityInput: any, uid: string) => {
 	return jsonCreatedActivity;
 };
 
-export default createActivity;
+export const getActivities = async () => {
+	const activitiesList = await fetch(`${BASE_URL}activity/all`);
+	const jsonActivitiesList = await activitiesList.json();
 
-// Object {
+	return jsonActivitiesList;
+};
 
-// }
+export const getActivitiesByCoordinates = async (mapCenter: Coords) => {
+	console.log('service');
+
+	const coordinates = {
+		latitudeLow: mapCenter.lat - 1,
+		latitudeHigh: mapCenter.lat + 1,
+		longitudeLow: mapCenter.lng - 1,
+		longitudeHigh: mapCenter.lng + 1,
+	};
+	const activitiesByCoord = await fetch(`${BASE_URL}activity/coordinates`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(coordinates),
+	});
+	const jsonActivitiesByCoord = await activitiesByCoord.json();
+
+	return jsonActivitiesByCoord;
+};

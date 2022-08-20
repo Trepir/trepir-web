@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button } from '@mui/material';
+import { Box, Button, Modal } from '@mui/material';
 
 import { useAppSelector } from '../../../app/hooks';
 
@@ -16,11 +16,28 @@ type Props = {
 };
 
 function FormStepTwo(props: Props) {
-	const [showAccommodation, setShowAccommodation] = useState(false);
-	const [showTravel, setShowTravel] = useState(false);
+	// ACTIVITY FORM MODAL LOGIC TO BE REUSED ANYWHERE
+	const [openAccommodation, setOpenAccommodation] = useState(false);
+	const [openTravel, setOpenTravel] = useState(false);
+	const handleOpenAccommodation = () => setOpenAccommodation(true);
+	const handleCloseAccommodation = () => setOpenAccommodation(false);
+	const handleOpenTravel = () => setOpenTravel(true);
+	const handleCloseTravel = () => setOpenTravel(false);
+	const style = {
+		position: 'absolute' as 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		width: 400,
+		bgcolor: 'background.paper',
+		border: '2px solid #000',
+		boxShadow: 24,
+		p: 4,
+	};
+	// ////////////////////////////////////
 
 	const newAccommodation = useAppSelector(selectNewAccommodation);
-	console.log(newAccommodation);
+	console.log('hello there', newAccommodation);
 
 	const { submitRef, setValidated, setActiveStep } = props;
 
@@ -33,25 +50,33 @@ function FormStepTwo(props: Props) {
 	return (
 		<div className="step-container">
 			<div className="modal-buttons-container">
-				<Button
-					variant="contained"
-					disabled={showTravel}
-					onClick={() => setShowAccommodation(true)}
-				>
-					Add Accommodation
+				<Button variant="contained" onClick={handleOpenAccommodation}>
+					Add Accommodation Details
 				</Button>
-				<Button
-					variant="contained"
-					disabled={showAccommodation}
-					onClick={() => setShowTravel(true)}
+				<Modal
+					open={openAccommodation}
+					onClose={handleCloseAccommodation}
+					aria-labelledby="create-accommodation-modal"
+					aria-describedby="create-accommodation-modal"
 				>
+					<Box sx={style}>
+						<AddAccommodationForm />
+					</Box>
+				</Modal>
+				<Button variant="contained" onClick={handleOpenTravel}>
 					Add Travel Details
 				</Button>
+				<Modal
+					open={openTravel}
+					onClose={handleCloseTravel}
+					aria-labelledby="create-travel-modal"
+					aria-describedby="create-travel-modal"
+				>
+					<Box sx={style}>
+						<AddTravelForm />
+					</Box>
+				</Modal>
 			</div>
-			{showAccommodation ? (
-				<AddAccommodationForm setShowAccommodation={setShowAccommodation} />
-			) : null}
-			{showTravel ? <AddTravelForm setShowTravel={setShowTravel} /> : null}
 			<button
 				ref={submitRef}
 				type="button"

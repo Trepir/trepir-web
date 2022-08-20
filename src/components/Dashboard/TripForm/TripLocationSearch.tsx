@@ -169,6 +169,7 @@ export default function TripLocationSearch(props: Props) {
 				if (newValue) {
 					const details = await getDetails({
 						placeId: newValue.place_id.toString(),
+						fields: ['name', 'formatted_address', 'photos', 'geometry'],
 					});
 					handleLocationChange(details);
 				}
