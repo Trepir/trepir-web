@@ -6,6 +6,7 @@ import { RootState } from '../store';
 export interface mapState {
 	mapCenter: Coords;
 	panCoords: Coords | null;
+	viewportCoords: any;
 	activities: any[] | null;
 	tagsApplied: any[];
 	filteredActivities: any[] | null | undefined;
@@ -18,6 +19,7 @@ const initialState: mapState = {
 		lng: 2.173404,
 	},
 	panCoords: null,
+	viewportCoords: null,
 	activities: mock,
 	tagsApplied: [],
 	filteredActivities: mock,
@@ -34,7 +36,9 @@ export const mapSlice = createSlice({
 		setMapPan: (state, action: PayloadAction<Coords>) => {
 			state.panCoords = action.payload;
 		},
-		// Set map viewport
+		setMapViewport: (state, action: PayloadAction<any>) => {
+			state.viewportCoords = action.payload;
+		},
 		setTagsApplied: (state, action: PayloadAction<any>) => {
 			//	first check if the tag is already in the array
 			const index = state.tagsApplied.indexOf(action.payload);
@@ -78,6 +82,7 @@ export const mapSlice = createSlice({
 export const {
 	setMapCenter,
 	setMapPan,
+	setMapViewport,
 	setTagsApplied,
 	setActivites,
 	setFilteredActivites,
@@ -87,6 +92,8 @@ export const {
 
 export const selectMapCenter = (state: RootState) => state.map.mapCenter;
 export const selectPanCoords = (state: RootState) => state.map.panCoords;
+export const selectViewportCoords = (state: RootState) =>
+	state.map.viewportCoords;
 export const selectActivities = (state: RootState) => state.map.activities;
 export const selectTagsApplied = (state: RootState) => state.map.tagsApplied;
 export const selectFilteredActivities = (state: RootState) =>

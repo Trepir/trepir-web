@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import {
 	selectActivities,
-	selectMapCenter,
+	selectViewportCoords,
 	setActivites,
 } from '../../app/reducers/mapSlice';
 import Activity from './Activity';
@@ -12,16 +12,19 @@ import { getActivitiesByCoordinates } from '../../features/createActivity/create
 
 function ActivitiesList({ setSelectedActivity }: any) {
 	const dispatch = useDispatch();
-	const mapCenter = useSelector(selectMapCenter);
+	const viewportCoords: any = useSelector(selectViewportCoords);
 	const activities = useSelector(selectActivities);
 	useEffect(() => {
-		console.log('in');
-		const getAllActivities = async () => {
-			const activityListByCoord = await getActivitiesByCoordinates(mapCenter);
+		const getActivities = async () => {
+			if (!viewportCoords) return;
+			const activityListByCoord = await getActivitiesByCoordinates(
+				viewportCoords
+			);
+
 			console.log('Place activities', activityListByCoord);
 			dispatch(setActivites(activityListByCoord));
 		};
-		getAllActivities();
+		getActivities();
 	}, []);
 	return (
 		<Box
@@ -43,12 +46,14 @@ function ActivitiesList({ setSelectedActivity }: any) {
 					height: '20vh',
 				}}
 			>
-				{activities?.map((activity) => (
-					<Activity
-						activity={activity}
-						setSelectedActivity={setSelectedActivity}
-					/>
-				))}
+				{activities
+					? activities?.map((activity) => (
+							<Activity
+								activity={activity}
+								setSelectedActivity={setSelectedActivity}
+							/>
+					  ))
+					: null}
 			</Box>
 		</Box>
 	);

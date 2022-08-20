@@ -11,7 +11,8 @@ import { getDetails, getGeocode, getLatLng } from 'use-places-autocomplete';
 import { useNavigate } from 'react-router-dom';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
-import { setMapCenter } from '../../app/reducers/mapSlice';
+import { setMapCenter, setMapViewport } from '../../app/reducers/mapSlice';
+import { getMapViewport } from '../../utils/mapUtils';
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
 	if (!position) {
@@ -157,6 +158,8 @@ export default function SearchGooglePlaces() {
 						fields: ['name', 'formatted_address', 'photos', 'geometry'],
 					});
 					console.log(details);
+					const viewportCoords = await getMapViewport(details);
+					dispatch(setMapViewport(viewportCoords));
 					//	////////////// ///////////////////////////////////////////////////////
 
 					setMapCenterCoordinates(newValue.description);
