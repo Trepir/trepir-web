@@ -1,5 +1,4 @@
 import { getLatLng } from 'use-places-autocomplete';
-import { Coords } from '../../types/MapTypes';
 
 export const BASE_URL = 'https://trepir.herokuapp.com/';
 
@@ -47,7 +46,6 @@ export const createActivity = async (
 		body: JSON.stringify(formattedActivity),
 	});
 	const jsonCreatedActivity = await createdActivity.json();
-	console.log('hello', jsonCreatedActivity);
 
 	return jsonCreatedActivity;
 };
@@ -59,21 +57,18 @@ export const getActivities = async () => {
 	return jsonActivitiesList;
 };
 
-export const getActivitiesByCoordinates = async (mapCenter: Coords) => {
-	console.log('service');
-
-	const coordinates = {
-		latitudeLow: mapCenter.lat - 1,
-		latitudeHigh: mapCenter.lat + 1,
-		longitudeLow: mapCenter.lng - 1,
-		longitudeHigh: mapCenter.lng + 1,
-	};
-	const activitiesByCoord = await fetch(`${BASE_URL}activity/coordinates`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(coordinates),
-	});
-	const jsonActivitiesByCoord = await activitiesByCoord.json();
-
-	return jsonActivitiesByCoord;
+export const getActivitiesByCoordinates = async (viewportCoords: any) => {
+	console.log('service', viewportCoords);
+	try {
+		const activitiesByCoord = await fetch(`${BASE_URL}activity/coordinates`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(viewportCoords),
+		});
+		const jsonActivitiesByCoord = await activitiesByCoord.json();
+		return jsonActivitiesByCoord;
+	} catch (e) {
+		console.log(e);
+		return e;
+	}
 };
