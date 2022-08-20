@@ -14,7 +14,7 @@ const createTravel = async (
 		await travelInput.departureLocation.photos[0].getUrl();
 	const arrivalPhotoUrl = await travelInput.arrivalLocation.photos[0].getUrl();
 	const departureCoordinates = await getLatLng(travelInput.departureLocation);
-	const arrivalCoordinates = await getLatLng(travelInput.location);
+	const arrivalCoordinates = await getLatLng(travelInput.arrivalLocation);
 
 	const departureLocation = {
 		formattedAddress: travelInput.departureLocation.formatted_address,
@@ -44,7 +44,7 @@ const createTravel = async (
 		tripId,
 	};
 
-	console.log(formattedTravel);
+	console.log('formattedTravel', formattedTravel);
 
 	const createdTravel = await fetch(`${BASE_URL}trip/addTravelEvent`, {
 		method: 'POST',
