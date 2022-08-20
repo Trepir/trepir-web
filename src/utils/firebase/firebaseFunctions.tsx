@@ -5,6 +5,7 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 } from 'firebase/auth';
+
 import auth from './firebaseConfig';
 
 const baseURL = 'https://trepir.herokuapp.com';
@@ -21,7 +22,6 @@ export const createEmailUser = async (
 			email,
 			password
 		);
-		console.log(user);
 
 		//	send formatted user to backend
 		const result = await fetch(`${baseURL}/user/signup`, {
@@ -39,6 +39,7 @@ export const createEmailUser = async (
 				emailVerified: user.emailVerified,
 			}),
 		});
+
 		const jsonResult = await result.json();
 		console.log(jsonResult);
 		return jsonResult;

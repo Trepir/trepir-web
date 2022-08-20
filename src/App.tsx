@@ -55,28 +55,26 @@ function App() {
 	});
 
 	return (
-		<div className="App">
-			<LocalizationProvider dateAdapter={AdapterLuxon}>
-				<ThemeProvider theme={appTheme}>
-					<Router>
-						<TopNavigation />
-						<Routes>
-							<Route path="/calendar" element={<CalendarView />} />
-							<Route path="/" element={<Login />} />
-							<Route path="/login" element={<Login />} />
-							<Route path="/dashboard/*" element={<Dashboard />} />
-							<Route path="/discover/*" element={<Discover />} />
-							<Route path="/redux" element={<ReduxSample />} />
-							<Route path="/newtrip" element={<TripForm />} />
-							<Route path="/trip/:id" element={<TripPlanner />} />
-							<Route element={<PrivateRoutes />}>
-								<Route path="/private" element={<Private />} />
-							</Route>
-						</Routes>
-					</Router>
-				</ThemeProvider>
-			</LocalizationProvider>
-		</div>
+		<LocalizationProvider dateAdapter={AdapterLuxon}>
+			<ThemeProvider theme={appTheme}>
+				<Router>
+					<TopNavigation />
+					<Routes>
+						<Route path="/calendar" element={<CalendarView />} />
+						<Route path="/" element={<Login />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/dashboard/*" element={<Dashboard />} />
+						<Route path="/discover/*" element={<Discover />} />
+						<Route path="/redux" element={<ReduxSample />} />
+						<Route path="/newtrip" element={<TripForm />} />
+						<Route path="/trip/:id" element={<TripPlanner />} />
+						<Route element={<PrivateRoutes />}>
+							<Route path="/private" element={<Private />} />
+						</Route>
+					</Routes>
+				</Router>
+			</ThemeProvider>
+		</LocalizationProvider>
 	);
 }
 
