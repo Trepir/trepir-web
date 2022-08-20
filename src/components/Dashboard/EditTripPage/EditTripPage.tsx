@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 import EditTripActivitiesContainer from './EditTripActivitiesContainer';
 import SelectedTrip from './SelectedTrip';
@@ -14,6 +14,7 @@ import {
 } from '../../../features/createTrip/selectedTripSlice';
 import { BASE_URL } from '../../../features/createTrip/createTripService';
 import AddEventsControls from './addEventsControls';
+import Map from '../../Discover/Map';
 
 // const tripDetails = {
 // 	id: 'cl6yzxnjx03885zuohu5zw6kk',
@@ -193,6 +194,8 @@ function EditTripPage() {
 	//  eslint-disable-next-line
 	const [days, setDays] = useState<any>(null);
 
+	const [mapSelected, setMapSelected] = useState(false);
+
 	//	//////////////////1. GET DETAILS OF TRIP /////////////////
 	useEffect(() => {
 		const getTripDetails = async () => {
@@ -277,21 +280,31 @@ function EditTripPage() {
 								alignItems: 'center',
 							}}
 						>
-							<Box
+							<Paper
 								sx={{
 									display: 'flex',
-									gap: 10,
+									width: 250,
+									justifyContent: 'center',
+									gap: 7,
+									position: 'absolute',
+									zIndex: '1',
 								}}
 							>
-								<Button>Activities</Button>
-								<Button>Map</Button>
-							</Box>
-							<AddEventsControls />
-							<div style={{ margin: '3vw 0 0 5vw' }}>
-								<EditTripActivitiesContainer
-									savedActivities={savedActivities}
-								/>
-							</div>
+								<Button onClick={() => setMapSelected(false)}>
+									Activities
+								</Button>
+								<Button onClick={() => setMapSelected(true)}>Map</Button>
+							</Paper>
+							{mapSelected ? (
+								<Map />
+							) : (
+								<>
+									<AddEventsControls />
+									<EditTripActivitiesContainer
+										savedActivities={savedActivities}
+									/>
+								</>
+							)}
 						</Box>
 					</Box>
 				</DragDropContext>

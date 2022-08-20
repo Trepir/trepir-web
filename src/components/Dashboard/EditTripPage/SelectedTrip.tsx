@@ -24,6 +24,7 @@ function SelectedTrip({ days, tripName }: any) {
 			sx={{
 				borderRadius: 3,
 				padding: '1vw 0 0 2vw',
+				zIndex: '1',
 			}}
 		>
 			<Typography variant="h3" style={{ margin: '0 0 2.5vw 0' }}>
