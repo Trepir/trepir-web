@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import * as yup from 'yup';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -169,7 +168,13 @@ export default function TripLocationSearch(props: Props) {
 				if (newValue) {
 					const details = await getDetails({
 						placeId: newValue.place_id.toString(),
-						fields: ['name', 'formatted_address', 'photos', 'geometry'],
+						fields: [
+							'name',
+							'formatted_address',
+							'photos',
+							'geometry',
+							'place_id',
+						],
 					});
 					handleLocationChange(details);
 				}

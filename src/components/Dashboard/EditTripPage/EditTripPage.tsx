@@ -15,60 +15,7 @@ import {
 import { BASE_URL } from '../../../features/createTrip/createTripService';
 import AddEventsControls from './addEventsControls';
 import Map from '../../Discover/Map';
-
-// const tripDetails = {
-// 	id: 'cl6yzxnjx03885zuohu5zw6kk',
-// 	createdAt: '2022-08-18T12:05:46.749Z',
-// 	userId: 'cl6yvhyd600475zuop6gba6xg',
-// 	startDate: '2023-07-02T00:00:00.000Z',
-// 	endDate: '2023-07-06T00:00:00.000Z',
-// 	name: 'Euro Trip - Barcelona',
-// 	tripDay: [
-// 		{
-// 			id: 'cl6yzxnjx03895zuo323oyknm',
-// 			dayIndex: 0,
-// 			tripId: 'cl6yzxnjx03885zuohu5zw6kk',
-// 			tripDayActivities: [],
-// 		},
-// 		{
-// 			id: 'cl6yzxnjx03905zuokpfa6lds',
-// 			dayIndex: 1,
-// 			tripId: 'cl6yzxnjx03885zuohu5zw6kk',
-// 			tripDayActivities: [],
-// 		},
-// 		{
-// 			id: 'cl6yzxnjx03915zuo0m6xq9ud',
-// 			dayIndex: 2,
-// 			tripId: 'cl6yzxnjx03885zuohu5zw6kk',
-// 			tripDayActivities: [],
-// 		},
-// 		{
-// 			id: 'cl6yzxnjx03925zuoifyycuj3',
-// 			dayIndex: 3,
-// 			tripId: 'cl6yzxnjx03885zuohu5zw6kk',
-// 			tripDayActivities: [],
-// 		},
-// 		{
-// 			id: 'cl6yzxnjx03935zuoochl05rs',
-// 			dayIndex: 4,
-// 			tripId: 'cl6yzxnjx03885zuohu5zw6kk',
-// 			tripDayActivities: [],
-// 		},
-// 	],
-// };
-//  Your Saved Activities
-// const favoritedActivities = {
-// 	ActivitiesList: mock,
-// };
-
-//  Your Trip Days
-// const tripDays = {
-// 	Mon: [],
-// 	Tues: [],
-// 	Wed: [],
-// 	Thurs: [],
-// 	Fri: [],
-// };
+import ActivityDetails from '../../Discover/ActivityDetails';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = (
@@ -194,7 +141,10 @@ function EditTripPage() {
 	//  eslint-disable-next-line
 	const [days, setDays] = useState<any>(null);
 
+	//	MAP CONTROL
 	const [mapSelected, setMapSelected] = useState(false);
+	// ACTIVITY DETAIL CONTROL
+	const [selectedActivity, setSelectedActivity] = useState(false);
 
 	//	//////////////////1. GET DETAILS OF TRIP /////////////////
 	useEffect(() => {
@@ -271,7 +221,11 @@ function EditTripPage() {
 							width: '100vw',
 						}}
 					>
-						<SelectedTrip days={days} tripName={tripDetails.name} />
+						<SelectedTrip
+							days={days}
+							tripName={tripDetails.name}
+							setSelectedActivity={setSelectedActivity}
+						/>
 						<Box
 							sx={{
 								display: 'flex',
@@ -298,12 +252,25 @@ function EditTripPage() {
 							{mapSelected ? (
 								<Map />
 							) : (
-								<>
-									<AddEventsControls />
-									<EditTripActivitiesContainer
-										savedActivities={savedActivities}
-									/>
-								</>
+								<div>
+									{selectedActivity ? (
+										<>
+											<div style={{ height: '6vh' }} />
+											<ActivityDetails
+												setSelectedActivity={setSelectedActivity}
+												activity={selectedActivity}
+											/>
+										</>
+									) : (
+										<>
+											<AddEventsControls />
+											<EditTripActivitiesContainer
+												savedActivities={savedActivities}
+												setSelectedActivity={setSelectedActivity}
+											/>
+										</>
+									)}
+								</div>
 							)}
 						</Box>
 					</Box>
