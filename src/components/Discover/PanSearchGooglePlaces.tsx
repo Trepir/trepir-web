@@ -11,7 +11,7 @@ import { getDetails, getGeocode, getLatLng } from 'use-places-autocomplete';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
 import { setMapPan, setMapViewport } from '../../app/reducers/mapSlice';
-import { getMapViewport } from '../../utils/mapUtils';
+// import { getMapViewport } from '../../utils/mapUtils';
 
 // function loadScript(src: string, position: HTMLElement | null, id: string) {
 // 	if (!position) {
@@ -145,15 +145,13 @@ export default function PanSearchGooglePlaces() {
 			onChange={async (event: any, newValue: any | null) => {
 				setOptions(newValue ? [newValue, ...options] : options);
 				setValue(newValue);
+				//	//////////////ADDED DETAILS LOGIC HERE //////////////////////////////
 				if (newValue) {
-					//	//////////////ADDED DETAILS LOGIC HERE //////////////////////////////
-
-					const details = await getDetails({
+					const details: any = await getDetails({
 						placeId: newValue.place_id.toString(),
+						fields: ['name', 'formatted_address', 'photos', 'geometry'],
 					});
-					console.log(details);
-					const viewportCoords = await getMapViewport(details);
-					dispatch(setMapViewport(viewportCoords));
+					dispatch(setMapViewport(details.geometry.viewport));
 					//	////////////// ///////////////////////////////////////////////////////
 
 					setMapPanCoordinates(newValue.description);

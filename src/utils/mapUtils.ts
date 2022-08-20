@@ -1,9 +1,9 @@
-export const getMapViewport = async (details: any) => {
+export const parseMapViewport = async (viewport: any) => {
 	const viewportCoords = {
-		latitudeLow: details.geometry.viewport.zb.lo,
-		latitudeHigh: details.geometry.viewport.zb.hi,
-		longitudeLow: details.geometry.viewport.Ra.lo,
-		longitudeHigh: details.geometry.viewport.Ra.hi,
+		latitudeLow: viewport.zb.lo,
+		latitudeHigh: viewport.zb.hi,
+		longitudeLow: viewport.Ra.lo,
+		longitudeHigh: viewport.Ra.hi,
 	};
 	return viewportCoords;
 };

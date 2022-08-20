@@ -9,6 +9,7 @@ import {
 } from '../../app/reducers/mapSlice';
 import Activity from './Activity';
 import { getActivitiesByCoordinates } from '../../features/createActivity/createActivityService';
+import { parseMapViewport } from '../../utils/mapUtils';
 
 function ActivitiesList({ setSelectedActivity }: any) {
 	const dispatch = useDispatch();
@@ -17,8 +18,9 @@ function ActivitiesList({ setSelectedActivity }: any) {
 	useEffect(() => {
 		const getActivities = async () => {
 			if (!viewportCoords) return;
+			const parsedViewport = await parseMapViewport(viewportCoords);
 			const activityListByCoord = await getActivitiesByCoordinates(
-				viewportCoords
+				parsedViewport
 			);
 
 			console.log('Place activities', activityListByCoord);
