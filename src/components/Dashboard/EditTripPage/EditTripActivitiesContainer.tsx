@@ -32,7 +32,8 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 							// width: '50vw',
 							display: 'flex',
 							flexWrap: 'wrap',
-							// height: 0,
+							margin: '3vw 0 0 5vw',
+							height: 0,
 							gap: 10,
 						}}
 					>
