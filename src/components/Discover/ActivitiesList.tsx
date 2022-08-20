@@ -25,7 +25,7 @@ function ActivitiesList({ setSelectedActivity }: any) {
 			dispatch(setActivites(activityListByCoord));
 		};
 		getActivities();
-	}, []);
+	}, [viewportCoords]);
 	return (
 		<Box
 			sx={{
