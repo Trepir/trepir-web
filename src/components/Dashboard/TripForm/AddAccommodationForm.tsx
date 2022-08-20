@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -15,6 +16,9 @@ import {
 	// submitAccommodationLocation,
 } from '../../../features/createAccommodation/createAccommodationSlice';
 import { addAccommodation } from '../../../features/createAccommodation/accommodationList';
+import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
+import { selectUid } from '../../../app/reducers/authSlice';
+import { selectTripId } from '../../../features/createTrip/selectedTripSlice';
 
 type Props = {
 	handleCloseAccommodation: () => void;
@@ -29,6 +33,8 @@ function AddAccommodationForm(props: Props) {
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
 	const newAccommodation: any = useAppSelector(selectNewAccommodation);
+	const uid: string | null = useSelector(selectUid);
+	const tripId = useSelector(selectTripId);
 
 	const {
 		register,
@@ -57,12 +63,10 @@ function AddAccommodationForm(props: Props) {
 		}
 		if (isValid && newAccommodation.location) {
 			dispatch(addAccommodation(newAccommodation));
-			// dispatch(submitAccommodationLocation(null));
-			// dispatch(changeAccommodationStartDate(null));
-			// dispatch(changeAccommodationEndDate(null));
-			setValue('checkinDate', null);
-			setValue('checkoutDate', null);
-			handleCloseAccommodation();
+			if (tripId && uid) {
+				await createAccommodation(data, newAccommodation, uid, tripId);
+				handleCloseAccommodation();
+			}
 		}
 	};
 
