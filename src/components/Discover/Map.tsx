@@ -11,9 +11,10 @@ import { useSelector } from 'react-redux';
 import {
 	selectMapCenter,
 	selectMarkers,
-	selectPanCoords,
+	// selectPanCoords,
+	selectViewportCoords,
 } from '../../app/reducers/mapSlice';
-import { Coords } from '../../types/MapTypes';
+// import { Coords } from '../../types/MapTypes';
 
 //	We set these up outside of the googlemaps component becasue the map will accidentally rerender
 //	otherwise
@@ -22,11 +23,6 @@ const mapContainerStyle = {
 	width: '51vw',
 	height: '100vh',
 };
-
-// const center = {
-// 	lat: 41.385063,
-// 	lng: 2.173404,
-// };
 
 function Map() {
 	const center = useSelector(selectMapCenter);
@@ -45,16 +41,25 @@ function Map() {
 		mapRef.current = map;
 	}, []);
 
-	const panTo = React.useCallback(({ lat, lng }: Coords) => {
-		mapRef.current.panTo({ lat, lng });
-		mapRef.current.setZoom(14);
-	}, []);
+	// const panTo = React.useCallback(({ lat, lng }: Coords) => {
+	// 	mapRef.current.panTo({ lat, lng });
+	// 	mapRef.current.setZoom(14);
+	// }, []);
+
+	//	FOR VIEWPORT
+	const viewport = useSelector(selectViewportCoords);
+	React.useEffect(() => {
+		if (viewport) {
+			console.log(mapRef.current);
+			mapRef.current.fitBounds(viewport);
+		}
+	}, [viewport]);
 
 	//	FOR PAN
-	const panCoords = useSelector(selectPanCoords);
-	React.useEffect(() => {
-		if (panCoords) panTo(panCoords);
-	}, [panCoords]);
+	// const panCoords = useSelector(selectPanCoords);
+	// React.useEffect(() => {
+	// 	if (panCoords) panTo(panCoords);
+	// }, [panCoords]);
 
 	// FOR MARKERS
 	const markers = useSelector(selectMarkers);

@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
 import { setMapCenter, setMapViewport } from '../../app/reducers/mapSlice';
-import { getMapViewport } from '../../utils/mapUtils';
 
 // function loadScript(src: string, position: HTMLElement | null, id: string) {
 // 	if (!position) {
@@ -153,15 +152,12 @@ export default function SearchGooglePlaces() {
 				setValue(newValue);
 				//	//////////////ADDED DETAILS LOGIC HERE //////////////////////////////
 				if (newValue) {
-					const details = await getDetails({
+					const details: any = await getDetails({
 						placeId: newValue.place_id.toString(),
 						fields: ['name', 'formatted_address', 'photos', 'geometry'],
 					});
-					console.log(details);
-					const viewportCoords = await getMapViewport(details);
-					dispatch(setMapViewport(viewportCoords));
+					dispatch(setMapViewport(details.geometry.viewport));
 					//	////////////// ///////////////////////////////////////////////////////
-
 					setMapCenterCoordinates(newValue.description);
 				}
 			}}
