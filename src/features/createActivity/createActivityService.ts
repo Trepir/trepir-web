@@ -18,11 +18,14 @@ export const createActivity = async (
 
 	const formattedDuration = Math.floor(durationHours * 60 + durationMinutes);
 
+	console.log(activityInput.location);
+
 	const formattedActivity = {
 		name: activityName,
 		description: activityDescription,
 		duration: formattedDuration,
 		imageUrl: photoUrl,
+		tags: activityInput.tag,
 		location: {
 			/* eslint-disable-next-line */
 			formattedAddress: formatted_address,
@@ -33,7 +36,7 @@ export const createActivity = async (
 			latitude: lat,
 			longitude: lng,
 			locationName: name,
-			photoUrl,
+			photoUrl: [photoUrl],
 		},
 		uid,
 	};
