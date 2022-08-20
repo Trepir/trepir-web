@@ -1,11 +1,28 @@
+import { useEffect } from 'react';
 import { Box } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
-import { selectFilteredActivities } from '../../app/reducers/mapSlice';
+import {
+	selectActivities,
+	selectMapCenter,
+	setActivites,
+} from '../../app/reducers/mapSlice';
 import Activity from './Activity';
+import { getActivitiesByCoordinates } from '../../features/createActivity/createActivityService';
 
 function ActivitiesList({ setSelectedActivity }: any) {
-	const activities = useSelector(selectFilteredActivities);
+	const dispatch = useDispatch();
+	const mapCenter = useSelector(selectMapCenter);
+	const activities = useSelector(selectActivities);
+	useEffect(() => {
+		console.log('in');
+		const getAllActivities = async () => {
+			const activityListByCoord = await getActivitiesByCoordinates(mapCenter);
+			console.log('Place activities', activityListByCoord);
+			dispatch(setActivites(activityListByCoord));
+		};
+		getAllActivities();
+	}, []);
 	return (
 		<Box
 			sx={{

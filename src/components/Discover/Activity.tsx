@@ -2,8 +2,8 @@ import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
 
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { setOneMarker } from '../../app/reducers/mapSlice';
 
 function Activity({ activity, setSelectedActivity }: any) {
@@ -27,7 +27,10 @@ function Activity({ activity, setSelectedActivity }: any) {
 			elevation={10}
 			onClick={() => handleClick()}
 		>
-			<AccountBalanceIcon style={{ fontSize: '110px', color: 'grey' }} />
+			<img
+				src={activity.location ? activity.location.photoUrl[0] : fallbackPhoto}
+				alt=""
+			/>
 			<Box
 				sx={{
 					display: 'flex',

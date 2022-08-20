@@ -30,7 +30,7 @@ import {
 	submitActivityName,
 	submitActivityTag,
 } from '../../../features/createActivity/createActivitySlice';
-import createActivity from '../../../features/createActivity/createActivityService';
+import { createActivity } from '../../../features/createActivity/createActivityService';
 import { selectUid } from '../../../app/reducers/authSlice';
 // import { selectUid } from '../../../app/reducers/authSlice';
 

@@ -34,6 +34,7 @@ export const mapSlice = createSlice({
 		setMapPan: (state, action: PayloadAction<Coords>) => {
 			state.panCoords = action.payload;
 		},
+		// Set map viewport
 		setTagsApplied: (state, action: PayloadAction<any>) => {
 			//	first check if the tag is already in the array
 			const index = state.tagsApplied.indexOf(action.payload);
@@ -47,6 +48,9 @@ export const mapSlice = createSlice({
 					...state.tagsApplied.slice(index + 1),
 				];
 			}
+		},
+		setActivites: (state, action) => {
+			state.activities = action.payload;
 		},
 		setFilteredActivites: (state) => {
 			state.filteredActivities = state.activities?.filter((activity) => {
@@ -75,6 +79,7 @@ export const {
 	setMapCenter,
 	setMapPan,
 	setTagsApplied,
+	setActivites,
 	setFilteredActivites,
 	setMarkers,
 	setOneMarker,
