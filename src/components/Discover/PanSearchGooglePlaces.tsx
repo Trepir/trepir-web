@@ -10,7 +10,8 @@ import throttle from 'lodash/throttle';
 import { getDetails, getGeocode, getLatLng } from 'use-places-autocomplete';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
-import { setMapPan } from '../../app/reducers/mapSlice';
+import { setMapPan, setMapViewport } from '../../app/reducers/mapSlice';
+import { getMapViewport } from '../../utils/mapUtils';
 
 // function loadScript(src: string, position: HTMLElement | null, id: string) {
 // 	if (!position) {
@@ -151,6 +152,8 @@ export default function PanSearchGooglePlaces() {
 						placeId: newValue.place_id.toString(),
 					});
 					console.log(details);
+					const viewportCoords = await getMapViewport(details);
+					dispatch(setMapViewport(viewportCoords));
 					//	////////////// ///////////////////////////////////////////////////////
 
 					setMapPanCoordinates(newValue.description);

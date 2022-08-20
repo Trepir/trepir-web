@@ -14,9 +14,9 @@ import {
 import TripForm from './TripForm';
 import DashboardHome from '../../components/Dashboard/DashboardHome/DashboardHome';
 import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
-// import CreateActivityForm from '../../components/Dashboard/EditTripPage/CreateActivity';
+import CreateActivityForm from '../../components/Dashboard/EditTripPage/CreateActivity';
 // import CalendarView from './CalendarView';
-import AddTravelForm from '../../components/Dashboard/TripForm/AddTravelForm';
+// import AddTravelForm from '../../components/Dashboard/TripForm/AddTravelForm';
 
 function Dashboard() {
 	// LOAD MAP
