@@ -37,12 +37,3 @@
 		transform: translateY(0px);
 	}
 }
-
-.modal-buttons-container {
-	display: flex;
-	gap: 2rem;
-}
-.modal-form-container {
-	display: flex;
-	gap: 2rem;
-}

@@ -69,7 +69,6 @@ function Dashboard() {
 				<Route path="/" element={<DashboardHome />} />
 				<Route path="/createtrip" element={<TripForm />} />
 				<Route path="/trip" element={<EditTripPage />} />
-				<Route path="/tripplan" element={<CalendarView />} />
 			</Routes>
 			{/* Create Activity Modal render */}
 			{/* <Button onClick={handleOpen}>Create Activity</Button>
