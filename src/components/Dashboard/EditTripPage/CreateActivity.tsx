@@ -80,7 +80,12 @@ const AddActivitySchema = yup.object().shape({
 	activityTags: yup.mixed().required('Please add up to 3 tags'),
 });
 
-function CreateActivityForm() {
+type Props = {
+	handleCloseActivity: () => void;
+};
+
+function CreateActivityForm(props: Props) {
+	const { handleCloseActivity } = props;
 	const uid: string | null = useSelector(selectUid);
 	const newActivity: any = useAppSelector(selectNewActivity);
 	const theme = useTheme();
@@ -127,6 +132,7 @@ function CreateActivityForm() {
 			if (uid) {
 				const createdActivity = await createActivity(data, newActivity, uid);
 				console.log('response', createdActivity);
+				handleCloseActivity();
 			}
 		}
 	};

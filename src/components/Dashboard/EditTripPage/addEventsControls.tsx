@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Button, Modal } from '@mui/material';
 import CreateActivityForm from './CreateActivity';
+import AddTravelForm from '../TripForm/AddTravelForm';
+import AddAccommodationForm from '../TripForm/AddAccommodationForm';
 
 const style = {
 	position: 'absolute' as 'absolute',
@@ -16,9 +18,15 @@ const style = {
 };
 
 function AddEventsControls() {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	const [openActivity, setOpenActivity] = useState(false);
+	const handleOpenActivity = () => setOpenActivity(true);
+	const handleCloseActivity = () => setOpenActivity(false);
+	const [openTravel, setOpenTravel] = useState(false);
+	const handleOpenTravel = () => setOpenTravel(true);
+	const handleCloseTravel = () => setOpenTravel(false);
+	const [openAccommodation, setOpenAccommodation] = useState(false);
+	const handleOpenAccommodation = () => setOpenAccommodation(true);
+	const handleCloseAccommodation = () => setOpenAccommodation(false);
 	return (
 		<>
 			<Box
@@ -30,20 +38,46 @@ function AddEventsControls() {
 					justifyContent: 'center',
 				}}
 			>
-				<Button variant="contained" onClick={handleOpen}>
+				<Button variant="contained" onClick={handleOpenActivity}>
 					Add Activity
 				</Button>
-				<Button variant="contained">Add Travel</Button>
-				<Button variant="contained">Add Accomodation</Button>
+				<Button variant="contained" onClick={handleOpenTravel}>
+					Add Travel
+				</Button>
+				<Button variant="contained" onClick={handleOpenAccommodation}>
+					Add Accomodation
+				</Button>
 			</Box>
 			<Modal
-				open={open}
-				onClose={handleClose}
+				open={openActivity}
+				onClose={handleCloseActivity}
 				aria-labelledby="create-activity-modal"
 				aria-describedby="create-activity-modal"
 			>
 				<Box sx={style}>
-					<CreateActivityForm />
+					<CreateActivityForm handleCloseActivity={handleCloseActivity} />
+				</Box>
+			</Modal>
+			<Modal
+				open={openTravel}
+				onClose={handleCloseTravel}
+				aria-labelledby="create-travel-modal"
+				aria-describedby="create-travel-modal"
+			>
+				<Box sx={style}>
+					<AddTravelForm handleCloseTravel={handleCloseTravel} />
+				</Box>
+			</Modal>
+			<Modal
+				open={openAccommodation}
+				onClose={handleCloseAccommodation}
+				aria-labelledby="create-accommodation-modal"
+				aria-describedby="create-accommodation-modal"
+			>
+				<Box sx={style}>
+					<AddAccommodationForm
+						handleCloseAccommodation={handleCloseAccommodation}
+					/>
 				</Box>
 			</Modal>
 		</>
