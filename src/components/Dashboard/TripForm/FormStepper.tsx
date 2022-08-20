@@ -83,7 +83,9 @@ function FormStepper() {
 				dispatch(addTrip(createdTrip));
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				// Pending call to backend and use trip id for params
-				navigate(`/trip/${createdTrip.id}`, { replace: true });
+				//	SET YOUR SELECTED TRIP BEFORE NAIGATING TO edit page
+				dispatch(setSelectedTripId(createdTrip.id));
+				navigate('../trip');
 			}
 		}
 	};

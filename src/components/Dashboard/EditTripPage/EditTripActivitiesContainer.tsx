@@ -1,12 +1,10 @@
-// import { Card, Typography } from '@mui/material';
-// import Box from '@mui/material/Box';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-// import Activity from '../../Discover/Activity';
-// import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-
 import Activity from '../../Discover/Activity';
 
-function EditTripActivitiesContainer({ savedActivities }: any) {
+function EditTripActivitiesContainer({
+	savedActivities,
+	setSelectedActivity,
+}: any) {
 	//	the ids are so that this list will always contain unique draggable ids. Activity id was not going to work
 	const ids: any = [];
 	//	eslint-disable-next-line
@@ -15,11 +13,7 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 	}
 	console.log(ids);
 	return (
-		<Droppable
-			droppableId="favoritedActivities"
-			key="favoritedActivities"
-			// direction="horizontal"
-		>
+		<Droppable droppableId="favoritedActivities" key="favoritedActivities">
 			{/* eslint-disable-next-line */}
 			{(provided) => {
 				return (
@@ -28,8 +22,6 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 						style={{
-							// backgroundColor: 'pink',
-							// width: '50vw',
 							display: 'flex',
 							flexWrap: 'wrap',
 							margin: '3vw 0 0 5vw',
@@ -53,23 +45,13 @@ function EditTripActivitiesContainer({ savedActivities }: any) {
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
 												style={{
-													// userSelect: 'none',
-													// padding: 4,
-													// height: '6rem',
-													// minHeight: '6rem',
-													// width: '4rem',
-													// minWidth: '4rem',
-													// backgroundColor: '#456C86',
-													// color: 'white',
-													// border: '1px solid black',
 													...provided.draggableProps.style,
 												}}
 											>
 												<Activity
 													activity={activity}
-													setSelectedActivity={() => console.log('placeholder')}
+													setSelectedActivity={setSelectedActivity}
 												/>
-												{/* {activity.name} */}
 											</div>
 										);
 									}}

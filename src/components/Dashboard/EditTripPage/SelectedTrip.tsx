@@ -1,10 +1,9 @@
-// import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Activity from '../../Discover/Activity';
 
-function SelectedTrip({ days, tripName }: any) {
+function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 	console.log('days', days);
 	const idMap: any = {};
 	//	eslint-disable-next-line
@@ -34,7 +33,6 @@ function SelectedTrip({ days, tripName }: any) {
 				style={{
 					display: 'flex',
 					flexDirection: 'column',
-					// border: 'solid',
 					height: '80vh',
 					overflowY: 'scroll',
 					width: '50vw',
@@ -80,23 +78,14 @@ function SelectedTrip({ days, tripName }: any) {
 														{...provided.draggableProps}
 														{...provided.dragHandleProps}
 														style={{
-															// userSelect: 'none',
-															// padding: 4,
 															height: 140,
-															// minHeight: '6rem',
 															width: 250,
-															// minWidth: '4rem',
-															// backgroundColor: '#456C86',
-															// color: 'white',
-															// border: '1px solid black',
 															...provided.draggableProps.style,
 														}}
 													>
 														<Activity
 															activity={activity}
-															setSelectedActivity={() =>
-																console.log('placeholder')
-															}
+															setSelectedActivity={setSelectedActivity}
 														/>
 													</div>
 												);
