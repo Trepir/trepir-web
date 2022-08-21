@@ -14,7 +14,7 @@ import { parseMapViewport } from '../../utils/mapUtils';
 function ActivitiesList({ setSelectedActivity }: any) {
 	const dispatch = useDispatch();
 	const viewportCoords: any = useSelector(selectViewportCoords);
-	const activities = useSelector(selectActivities);
+	const activities: any = useSelector(selectActivities);
 	useEffect(() => {
 		const getActivities = async () => {
 			if (!viewportCoords) return;
@@ -49,7 +49,7 @@ function ActivitiesList({ setSelectedActivity }: any) {
 				}}
 			>
 				{activities
-					? activities?.map((activity) => (
+					? activities?.map((activity: any) => (
 							<Activity
 								activity={activity}
 								setSelectedActivity={setSelectedActivity}
