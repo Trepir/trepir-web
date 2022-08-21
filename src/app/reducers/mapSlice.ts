@@ -5,6 +5,7 @@ import { RootState } from '../store';
 export interface mapState {
 	panCoords: Coords | null;
 	viewportCoords: any;
+	prevViewportCoords: any;
 	activities: any[] | null;
 	tagsApplied: any[];
 	filteredActivities: any[] | null | undefined;
@@ -14,6 +15,7 @@ export interface mapState {
 const initialState: mapState = {
 	panCoords: null,
 	viewportCoords: null,
+	prevViewportCoords: null,
 	activities: null,
 	tagsApplied: [],
 	filteredActivities: null,
@@ -24,8 +26,12 @@ export const mapSlice = createSlice({
 	name: 'map',
 	initialState,
 	reducers: {
+		setMapPan: (state, action: PayloadAction<Coords>) => {
+			state.panCoords = action.payload;
+		},
 		setMapViewport: (state, action: PayloadAction<any>) => {
 			state.viewportCoords = action.payload;
+			if (action.payload) state.prevViewportCoords = action.payload;
 		},
 		setTagsApplied: (state, action: PayloadAction<any>) => {
 			//	first check if the tag is already in the array
@@ -65,23 +71,37 @@ export const mapSlice = createSlice({
 			);
 			state.markers = markers;
 		},
-		setOneMarker: (state, action: PayloadAction<Coords>) => {
-			state.markers = [action.payload];
+		setSpecificMarkers: (state, action: PayloadAction<any>) => {
+			state.markers = [...action.payload];
+		},
+		resetMap: (state) => {
+			state.panCoords = null;
+			state.viewportCoords = null;
+			state.prevViewportCoords = null;
+			state.activities = null;
+			state.tagsApplied = [];
+			state.filteredActivities = null;
+			state.markers = [];
 		},
 	},
 });
 
 export const {
+	setMapPan,
 	setMapViewport,
 	setTagsApplied,
 	setActivities,
 	setFilteredActivities,
 	setMarkers,
-	setOneMarker,
+	setSpecificMarkers,
+	resetMap,
 } = mapSlice.actions;
 
+export const selectPanCoords = (state: RootState) => state.map.panCoords;
 export const selectViewportCoords = (state: RootState) =>
 	state.map.viewportCoords;
+export const selectPrevViewportCoords = (state: RootState) =>
+	state.map.prevViewportCoords;
 export const selectActivities = (state: RootState) => state.map.activities;
 export const selectTagsApplied = (state: RootState) => state.map.tagsApplied;
 export const selectFilteredActivities = (state: RootState) =>

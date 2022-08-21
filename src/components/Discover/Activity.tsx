@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
 
-import { setOneMarker } from '../../app/reducers/mapSlice';
+import { setMapPan, setSpecificMarkers } from '../../app/reducers/mapSlice';
 import {
 	selectFavoriteActivities,
 	toggleFavoriteActivity,
@@ -25,7 +25,15 @@ function Activity(props: Props) {
 
 	function handleClick() {
 		dispatch(
-			setOneMarker({
+			setSpecificMarkers([
+				{
+					lat: activity.location.latitude,
+					lng: activity.location.longitude,
+				},
+			])
+		);
+		dispatch(
+			setMapPan({
 				lat: activity.location.latitude,
 				lng: activity.location.longitude,
 			})

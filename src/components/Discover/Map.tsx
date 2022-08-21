@@ -1,15 +1,12 @@
 import React from 'react';
 
-import {
-	GoogleMap,
-	MarkerF,
-	// InfoWindow,
-} from '@react-google-maps/api';
-//	REDUX IMPORTS
-import { useSelector } from 'react-redux';
+import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	selectMarkers,
+	selectPanCoords,
 	selectViewportCoords,
+	setMapViewport,
 } from '../../app/reducers/mapSlice';
 
 //	We set these up outside of the googlemaps component becasue the map will accidentally rerender
@@ -20,7 +17,10 @@ const mapContainerStyle = {
 const center = { lat: 0, lng: 0 };
 
 function Map() {
+	const dispatch = useDispatch();
 	const viewport = useSelector(selectViewportCoords);
+	const panCoords = useSelector(selectPanCoords);
+
 	//	create a reference to the map itself
 	//	ref lets you change states without causing app to rerender
 	const mapRef: any = React.useRef();
@@ -29,15 +29,30 @@ function Map() {
 		if (viewport) mapRef.current.fitBounds(viewport);
 	}, []);
 
-	//	FOR VIEWPORT
+	//	///////////////////FOR VIEWPORT////////////////////////
 	React.useEffect(() => {
 		if (viewport && mapRef.current !== undefined) {
 			mapRef.current.fitBounds(viewport);
 		}
 	}, [viewport]);
+	//	/////////////////////////////////////////////////////////////////
+	// ///////////////FOR PAN/ZOOM ON SELECT ACTIVITY///////////////
+	const panTo = React.useCallback(({ lat, lng }: any) => {
+		mapRef.current.panTo({ lat, lng });
+		mapRef.current.setZoom(15);
+	}, []);
 
-	// FOR MARKERS
+	React.useEffect(() => {
+		if (panCoords) {
+			panTo(panCoords);
+			dispatch(setMapViewport(null));
+		}
+	}, [panCoords]);
+	//	/////////////////////////////////////////////////////////////////
+	// ///////////////////////FOR MARKERS//////////////////////////////
 	const markers = useSelector(selectMarkers);
+	//	/////////////////////////////////////////////////////////////////
+
 	// if (loadError) alert('Error loading maps');
 
 	// if (!isLoaded) return <>Loading Maps</>;

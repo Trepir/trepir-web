@@ -16,6 +16,8 @@ import { BASE_URL } from '../../../features/createTrip/createTripService';
 import AddEventsControls from './addEventsControls';
 import Map from '../../Discover/Map';
 import ActivityDetails from '../../Discover/ActivityDetails';
+import { parseMarkers } from '../../../utils/mapUtils';
+import { setSpecificMarkers } from '../../../app/reducers/mapSlice';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = (
@@ -23,7 +25,8 @@ const onDragEnd = (
 	days: any,
 	setDays: any,
 	savedActivities: any,
-	setSavedActivities: any
+	setSavedActivities: any,
+	setLocalMarkers: any
 ) => {
 	const { source, destination } = result;
 	//	/////////FAIL CHECKS/////////////////////
@@ -37,6 +40,13 @@ const onDragEnd = (
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkers({
+			...days,
+			[source.droppableId]: dayActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 
 		console.log('remove me!');
 		return;
@@ -64,6 +74,13 @@ const onDragEnd = (
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkers({
+			...days,
+			[source.droppableId]: dayActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 
 		console.log('remove me!');
 		return;
@@ -83,7 +100,6 @@ const onDragEnd = (
 		// add the copy of the removed activity, with a new id, to the source activities
 		sourceActivities.push(removedCopy);
 		//	set the days
-		console.log('destdropid:', destination.droppableId);
 		setDays({
 			...days,
 			[destination.droppableId]: destActivities,
@@ -92,6 +108,13 @@ const onDragEnd = (
 		setSavedActivities({
 			ActivitiesList: sourceActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkers({
+			...days,
+			[destination.droppableId]: destActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 
 		return;
 	}
@@ -115,6 +138,14 @@ const onDragEnd = (
 			[source.droppableId]: sourceActivities,
 			[destination.droppableId]: destActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkers({
+			...days,
+			[source.droppableId]: sourceActivities,
+			[destination.droppableId]: destActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 		return;
 	}
 	//	IF SOURCE & DEST ARE THE SAME DAY
@@ -129,6 +160,13 @@ const onDragEnd = (
 			...days,
 			[source.droppableId]: activities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkers({
+			...days,
+			[source.droppableId]: activities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 	}
 };
 
@@ -140,6 +178,8 @@ function EditTripPage() {
 	const [savedActivities, setSavedActivities] = useState<any>(null);
 	//  eslint-disable-next-line
 	const [days, setDays] = useState<any>(null);
+	//  eslint-disable-next-line
+	const [localMarkers, setLocalMarkers] = useState(null);
 
 	//	MAP CONTROL
 	const [mapSelected, setMapSelected] = useState(false);
@@ -157,7 +197,6 @@ function EditTripPage() {
 						`${BASE_URL}trip/tripById/${id}`
 					);
 					const jsonTripDetails = await fetchTripDetails.json();
-					console.log('json', jsonTripDetails);
 					dispatch(setSelectedTrip(jsonTripDetails));
 				} catch (e) {
 					console.log(e);
@@ -166,7 +205,7 @@ function EditTripPage() {
 		};
 		getTripDetails();
 	}, [id]);
-	//	//////////////////2. SET YOUR TRIP DAYS STATE /////////////////
+	//	//////////////////2. SET YOUR TRIP DAYS & MARKER STATE /////////////////
 
 	useEffect(() => {
 		if (!tripDetails) return;
@@ -174,13 +213,17 @@ function EditTripPage() {
 			tripDetails.startDate,
 			tripDetails.tripDay.length
 		);
+		//	///PARSE YOUR TRIP INTO A MAP OF DAYS//////////
 		//  eslint-disable-next-line
 		const tripDayMap: any = {};
 		//  eslint-disable-next-line
 		tripDetails.tripDay.forEach((day: any) => {
 			tripDayMap[dateList[day.dayIndex]] = day.tripDayActivities;
 		});
+		//	////////////////////////////////////////////////
 		setDays(tripDayMap);
+		//	//////PUT INITIAL MARKER STATE LOGIC HERE////////////
+		//	////////////////////////////////////////////////////
 	}, [tripDetails]);
 
 	//	//////////////////3. SET YOUR TRIP ACTIVITIES STATE /////////////////
@@ -200,6 +243,13 @@ function EditTripPage() {
 		getActivities();
 	}, []);
 
+	//	/////////////////SET MARKERS ON CHANGE///////////////////////
+	useEffect(() => {
+		if (!localMarkers) return;
+		dispatch(setSpecificMarkers(localMarkers));
+	}, [localMarkers]);
+	//	///////////////////////////////////////////////////////////////
+
 	return (
 		<>
 			{/* eslint-disable-next-line */}
@@ -211,7 +261,8 @@ function EditTripPage() {
 							days,
 							setDays,
 							savedActivities,
-							setSavedActivities
+							setSavedActivities,
+							setLocalMarkers
 						)
 					}
 				>

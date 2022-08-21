@@ -19,6 +19,7 @@ function ActivitiesList({ setSelectedActivity }: any) {
 	useEffect(() => {
 		const getActivities = async () => {
 			if (!viewportCoords) return;
+			//	NOTE: WE DO A FETCH EVERY TIME WE RETURN FROM AN ACTIVITY DETAIL
 			const parsedViewport = await parseMapViewport(viewportCoords);
 			const activityListByCoord = await getActivitiesByCoordinates(
 				parsedViewport
