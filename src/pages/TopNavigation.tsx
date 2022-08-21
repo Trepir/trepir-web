@@ -10,20 +10,27 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { AppBar, Box } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUid, setUid } from '../app/reducers/authSlice';
+import { logOut } from '../utils/firebase/firebaseFunctions';
 
 const pages = [
-	<Link to="/login">Login</Link>,
 	<Link to="/discover">Discover</Link>,
 	<Link to="/dashboard">Dashboard</Link>,
+	<Link to="/discover">Playground</Link>,
 
 	// <Link to="/private">Private</Link>,
 ];
 // const settings = ['Profile', 'Account', 'Logout'];
 
 function TopNavigation() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const loggedIn = useSelector(selectUid);
+
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
 		null
 	);
@@ -44,6 +51,17 @@ function TopNavigation() {
 
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
+	};
+
+	const handleLogout = async () => {
+		try {
+			await logOut();
+
+			dispatch(setUid(null));
+			navigate('/discover');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -161,11 +179,25 @@ function TopNavigation() {
 							open={Boolean(anchorElUser)}
 							onClose={handleCloseUserMenu}
 						>
-							<MenuItem key="1" onClick={handleCloseUserMenu}>
-								<Typography textAlign="center" component={Link} to="login">
-									Login
-								</Typography>
-							</MenuItem>
+							{loggedIn ? (
+								<MenuItem
+									key="1"
+									onClick={() => {
+										handleLogout();
+										handleCloseUserMenu();
+									}}
+								>
+									<Typography textAlign="center" component={Link} to="login">
+										Logout
+									</Typography>
+								</MenuItem>
+							) : (
+								<MenuItem key="1" onClick={handleCloseUserMenu}>
+									<Typography textAlign="center" component={Link} to="login">
+										Login
+									</Typography>
+								</MenuItem>
+							)}
 						</Menu>
 					</Box>
 				</Toolbar>
