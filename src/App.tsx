@@ -47,7 +47,6 @@ function App() {
 	const auth = getAuth();
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
-			console.log(user);
 			dispatch(setUid(user.uid));
 		} else {
 			console.log('not logged in');

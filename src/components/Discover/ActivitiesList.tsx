@@ -5,7 +5,8 @@ import Typography from '@mui/material/Typography';
 import {
 	selectActivities,
 	selectViewportCoords,
-	setActivites,
+	setActivities,
+	setMarkers,
 } from '../../app/reducers/mapSlice';
 import Activity from './Activity';
 import { getActivitiesByCoordinates } from '../../features/createActivity/createActivityService';
@@ -22,16 +23,14 @@ function ActivitiesList({ setSelectedActivity }: any) {
 			const activityListByCoord = await getActivitiesByCoordinates(
 				parsedViewport
 			);
-
-			console.log('Place activities', activityListByCoord);
-			dispatch(setActivites(activityListByCoord));
+			dispatch(setActivities(activityListByCoord));
+			dispatch(setMarkers());
 		};
 		getActivities();
 	}, [viewportCoords]);
 	return (
 		<Box
 			sx={{
-				// backgroundColor: 'pink',
 				display: 'flex',
 				flexDirection: 'column',
 				height: '25vh',

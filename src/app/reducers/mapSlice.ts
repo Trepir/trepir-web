@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Coords } from '../../types/MapTypes';
-import mock from '../../utils/mockActivities';
 import { RootState } from '../store';
 
 export interface mapState {
-	mapCenter: Coords;
 	panCoords: Coords | null;
 	viewportCoords: any;
 	activities: any[] | null;
@@ -14,15 +12,11 @@ export interface mapState {
 }
 
 const initialState: mapState = {
-	mapCenter: {
-		lat: 41.385063,
-		lng: 2.173404,
-	},
 	panCoords: null,
 	viewportCoords: null,
-	activities: mock,
+	activities: null,
 	tagsApplied: [],
-	filteredActivities: mock,
+	filteredActivities: null,
 	markers: [],
 };
 
@@ -30,12 +24,6 @@ export const mapSlice = createSlice({
 	name: 'map',
 	initialState,
 	reducers: {
-		setMapCenter: (state, action: PayloadAction<Coords>) => {
-			state.mapCenter = action.payload;
-		},
-		setMapPan: (state, action: PayloadAction<Coords>) => {
-			state.panCoords = action.payload;
-		},
 		setMapViewport: (state, action: PayloadAction<any>) => {
 			state.viewportCoords = action.payload;
 		},
@@ -53,10 +41,11 @@ export const mapSlice = createSlice({
 				];
 			}
 		},
-		setActivites: (state, action) => {
+		setActivities: (state, action) => {
 			state.activities = action.payload;
+			state.filteredActivities = action.payload;
 		},
-		setFilteredActivites: (state) => {
+		setFilteredActivities: (state) => {
 			state.filteredActivities = state.activities?.filter((activity) => {
 				let result: boolean = true;
 				state.tagsApplied.forEach((tag) => {
@@ -69,7 +58,10 @@ export const mapSlice = createSlice({
 		setMarkers: (state) => {
 			const markers: Coords[] = [];
 			state.filteredActivities?.forEach((activity) =>
-				markers.push(activity.coords)
+				markers.push({
+					lat: activity.location.latitude,
+					lng: activity.location.longitude,
+				})
 			);
 			state.markers = markers;
 		},
@@ -80,18 +72,14 @@ export const mapSlice = createSlice({
 });
 
 export const {
-	setMapCenter,
-	setMapPan,
 	setMapViewport,
 	setTagsApplied,
-	setActivites,
-	setFilteredActivites,
+	setActivities,
+	setFilteredActivities,
 	setMarkers,
 	setOneMarker,
 } = mapSlice.actions;
 
-export const selectMapCenter = (state: RootState) => state.map.mapCenter;
-export const selectPanCoords = (state: RootState) => state.map.panCoords;
 export const selectViewportCoords = (state: RootState) =>
 	state.map.viewportCoords;
 export const selectActivities = (state: RootState) => state.map.activities;

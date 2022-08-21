@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	selectTagsApplied,
-	setFilteredActivites,
+	setFilteredActivities,
 	setMarkers,
 	setTagsApplied,
 } from '../../app/reducers/mapSlice';
@@ -21,7 +21,7 @@ function Tag({ label }: any) {
 		if (selected) setSelected(false);
 		if (!selected) setSelected(true);
 		dispatch(setTagsApplied(tag));
-		dispatch(setFilteredActivites());
+		dispatch(setFilteredActivities());
 		dispatch(setMarkers());
 	}
 	return (

@@ -24,7 +24,12 @@ function Activity(props: Props) {
 	const favoriteColor: boolean = favoriteActivities.includes(activity.id);
 
 	function handleClick() {
-		dispatch(setOneMarker(activity.coords));
+		dispatch(
+			setOneMarker({
+				lat: activity.location.latitude,
+				lng: activity.location.longitude,
+			})
+		);
 
 		setSelectedActivity(activity);
 	}
