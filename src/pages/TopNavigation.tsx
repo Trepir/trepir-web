@@ -16,13 +16,12 @@ import { AppBar, Box } from '@mui/material';
 
 const pages = [
 	<Link to="/login">Login</Link>,
-	// <Link to="/redux">Redux</Link>,
 	<Link to="/discover">Discover</Link>,
 	<Link to="/dashboard">Dashboard</Link>,
 
 	// <Link to="/private">Private</Link>,
 ];
-const settings = ['Profile', 'Account', 'Logout'];
+// const settings = ['Profile', 'Account', 'Logout'];
 
 function TopNavigation() {
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -162,11 +161,11 @@ function TopNavigation() {
 							open={Boolean(anchorElUser)}
 							onClose={handleCloseUserMenu}
 						>
-							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
-									<Typography textAlign="center">{setting}</Typography>
-								</MenuItem>
-							))}
+							<MenuItem key="1" onClick={handleCloseUserMenu}>
+								<Typography textAlign="center" component={Link} to="login">
+									Login
+								</Typography>
+							</MenuItem>
 						</Menu>
 					</Box>
 				</Toolbar>
