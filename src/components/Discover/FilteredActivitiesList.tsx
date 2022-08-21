@@ -30,7 +30,7 @@ function FilteredActivitiesList({ setSelectedActivity }: any) {
 					height: '20vh',
 				}}
 			>
-				{activities?.map((activity) => (
+				{activities?.map((activity: any) => (
 					<Activity
 						activity={activity}
 						setSelectedActivity={setSelectedActivity}
