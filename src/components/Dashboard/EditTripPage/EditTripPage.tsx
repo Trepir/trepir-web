@@ -17,7 +17,11 @@ import AddEventsControls from './addEventsControls';
 import Map from '../../Discover/Map';
 import ActivityDetails from '../../Discover/ActivityDetails';
 import { parseMarkers } from '../../../utils/mapUtils';
-import { setSpecificMarkers } from '../../../app/reducers/mapSlice';
+import {
+	setMapViewport,
+	setSpecificMarkers,
+} from '../../../app/reducers/mapSlice';
+import { getViewportWithId } from '../../../utils/googleMaps/googleService';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = (
@@ -248,6 +252,16 @@ function EditTripPage() {
 		if (!localMarkers) return;
 		dispatch(setSpecificMarkers(localMarkers));
 	}, [localMarkers]);
+	//	///////////////////////////////////////////////////////////////
+	//	/////////////////SET INITIAL MAP VIEWPORT///////////////////////
+	useEffect(() => {
+		const initializeMap = async () => {
+			const viewport = await getViewportWithId(tripDetails.googlePlaceId);
+			dispatch(setMapViewport(viewport));
+		};
+		if (!tripDetails) return;
+		initializeMap();
+	}, [tripDetails]);
 	//	///////////////////////////////////////////////////////////////
 
 	return (

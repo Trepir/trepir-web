@@ -24,10 +24,12 @@ function Map() {
 	//	create a reference to the map itself
 	//	ref lets you change states without causing app to rerender
 	const mapRef: any = React.useRef();
+	//	/////////WHEN MAP IS LOADED DO THIS ///////////////
 	const onMapLoad = React.useCallback((map: any) => {
 		mapRef.current = map;
 		if (viewport) mapRef.current.fitBounds(viewport);
 	}, []);
+	//	/////////////////////////////////////////////////
 
 	//	///////////////////FOR VIEWPORT////////////////////////
 	React.useEffect(() => {
@@ -43,12 +45,12 @@ function Map() {
 	}, []);
 
 	React.useEffect(() => {
-		if (panCoords) {
+		if (panCoords && mapRef.current !== undefined) {
 			panTo(panCoords);
 			dispatch(setMapViewport(null));
 		}
 	}, [panCoords]);
-	//	/////////////////////////////////////////////////////////////////
+
 	// ///////////////////////FOR MARKERS//////////////////////////////
 	const markers = useSelector(selectMarkers);
 	//	/////////////////////////////////////////////////////////////////
