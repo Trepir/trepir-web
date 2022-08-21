@@ -2,33 +2,35 @@ import { useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
+import { selectViewportCoords, setMarkers } from '../../app/reducers/mapSlice';
 import {
 	selectActivities,
-	selectViewportCoords,
 	setActivities,
-	setMarkers,
-} from '../../app/reducers/mapSlice';
+} from '../../app/reducers/discoverSlice';
 import Activity from './Activity';
 import { getActivitiesByCoordinates } from '../../features/createActivity/createActivityService';
-import { parseMapViewport } from '../../utils/mapUtils';
+import { parseMapViewport, parseMarkersDiscover } from '../../utils/mapUtils';
 
 function ActivitiesList({ setSelectedActivity }: any) {
 	const dispatch = useDispatch();
 	const viewportCoords: any = useSelector(selectViewportCoords);
 	const activities: any = useSelector(selectActivities);
+
 	useEffect(() => {
 		const getActivities = async () => {
 			if (!viewportCoords) return;
-			//	NOTE: WE DO A FETCH EVERY TIME WE RETURN FROM AN ACTIVITY DETAIL
+			//	NOTE: WE DO A FETCH EVERY TIME WE RETURN FROM AN ACTIVITY DETAIL--- MAYBE FIX?
 			const parsedViewport = await parseMapViewport(viewportCoords);
 			const activityListByCoord = await getActivitiesByCoordinates(
 				parsedViewport
 			);
 			dispatch(setActivities(activityListByCoord));
-			dispatch(setMarkers());
+			const markers = parseMarkersDiscover(activityListByCoord);
+			dispatch(setMarkers(markers));
 		};
 		getActivities();
 	}, [viewportCoords]);
+
 	return (
 		<Box
 			sx={{

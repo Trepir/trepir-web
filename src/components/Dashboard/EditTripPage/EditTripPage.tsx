@@ -16,12 +16,17 @@ import { BASE_URL } from '../../../features/createTrip/createTripService';
 import AddEventsControls from './addEventsControls';
 import Map from '../../Discover/Map';
 import ActivityDetails from '../../Discover/ActivityDetails';
-import { parseMarkers } from '../../../utils/mapUtils';
+import { parseMarkersDashboard } from '../../../utils/mapUtils';
 import {
+	selectPrevViewportCoords,
 	setMapViewport,
 	setSpecificMarkers,
 } from '../../../app/reducers/mapSlice';
 import { getViewportWithId } from '../../../utils/googleMaps/googleService';
+import {
+	selectViewingMap,
+	setViewingMap,
+} from '../../../app/reducers/dashboardSlice';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = (
@@ -45,7 +50,7 @@ const onDragEnd = (
 			[source.droppableId]: dayActivities,
 		});
 		//	MARKERS
-		const newMarkers = parseMarkers({
+		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: dayActivities,
 		});
@@ -79,7 +84,7 @@ const onDragEnd = (
 			[source.droppableId]: dayActivities,
 		});
 		//	MARKERS
-		const newMarkers = parseMarkers({
+		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: dayActivities,
 		});
@@ -113,7 +118,7 @@ const onDragEnd = (
 			ActivitiesList: sourceActivities,
 		});
 		//	MARKERS
-		const newMarkers = parseMarkers({
+		const newMarkers = parseMarkersDashboard({
 			...days,
 			[destination.droppableId]: destActivities,
 		});
@@ -143,7 +148,7 @@ const onDragEnd = (
 			[destination.droppableId]: destActivities,
 		});
 		//	MARKERS
-		const newMarkers = parseMarkers({
+		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: sourceActivities,
 			[destination.droppableId]: destActivities,
@@ -165,7 +170,7 @@ const onDragEnd = (
 			[source.droppableId]: activities,
 		});
 		//	MARKERS
-		const newMarkers = parseMarkers({
+		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: activities,
 		});
@@ -186,7 +191,8 @@ function EditTripPage() {
 	const [localMarkers, setLocalMarkers] = useState(null);
 
 	//	MAP CONTROL
-	const [mapSelected, setMapSelected] = useState(false);
+	const mapSelected = useSelector(selectViewingMap);
+	const prevViewport = useSelector(selectPrevViewportCoords);
 	// ACTIVITY DETAIL CONTROL
 	const [selectedActivity, setSelectedActivity] = useState(false);
 
@@ -309,10 +315,22 @@ function EditTripPage() {
 									zIndex: '1',
 								}}
 							>
-								<Button onClick={() => setMapSelected(false)}>
+								<Button
+									onClick={() => {
+										dispatch(setViewingMap(false));
+										dispatch(setMapViewport(prevViewport));
+									}}
+								>
 									Activities
 								</Button>
-								<Button onClick={() => setMapSelected(true)}>Map</Button>
+								<Button
+									onClick={() => {
+										dispatch(setViewingMap(true));
+										setSelectedActivity(false);
+									}}
+								>
+									Map
+								</Button>
 							</Paper>
 							{mapSelected ? (
 								<Map />

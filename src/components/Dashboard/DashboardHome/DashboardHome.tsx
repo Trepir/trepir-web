@@ -3,8 +3,15 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { resetMap } from '../../../app/reducers/mapSlice';
 
 function DashboardHome() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(resetMap('dashboard'));
+	}, []);
 	return (
 		<Box
 			sx={{

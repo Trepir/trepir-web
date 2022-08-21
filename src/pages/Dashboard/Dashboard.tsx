@@ -45,7 +45,7 @@ function Dashboard() {
 		getTripList();
 	}, [uid]);
 	useEffect(() => {
-		dispatch(resetMap());
+		dispatch(resetMap('dashboard'));
 	}, []);
 
 	return (

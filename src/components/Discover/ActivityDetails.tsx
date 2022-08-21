@@ -4,14 +4,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
 	selectPrevViewportCoords,
 	setMapViewport,
-	setMarkers,
+	// setMarkers,
 } from '../../app/reducers/mapSlice';
 
 function ActivityDetails({ setSelectedActivity, activity }: any) {
 	const dispatch = useDispatch();
 	const prevViewport = useSelector(selectPrevViewportCoords);
 	function handleClick() {
-		dispatch(setMarkers());
 		dispatch(setMapViewport(prevViewport));
 		setSelectedActivity(false);
 	}

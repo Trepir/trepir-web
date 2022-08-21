@@ -8,7 +8,7 @@ export const parseMapViewport = async (viewport: any) => {
 	return viewportCoords;
 };
 
-export const parseMarkers = (tripDayMap: any) => {
+export const parseMarkersDashboard = (tripDayMap: any) => {
 	const markers: any[] = [];
 	const days: [any][] = Object.values(tripDayMap);
 	days.forEach((day) => {
@@ -19,5 +19,17 @@ export const parseMarkers = (tripDayMap: any) => {
 			});
 		});
 	});
+	return markers;
+};
+
+export const parseMarkersDiscover = (activities: any[]) => {
+	const markers: any[] = [];
+	activities.forEach((activity) => {
+		markers.push({
+			lat: activity.location.latitude,
+			lng: activity.location.longitude,
+		});
+	});
+
 	return markers;
 };

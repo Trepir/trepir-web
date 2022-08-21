@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/material';
-import { selectTagsApplied } from '../../app/reducers/mapSlice';
+import { selectTagsApplied } from '../../app/reducers/discoverSlice';
 import ActivitiesList from './ActivitiesList';
 import ActivityDetails from './ActivityDetails';
 import FilteredActivitiesList from './FilteredActivitiesList';
