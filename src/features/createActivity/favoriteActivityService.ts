@@ -4,12 +4,11 @@ export const updateFavoriteActivity = async (
 	uid: string,
 	activityId: string
 ) => {
+	const activityToFavorite = {
+		activityId,
+		uid,
+	};
 	try {
-		const activityToFavorite = {
-			activityId,
-			uid,
-		};
-
 		const newFavoriteActivity = await fetch(`${BASE_URL}activity/favorite`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -26,24 +25,44 @@ export const updateFavoriteActivity = async (
 export const saveActivityToTrip = async (
 	uid: string,
 	activityId: string,
-	tripId: string
+	tripId: string,
+	favoriteList: string[]
 ) => {
-	try {
-		const activityToAddToTrip = {
-			activityId,
-			uid,
-			tripId,
-		};
-
-		const activitySavedToTrip = await fetch(`${BASE_URL}activity/favorite`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(activityToAddToTrip),
-		});
-		const jsonActivitySavedToTrip = await activitySavedToTrip.json();
-		return jsonActivitySavedToTrip;
-	} catch (e) {
-		console.log(e);
-		return e;
+	const activityToAddToTrip = {
+		activityId,
+		uid,
+		tripId,
+	};
+	if (favoriteList.includes(activityToAddToTrip.activityId)) {
+		try {
+			await fetch(`${BASE_URL}activity/favorite`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ activityId, uid }),
+			});
+			const activitySavedToTrip = await fetch(`${BASE_URL}activity/favorite`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(activityToAddToTrip),
+			});
+			const jsonActivitySavedToTrip = await activitySavedToTrip.json();
+			return jsonActivitySavedToTrip;
+		} catch (e) {
+			console.log(e);
+			return e;
+		}
+	} else {
+		try {
+			const activitySavedToTrip = await fetch(`${BASE_URL}activity/favorite`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(activityToAddToTrip),
+			});
+			const jsonActivitySavedToTrip = await activitySavedToTrip.json();
+			return jsonActivitySavedToTrip;
+		} catch (e) {
+			console.log(e);
+			return e;
+		}
 	}
 };
