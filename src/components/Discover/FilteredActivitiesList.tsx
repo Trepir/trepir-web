@@ -13,6 +13,8 @@ import { setMarkers } from '../../app/reducers/mapSlice';
 function FilteredActivitiesList({ setSelectedActivity }: any) {
 	const dispatch = useDispatch();
 	const activities = useSelector(selectFilteredActivities);
+	const appliedTags = useSelector(selectTagsApplied);
+
 	useEffect(() => {
 		if (!activities) return;
 		const markers = parseMarkersDiscover(activities);
@@ -28,12 +30,13 @@ function FilteredActivitiesList({ setSelectedActivity }: any) {
 			}}
 		>
 			<Typography variant="subtitle1" style={{ alignSelf: 'flex-start' }}>
-				{useSelector(selectTagsApplied)}:
+				{appliedTags}:
 			</Typography>
 			<Box
 				sx={{
 					display: 'flex',
-					flexDirection: 'column',
+					// flexDirection: 'column',
+					flexWrap: 'wrap',
 					gap: 2,
 					// overflow: 'scroll',
 					height: '20vh',
