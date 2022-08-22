@@ -21,6 +21,8 @@ export const addActivityToTrip = async (
 	order: number
 ) => {
 	try {
+		console.log('here');
+
 		console.log(tripDayId, activityId, order);
 
 		const updatedDay = await fetch(`${BASE_URL}trip/addActivity`, {

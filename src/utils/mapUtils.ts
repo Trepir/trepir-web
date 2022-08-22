@@ -14,12 +14,25 @@ export const parseMarkersDashboard = (tripDayMap: any) => {
 	const days: [any][] = Object.values(tripDayMap);
 	days.forEach((day) => {
 		day.forEach((activity) => {
-			markers.push({
-				lat: activity.dayActivity.activity.location.latitude,
-				lng: activity.dayActivity.activity.location.longitude,
-			});
+			if (activity.travelEvent) {
+				markers.push({
+					lat: activity.travelEvent.destinationLocation.latitude,
+					lng: activity.travelEvent.destinationLocation.longitude,
+				});
+			} else if (activity.accommodation) {
+				markers.push({
+					lat: activity.accommodation.location.latitude,
+					lng: activity.accommodation.location.longitude,
+				});
+			} else {
+				markers.push({
+					lat: activity.dayActivity.activity.location.latitude,
+					lng: activity.dayActivity.activity.location.longitude,
+				});
+			}
 		});
 	});
+	console.log(markers);
 	return markers;
 };
 
