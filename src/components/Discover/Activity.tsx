@@ -53,8 +53,6 @@ function Activity(props: Props) {
 		dispatch(toggleFavoriteActivity(activity.id));
 	};
 
-	console.log(activity.name);
-
 	return (
 		<div>
 			<IconButton
