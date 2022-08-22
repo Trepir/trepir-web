@@ -20,7 +20,7 @@ import { logOut } from '../utils/firebase/firebaseFunctions';
 const pages = [
 	<Link to="/discover">Discover</Link>,
 	<Link to="/dashboard">Dashboard</Link>,
-	<Link to="/discover">Playground</Link>,
+	<Link to="/playground">Playground</Link>,
 
 	// <Link to="/private">Private</Link>,
 ];

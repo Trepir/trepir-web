@@ -96,7 +96,7 @@ export default function SearchGooglePlaces() {
 	return (
 		<Autocomplete
 			id="google-map-demo"
-			sx={{ width: 300 }}
+			sx={{ width: 350, backgroundColor: 'white', zIndex: 3 }}
 			getOptionLabel={(option) =>
 				typeof option === 'string' ? option : option.description
 			}
