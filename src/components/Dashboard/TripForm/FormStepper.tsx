@@ -31,6 +31,7 @@ import {
 } from '../../../features/createTrip/selectedTripSlice';
 import createTravel from '../../../features/createTravel/createTravelService';
 import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
+import FormStepThree from './FormStepThree';
 
 // import {
 // 	submitNewTrip,
@@ -41,7 +42,7 @@ function FormStepper() {
 	const travelList = useAppSelector(selectTravelList);
 	const submitRef: React.MutableRefObject<any> = useRef();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
-	const steps = ['Travel Details', 'Add Activities'];
+	const steps = ['General Information', 'Travel Details', 'Add Activities'];
 	const newTrip = useAppSelector(selectNewTrip);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -143,6 +144,11 @@ function FormStepper() {
 			) : null}
 		</div>,
 		<FormStepTwo
+			submitRef={submitRef}
+			setValidated={setValidated}
+			setActiveStep={setActiveStep}
+		/>,
+		<FormStepThree
 			submitRef={submitRef}
 			setValidated={setValidated}
 			setActiveStep={setActiveStep}
