@@ -45,16 +45,16 @@ const onDragEnd = async (
 	dayIdMap: any
 ) => {
 	const { source, destination } = result;
+	console.log('source:', source);
+	console.log('destination:', destination);
+
 	//	/////////FAIL CHECKS/////////////////////
 	//	CHECK: DROPPING AT A DROPPPABLE LOCATION
 	if (!result.destination) {
 		//	//WORKING HERE///////////
 		const dayActivities = [...days[source.droppableId]];
 		const tripDayActivity = dayActivities[source.index];
-		console.log('activity:', tripDayActivity);
 		const tripDayActivityId = tripDayActivity.id;
-		console.log(tripDayActivity);
-		console.log(tripDayActivityId);
 		await removeActivityFromTrip(tripDayActivityId);
 		//	//WORKING HERE///////////
 
@@ -173,16 +173,21 @@ const onDragEnd = async (
 
 		// WORKING HERE//////////////////
 		//	1. remove
-		const activityToRemove = sourceActivities[source.index];
-		const tripDayActivityIdToRemove = activityToRemove.id;
-		await removeActivityFromTrip(tripDayActivityIdToRemove);
+		// const activityToRemove = sourceActivities[source.index];
+		// const tripDayActivityIdToRemove = activityToRemove.id;
+		// await removeActivityFromTrip(tripDayActivityIdToRemove);
 		const [removed] = sourceActivities.splice(source.index, 1);
+		//	If its a travel event or accomodation then return
+		if (removed.travelEvent) return;
 		// 2. add
 		const removedCopy = { ...removed };
 		console.log(removedCopy);
+		// check if activity or travel event
 		const addedActivityId = removedCopy.dayActivity.activityId;
+
 		console.log(addedActivityId);
 		const tripDayId = dayIdMap[destination.droppableId];
+		console.log('tripdayId:', tripDayId);
 		const { index } = destination;
 		console.log(index);
 		const updatedDay = await addActivityToTrip(
@@ -313,8 +318,8 @@ function EditTripPage() {
 		setDays(tripDayActivityMap);
 		setDayIdMap(tripDayIdMap);
 		//	//////PUT INITIAL MARKER STATE LOGIC HERE////////////
-		const markers = parseMarkersDashboard(tripDayActivityMap);
-		setLocalMarkers(markers);
+		// const markers = parseMarkersDashboard(tripDayActivityMap);
+		// setLocalMarkers(markers);
 		//	////////////////////////////////////////////////////
 	}, [tripDetails]);
 

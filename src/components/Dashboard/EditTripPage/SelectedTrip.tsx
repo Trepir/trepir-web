@@ -2,6 +2,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Activity from '../../Discover/Activity';
+import TravelEvent from './TravelEvent';
 
 function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 	console.log(days);
@@ -81,10 +82,14 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 															...provided.draggableProps.style,
 														}}
 													>
-														<Activity
-															activity={activity.dayActivity.activity}
-															setSelectedActivity={setSelectedActivity}
-														/>
+														{activity.travelEvent ? (
+															<TravelEvent activity={activity.travelEvent} />
+														) : (
+															<Activity
+																activity={activity.dayActivity.activity}
+																setSelectedActivity={setSelectedActivity}
+															/>
+														)}
 													</div>
 												);
 											}}
