@@ -11,9 +11,15 @@ function HomePage() {
 				flexDirection: 'column',
 				alignItems: 'center',
 				gap: '10vw',
+				backgroundColor: 'black',
 			}}
 		>
-			<div>Where do you want to go?</div>
+			<img
+				src="globe.gif"
+				alt="globe"
+				style={{ position: 'absolute', width: '130vh', height: '100vh' }}
+			/>
+			<div style={{ zIndex: 2, color: 'white' }}>Where do you want to go?</div>
 			<SearchGooglePlaces />
 		</Box>
 	);
