@@ -17,7 +17,7 @@ function MapPage() {
 					position: 'absolute',
 					display: 'flex',
 					flexDirection: 'column',
-					overflow: 'scroll',
+					// overflow: 'scroll',
 				}}
 			>
 				<FilterPage />
