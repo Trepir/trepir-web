@@ -11,13 +11,13 @@ function MapPage() {
 				elevation={20}
 				sx={{
 					width: '50vw',
-					height: '100vh',
+					height: '92.5vh',
 					borderRadius: 3,
 					zIndex: 4,
 					position: 'absolute',
 					display: 'flex',
 					flexDirection: 'column',
-					// overflow: 'scroll',
+					overflowY: 'scroll',
 				}}
 			>
 				<FilterPage />
