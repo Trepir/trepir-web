@@ -75,11 +75,9 @@ function Activity(props: Props) {
 		setAnchorEl(null);
 	};
 
-
 	const handleAddToTrip = (tripId: string) => {
 		if (uid) {
-			dispatch(toggleFavoriteActivity(activity.id));
-			saveActivityToTrip(uid, activity.id, tripId);
+			saveActivityToTrip(uid, activity.id, tripId, favoriteActivities);
 		}
 	};
 

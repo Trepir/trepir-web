@@ -85,7 +85,7 @@ function AddTravelForm(props: Props) {
 			dispatch(submitFlightNumber(data.flightNumber));
 			dispatch(addTravel(newTravel));
 			if (tripId && uid) {
-				await createTravel(data, newTravel, uid, tripId);
+				await createTravel(newTravel, uid, tripId, data);
 				handleCloseTravel();
 			}
 			// dispatch(submitTravelDepartureLocation(null));

@@ -29,6 +29,7 @@ import {
 	setSelectedTrip,
 	setSelectedTripId,
 } from '../../../features/createTrip/selectedTripSlice';
+import createTravel from '../../../features/createTravel/createTravelService';
 
 // import {
 // 	submitNewTrip,
@@ -79,6 +80,9 @@ function FormStepper() {
 					return;
 				}
 				const createdTrip = await createTrip(newTrip, uid);
+				travelList.forEach(async (travelEvent: any) => {
+					await createTravel(travelEvent, uid, createdTrip.id);
+				});
 
 				dispatch(addTrip(createdTrip));
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
