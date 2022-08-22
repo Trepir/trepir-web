@@ -15,7 +15,7 @@ function HomePage() {
 			}}
 		>
 			<img
-				src="map2.gif"
+				src="globe.gif"
 				alt="globe"
 				style={{ position: 'absolute', width: '100vw', height: '100vh' }}
 			/>
