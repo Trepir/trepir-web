@@ -14,10 +14,16 @@ export const favoriteActivitySlice = createSlice({
 				state.push(action.payload);
 			}
 		},
+		fetchFavoriteActivities: (state, action: PayloadAction<string>) => {
+			if (!state.includes(action.payload)) {
+				state.push(action.payload);
+			}
+		},
 	},
 });
 
-export const { toggleFavoriteActivity } = favoriteActivitySlice.actions;
+export const { toggleFavoriteActivity, fetchFavoriteActivities } =
+	favoriteActivitySlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

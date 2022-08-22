@@ -11,6 +11,8 @@ import {
 	toggleFavoriteActivity,
 } from '../../features/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../app/reducers/dashboardSlice';
+import { updateFavoriteActivity } from '../../features/createActivity/favoriteActivityService';
+import { selectUid } from '../../app/reducers/authSlice';
 
 type Props = {
 	activity: any;
@@ -20,6 +22,7 @@ type Props = {
 function Activity(props: Props) {
 	const { activity, setSelectedActivity } = props;
 	const favoriteActivities = useSelector(selectFavoriteActivities);
+	const uid: string | null = useSelector(selectUid);
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
@@ -50,7 +53,10 @@ function Activity(props: Props) {
 	}
 
 	const handleFavorite = () => {
-		dispatch(toggleFavoriteActivity(activity.id));
+		if (uid) {
+			dispatch(toggleFavoriteActivity(activity.id));
+			updateFavoriteActivity(uid, activity.id);
+		}
 	};
 
 	console.log(activity.name);
@@ -60,8 +66,8 @@ function Activity(props: Props) {
 			<IconButton
 				aria-label="favorite"
 				sx={{
-					position: 'absolute',
-					color: `${favoriteColor ? 'red' : 'white'}`,
+					position: 'relative',
+					color: `${favoriteColor ? 'red' : 'black'}`,
 				}}
 				onClick={handleFavorite}
 			>
