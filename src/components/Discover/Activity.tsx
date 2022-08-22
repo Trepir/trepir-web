@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import { Box, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
+// import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
 
 import { selectPage, setMapPan, setMarkers } from '../../app/reducers/mapSlice';
 import {
@@ -53,6 +53,8 @@ function Activity(props: Props) {
 		dispatch(toggleFavoriteActivity(activity.id));
 	};
 
+	console.log(activity.name);
+
 	return (
 		<div>
 			<IconButton
@@ -76,12 +78,12 @@ function Activity(props: Props) {
 				elevation={10}
 				onClick={() => handleClick()}
 			>
-				<img
+				{/* <img
 					src={
 						activity.location ? activity.location.photoUrl[0] : fallbackPhoto
 					}
 					alt="location pic"
-				/>
+				/> */}
 				<Box
 					sx={{
 						display: 'flex',
