@@ -26,7 +26,6 @@ const createTrip = async (tripInput: any, uid: string) => {
 		/* eslint-disable-next-line */
 		formattedAddress: formatted_address,
 		googleLocationName: name,
-		accommodation: [],
 	};
 
 	/* eslint-disable-next-line */
