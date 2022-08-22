@@ -24,6 +24,7 @@ function Dashboard() {
 	//  eslint-disable-next-line
 	const tripList = useSelector(selectTripList);
 	const uid = useSelector(selectUid);
+	// CURRENTLY ADD TO TRIP ONLY WORKS IF WE GO THROUGH DASHBOARD
 	useEffect(() => {
 		const getTripList = async () => {
 			try {

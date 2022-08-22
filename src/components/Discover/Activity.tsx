@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { PlaylistAdd } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 // import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
 
@@ -11,8 +13,12 @@ import {
 	toggleFavoriteActivity,
 } from '../../features/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../app/reducers/dashboardSlice';
-import { updateFavoriteActivity } from '../../features/createActivity/favoriteActivityService';
+import {
+	saveActivityToTrip,
+	updateFavoriteActivity,
+} from '../../features/createActivity/favoriteActivityService';
 import { selectUid } from '../../app/reducers/authSlice';
+import { selectTripList } from '../../features/createTrip/tripListSlice';
 
 type Props = {
 	activity: any;
@@ -20,9 +26,12 @@ type Props = {
 };
 
 function Activity(props: Props) {
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
 	const { activity, setSelectedActivity } = props;
 	const favoriteActivities = useSelector(selectFavoriteActivities);
 	const uid: string | null = useSelector(selectUid);
+	const tripList: any = useSelector(selectTripList);
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
@@ -59,20 +68,73 @@ function Activity(props: Props) {
 		}
 	};
 
-	console.log(activity.name);
+	const handleClickMenu = (event: any) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const handleAddToTrip = (tripId: string) => {
+		if (uid) {
+			dispatch(toggleFavoriteActivity(activity.id));
+			saveActivityToTrip(uid, activity.id, tripId);
+		}
+	};
 
 	return (
 		<div>
-			<IconButton
-				aria-label="favorite"
-				sx={{
-					position: 'relative',
-					color: `${favoriteColor ? 'red' : 'black'}`,
-				}}
-				onClick={handleFavorite}
-			>
-				<FavoriteIcon />
-			</IconButton>
+			{uid ? (
+				<div className="favorite-buttons">
+					<IconButton
+						aria-label="favorite"
+						sx={{
+							position: 'relative',
+							color: `${favoriteColor ? 'red' : 'black'}`,
+						}}
+						onClick={handleFavorite}
+					>
+						<FavoriteIcon />
+					</IconButton>
+					<Box sx={{ flexGrow: 0 }}>
+						<Tooltip title="Save to trip">
+							<IconButton onClick={handleClickMenu} sx={{ p: 0 }}>
+								<PlaylistAdd />
+							</IconButton>
+						</Tooltip>
+						<Menu
+							sx={{ mt: '45px' }}
+							id="menu-select-trip"
+							anchorEl={anchorEl}
+							anchorOrigin={{
+								vertical: 'top',
+								horizontal: 'right',
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'right',
+							}}
+							open={Boolean(open)}
+							onClose={handleClose}
+						>
+							{tripList.userTrips.length
+								? tripList.userTrips.map((trip: any) => (
+										<MenuItem
+											key={trip.id}
+											onClick={() => {
+												handleAddToTrip(trip.id);
+												handleClose();
+											}}
+										>
+											<Typography>{trip.name}</Typography>
+										</MenuItem>
+								  ))
+								: null}
+						</Menu>
+					</Box>
+				</div>
+			) : null}
 			<Card
 				sx={{
 					display: 'flex',
