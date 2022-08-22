@@ -3,14 +3,14 @@ import { RootState } from '../../app/store';
 
 export interface NewAccommodationState {
 	location: any;
-	startDate: string;
-	endDate: string;
+	checkinDate: string;
+	checkoutDate: string;
 }
 
 const initialState: NewAccommodationState = {
 	location: null,
-	startDate: 'idle',
-	endDate: 'idle',
+	checkinDate: 'idle',
+	checkoutDate: 'idle',
 };
 
 // export const TripAccommodationState: NewAccommodationState[] = [initialState];
@@ -34,10 +34,10 @@ export const createAccommodationSlice = createSlice({
 			state.location = action.payload;
 		},
 		changeAccommodationStartDate: (state, action: PayloadAction<any>) => {
-			state.startDate = action.payload;
+			state.checkinDate = action.payload;
 		},
 		changeAccommodationEndDate: (state, action: PayloadAction<any>) => {
-			state.endDate = action.payload;
+			state.checkoutDate = action.payload;
 		},
 	},
 });

@@ -3,13 +3,22 @@ import { getLatLng } from 'use-places-autocomplete';
 export const BASE_URL = 'https://trepir.herokuapp.com/';
 
 const createAccommodation = async (
-	data: any,
 	accommodationInput: any,
 	uid: string,
-	tripId: string
+	tripId: string,
+	data: any = null
 ) => {
 	console.log('pre-fetch', accommodationInput);
-	const { checkinDate, checkoutDate } = data;
+	let checkinDate;
+	let checkoutDate;
+	if (data) {
+		checkinDate = data.checkinDate;
+		checkoutDate = data.checkoutDate;
+	} else {
+		checkinDate = accommodationInput.checkinDate;
+		checkoutDate = accommodationInput.checkoutDate;
+	}
+	console.log(checkinDate, checkoutDate);
 	const photoUrl = await accommodationInput.location.photos[0].getUrl();
 	const coordinates = await getLatLng(accommodationInput.location);
 

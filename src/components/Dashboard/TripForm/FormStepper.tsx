@@ -30,6 +30,7 @@ import {
 	setSelectedTripId,
 } from '../../../features/createTrip/selectedTripSlice';
 import createTravel from '../../../features/createTravel/createTravelService';
+import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
 
 // import {
 // 	submitNewTrip,
@@ -81,7 +82,12 @@ function FormStepper() {
 				}
 				const createdTrip = await createTrip(newTrip, uid);
 				travelList.forEach(async (travelEvent: any) => {
+					console.log('travel', travelEvent);
 					await createTravel(travelEvent, uid, createdTrip.id);
+				});
+				accommodationList.forEach(async (accommodationEvent: any) => {
+					console.log('acc', accommodationEvent);
+					await createAccommodation(accommodationEvent, uid, createdTrip.id);
 				});
 
 				dispatch(addTrip(createdTrip));
