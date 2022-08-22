@@ -178,7 +178,7 @@ const onDragEnd = async (
 		// await removeActivityFromTrip(tripDayActivityIdToRemove);
 		const [removed] = sourceActivities.splice(source.index, 1);
 		//	If its a travel event or accomodation then return
-		if (removed.travelEvent) return;
+		if (removed.travelEvent || removed.accommodation) return;
 		// 2. add
 		const removedCopy = { ...removed };
 		console.log(removedCopy);
@@ -318,8 +318,9 @@ function EditTripPage() {
 		setDays(tripDayActivityMap);
 		setDayIdMap(tripDayIdMap);
 		//	//////PUT INITIAL MARKER STATE LOGIC HERE////////////
-		// const markers = parseMarkersDashboard(tripDayActivityMap);
-		// setLocalMarkers(markers);
+		//  eslint-disable-next-line
+		const markers = parseMarkersDashboard(tripDayActivityMap);
+		setLocalMarkers(markers);
 		//	////////////////////////////////////////////////////
 	}, [tripDetails]);
 

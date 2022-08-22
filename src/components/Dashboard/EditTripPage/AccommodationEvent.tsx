@@ -8,15 +8,15 @@ type Props = {
 	activity: any;
 };
 
-function TravelEvent(props: Props) {
+function AccommodationEvent(props: Props) {
 	const { activity } = props;
 	const dispatch = useDispatch();
 
 	function handleClick() {
 		dispatch(
 			setMapPan({
-				lat: activity.destinationLocation.latitude,
-				lng: activity.destinationLocation.longitude,
+				lat: activity.location.latitude,
+				lng: activity.location.longitude,
 			})
 		);
 	}
@@ -41,15 +41,13 @@ function TravelEvent(props: Props) {
 					}}
 				>
 					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
-						{activity.destinationLocation.locationName}
+						{activity.state}
 					</Typography>
-					<Typography variant="h6">
-						{activity.originLocation.locationName}
-					</Typography>
+					<Typography variant="h6">{activity.location.locationName}</Typography>
 				</Box>
 			</Card>
 		</div>
 	);
 }
 
-export default TravelEvent;
+export default AccommodationEvent;

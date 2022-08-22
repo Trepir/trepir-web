@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Activity from '../../Discover/Activity';
 import TravelEvent from './TravelEvent';
+import AccommodationEvent from './AccommodationEvent';
 
 function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 	console.log(days);
@@ -82,8 +83,13 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 															...provided.draggableProps.style,
 														}}
 													>
+														{/* eslint-disable-next-line */}
 														{activity.travelEvent ? (
 															<TravelEvent activity={activity.travelEvent} />
+														) : activity.accommodation ? (
+															<AccommodationEvent
+																activity={activity.accommodation}
+															/>
 														) : (
 															<Activity
 																activity={activity.dayActivity.activity}
