@@ -19,6 +19,7 @@ import {
 } from '../../features/createActivity/favoriteActivityService';
 import { selectUid } from '../../app/reducers/authSlice';
 import { selectTripList } from '../../features/createTrip/tripListSlice';
+import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
 type Props = {
 	activity: any;
@@ -35,7 +36,7 @@ function Activity(props: Props) {
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
-
+	const isTripSelected = useSelector(selectTripId);
 	const favoriteColor: boolean = favoriteActivities.includes(activity.id);
 
 	function handleClick() {
@@ -52,6 +53,9 @@ function Activity(props: Props) {
 		}
 		if (page === 'dashboard' && viewingDashboardMap === false) {
 			setSelectedActivity(activity);
+		}
+		if (page === 'dashboard' && !isTripSelected.tripId) {
+			console.log('add activity');
 		}
 		dispatch(
 			setMapPan({

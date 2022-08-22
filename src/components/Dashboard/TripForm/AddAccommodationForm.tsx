@@ -64,7 +64,7 @@ function AddAccommodationForm(props: Props) {
 		if (isValid && newAccommodation.location) {
 			dispatch(addAccommodation(newAccommodation));
 			if (tripId && uid) {
-				await createAccommodation(data, newAccommodation, uid, tripId);
+				await createAccommodation(newAccommodation, uid, tripId, data);
 				handleCloseAccommodation();
 			}
 		}

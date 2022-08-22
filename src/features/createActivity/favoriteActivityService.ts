@@ -66,3 +66,22 @@ export const saveActivityToTrip = async (
 		}
 	}
 };
+
+export const getUserFavoriteActivities = async (uid: string) => {
+	try {
+		const userFavoriteActivities = await fetch(
+			`${BASE_URL}activity/favoriteActivities`,
+			{
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ uid }),
+			}
+		);
+
+		const jsonUserFavoriteActivities = await userFavoriteActivities.json();
+		return jsonUserFavoriteActivities;
+	} catch (e) {
+		console.log(e);
+		return e;
+	}
+};
