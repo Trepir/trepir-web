@@ -262,7 +262,7 @@ function EditTripPage() {
 	const [dayIdMap, setDayIdMap] = useState<any>(null);
 
 	//  eslint-disable-next-line
-	const [localMarkers, setLocalMarkers] = useState(null);
+	const [localMarkers, setLocalMarkers] = useState<any>(null);
 
 	//	MAP CONTROL
 	const mapSelected = useSelector(selectViewingMap);
@@ -305,7 +305,6 @@ function EditTripPage() {
 		tripDetails.tripDay.forEach((day: any) => {
 			const tripDayCopy = [...day.tripDayActivities];
 			const sortedActivities = sortDay(tripDayCopy);
-			console.log(sortedActivities);
 			tripDayActivityMap[dateList[day.dayIndex]] = sortedActivities;
 			tripDayIdMap[dateList[day.dayIndex]] = day.id;
 		});
@@ -314,6 +313,8 @@ function EditTripPage() {
 		setDays(tripDayActivityMap);
 		setDayIdMap(tripDayIdMap);
 		//	//////PUT INITIAL MARKER STATE LOGIC HERE////////////
+		const markers = parseMarkersDashboard(tripDayActivityMap);
+		setLocalMarkers(markers);
 		//	////////////////////////////////////////////////////
 	}, [tripDetails]);
 

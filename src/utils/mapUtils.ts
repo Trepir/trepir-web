@@ -9,13 +9,14 @@ export const parseMapViewport = async (viewport: any) => {
 };
 
 export const parseMarkersDashboard = (tripDayMap: any) => {
+	console.log(tripDayMap);
 	const markers: any[] = [];
 	const days: [any][] = Object.values(tripDayMap);
 	days.forEach((day) => {
 		day.forEach((activity) => {
 			markers.push({
-				lat: activity.location.latitude,
-				lng: activity.location.longitude,
+				lat: activity.dayActivity.activity.location.latitude,
+				lng: activity.dayActivity.activity.location.longitude,
 			});
 		});
 	});
