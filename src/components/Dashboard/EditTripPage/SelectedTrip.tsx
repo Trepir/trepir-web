@@ -4,11 +4,9 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Activity from '../../Discover/Activity';
 
 function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
-	console.log('days', days);
 	const idMap: any = {};
 	//	eslint-disable-next-line
 	for (const [key, value] of Object.entries(days)) {
-		console.log(key, value);
 		const idArray = [];
 		//	eslint-disable-next-line
 		for (let i = 0; i < (value as []).length; i++) {
@@ -16,7 +14,6 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 		}
 		idMap[key] = idArray;
 	}
-	console.log(idMap);
 	return (
 		<Paper
 			elevation={20}

@@ -18,7 +18,6 @@ export const tripListSlice = createSlice({
 			state.userTrips.push(action.payload);
 		},
 		addAllTrips: (state, action: PayloadAction<any>) => {
-			console.log('reducer', [...action.payload]);
 			state.userTrips = action.payload;
 		},
 	},

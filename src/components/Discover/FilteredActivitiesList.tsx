@@ -1,14 +1,23 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/material';
-import { useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import {
 	selectFilteredActivities,
 	selectTagsApplied,
-} from '../../app/reducers/mapSlice';
+} from '../../app/reducers/discoverSlice';
 import Activity from './Activity';
+import { parseMarkersDiscover } from '../../utils/mapUtils';
+import { setMarkers } from '../../app/reducers/mapSlice';
 
 function FilteredActivitiesList({ setSelectedActivity }: any) {
+	const dispatch = useDispatch();
 	const activities = useSelector(selectFilteredActivities);
+	useEffect(() => {
+		if (!activities) return;
+		const markers = parseMarkersDiscover(activities);
+		dispatch(setMarkers(markers));
+	}, [activities]);
 	return (
 		<Box
 			sx={{

@@ -11,7 +11,6 @@ function EditTripActivitiesContainer({
 	for (let i = 0; i <= savedActivities.ActivitiesList.length; i++) {
 		ids.push(String(Math.random()));
 	}
-	console.log(ids);
 	return (
 		<Droppable droppableId="favoritedActivities" key="favoritedActivities">
 			{/* eslint-disable-next-line */}

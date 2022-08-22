@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import Fab from '@mui/material/Fab';
+import { useNavigate } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 // import { getAuth } from 'firebase/auth';
 
@@ -10,17 +11,21 @@ import {
 	loginEmailAndPassword,
 	loginGoogle,
 } from '../utils/firebase/firebaseFunctions';
+// import { useDispatch } from 'react-redux';
 
 function Login() {
+	const navigate = useNavigate();
 	// const dispatch = useDispatch();
 
 	const handleSubmitLogin = async (e: any) => {
 		e.preventDefault();
 		try {
-			loginEmailAndPassword(
+			await loginEmailAndPassword(
 				e.target.loginEmail.value,
 				e.target.loginPassword.value
 			);
+			navigate('../dashboard');
+
 			// dispatch(setUid(user.uid));
 		} catch (error) {
 			console.log(error);
@@ -28,11 +33,16 @@ function Login() {
 	};
 	const handleSubmitRegister = async (e: any) => {
 		e.preventDefault();
-		createEmailUser(
-			e.target.registerEmail.value,
-			e.target.registerPassword.value,
-			e.target.registerUserName.value
-		);
+		try {
+			await createEmailUser(
+				e.target.registerEmail.value,
+				e.target.registerPassword.value,
+				e.target.registerUserName.value
+			);
+			navigate('../dashboard');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<div>

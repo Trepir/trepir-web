@@ -13,14 +13,16 @@ import {
 import TripForm from './TripForm';
 import DashboardHome from '../../components/Dashboard/DashboardHome/DashboardHome';
 import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
+import { resetMap } from '../../app/reducers/mapSlice';
 
 function Dashboard() {
-	// LOAD MAP
+	// ////LOAD MAP
 	const map = loadGoogleApi();
+	//	////////
 	const dispatch = useDispatch();
+	//  eslint-disable-next-line
 	const tripList = useSelector(selectTripList);
 	const uid = useSelector(selectUid);
-	console.log(tripList);
 	useEffect(() => {
 		const getTripList = async () => {
 			try {
@@ -34,9 +36,7 @@ function Dashboard() {
 					body: JSON.stringify({ uid }),
 				});
 				const jsonUserDetails = await userDetails.json();
-				console.log(jsonUserDetails);
 				const { trips } = jsonUserDetails;
-				console.log(trips);
 				dispatch(addAllTrips(trips));
 			} catch (e) {
 				console.log(e);
@@ -44,6 +44,9 @@ function Dashboard() {
 		};
 		getTripList();
 	}, [uid]);
+	useEffect(() => {
+		dispatch(resetMap('dashboard'));
+	}, []);
 
 	return (
 		<div>

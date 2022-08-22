@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	selectTagsApplied,
-	setFilteredActivites,
-	setMarkers,
+	setFilteredActivities,
 	setTagsApplied,
-} from '../../app/reducers/mapSlice';
+} from '../../app/reducers/discoverSlice';
 
 function Tag({ label }: any) {
 	const [selected, setSelected] = useState(false);
-	const tagsApplied = useSelector(selectTagsApplied);
+	const tagsApplied: any = useSelector(selectTagsApplied);
+
 	useEffect(() => {
 		if (tagsApplied?.includes(label)) setSelected(true);
 	}, []);
@@ -21,8 +21,7 @@ function Tag({ label }: any) {
 		if (selected) setSelected(false);
 		if (!selected) setSelected(true);
 		dispatch(setTagsApplied(tag));
-		dispatch(setFilteredActivites());
-		dispatch(setMarkers());
+		dispatch(setFilteredActivities());
 	}
 	return (
 		<Chip

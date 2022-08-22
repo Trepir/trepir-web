@@ -10,6 +10,9 @@ import travelListReducer from '../features/createTravel/travelListSlice';
 import tripListReducer from '../features/createTrip/tripListSlice';
 import selectedTripReducer from '../features/createTrip/selectedTripSlice';
 import mapReducer from './reducers/mapSlice';
+import discoverReducer from './reducers/discoverSlice';
+import dashboardReducer from './reducers/dashboardSlice';
+
 import authReducer from './reducers/authSlice';
 
 export const store = configureStore({
@@ -25,6 +28,8 @@ export const store = configureStore({
 		selectedTrip: selectedTripReducer,
 		newActivity: createActivityReducer,
 		map: mapReducer,
+		discover: discoverReducer,
+		dashboard: dashboardReducer,
 		auth: authReducer,
 	},
 	middleware: (getDefaultMiddleware) =>

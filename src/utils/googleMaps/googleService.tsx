@@ -1,4 +1,5 @@
 import { useLoadScript } from '@react-google-maps/api';
+import { getDetails } from 'use-places-autocomplete';
 
 const libraries: any = ['places'];
 
@@ -14,4 +15,14 @@ export function loadGoogleApi() {
 	if (!isLoaded) return false;
 
 	return true;
+}
+
+export async function getViewportWithId(id: string) {
+	const details: any = await getDetails({
+		placeId: id,
+		fields: ['geometry'],
+	});
+	//	eslint-disable-next-line
+	const viewport = details.geometry.viewport;
+	return viewport;
 }

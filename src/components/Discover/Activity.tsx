@@ -5,11 +5,12 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
 
-import { setOneMarker } from '../../app/reducers/mapSlice';
+import { selectPage, setMapPan, setMarkers } from '../../app/reducers/mapSlice';
 import {
 	selectFavoriteActivities,
 	toggleFavoriteActivity,
 } from '../../features/createActivity/favoriteActivitySlice';
+import { selectViewingMap } from '../../app/reducers/dashboardSlice';
 
 type Props = {
 	activity: any;
@@ -19,14 +20,33 @@ type Props = {
 function Activity(props: Props) {
 	const { activity, setSelectedActivity } = props;
 	const favoriteActivities = useSelector(selectFavoriteActivities);
+	const page = useSelector(selectPage);
+	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
 
 	const favoriteColor: boolean = favoriteActivities.includes(activity.id);
 
 	function handleClick() {
-		dispatch(setOneMarker(activity.coords));
-
-		setSelectedActivity(activity);
+		if (page === 'discover') {
+			dispatch(
+				setMarkers([
+					{
+						lat: activity.location.latitude,
+						lng: activity.location.longitude,
+					},
+				])
+			);
+			setSelectedActivity(activity);
+		}
+		if (page === 'dashboard' && viewingDashboardMap === false) {
+			setSelectedActivity(activity);
+		}
+		dispatch(
+			setMapPan({
+				lat: activity.location.latitude,
+				lng: activity.location.longitude,
+			})
+		);
 	}
 
 	const handleFavorite = () => {

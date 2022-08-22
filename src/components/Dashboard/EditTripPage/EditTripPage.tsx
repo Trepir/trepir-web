@@ -16,6 +16,17 @@ import { BASE_URL } from '../../../features/createTrip/createTripService';
 import AddEventsControls from './addEventsControls';
 import Map from '../../Discover/Map';
 import ActivityDetails from '../../Discover/ActivityDetails';
+import { parseMarkersDashboard } from '../../../utils/mapUtils';
+import {
+	selectPrevViewportCoords,
+	setMapViewport,
+	setSpecificMarkers,
+} from '../../../app/reducers/mapSlice';
+import { getViewportWithId } from '../../../utils/googleMaps/googleService';
+import {
+	selectViewingMap,
+	setViewingMap,
+} from '../../../app/reducers/dashboardSlice';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = (
@@ -23,7 +34,8 @@ const onDragEnd = (
 	days: any,
 	setDays: any,
 	savedActivities: any,
-	setSavedActivities: any
+	setSavedActivities: any,
+	setLocalMarkers: any
 ) => {
 	const { source, destination } = result;
 	//	/////////FAIL CHECKS/////////////////////
@@ -37,6 +49,13 @@ const onDragEnd = (
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkersDashboard({
+			...days,
+			[source.droppableId]: dayActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 
 		console.log('remove me!');
 		return;
@@ -64,6 +83,13 @@ const onDragEnd = (
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkersDashboard({
+			...days,
+			[source.droppableId]: dayActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 
 		console.log('remove me!');
 		return;
@@ -83,7 +109,6 @@ const onDragEnd = (
 		// add the copy of the removed activity, with a new id, to the source activities
 		sourceActivities.push(removedCopy);
 		//	set the days
-		console.log('destdropid:', destination.droppableId);
 		setDays({
 			...days,
 			[destination.droppableId]: destActivities,
@@ -92,6 +117,13 @@ const onDragEnd = (
 		setSavedActivities({
 			ActivitiesList: sourceActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkersDashboard({
+			...days,
+			[destination.droppableId]: destActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 
 		return;
 	}
@@ -115,6 +147,14 @@ const onDragEnd = (
 			[source.droppableId]: sourceActivities,
 			[destination.droppableId]: destActivities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkersDashboard({
+			...days,
+			[source.droppableId]: sourceActivities,
+			[destination.droppableId]: destActivities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 		return;
 	}
 	//	IF SOURCE & DEST ARE THE SAME DAY
@@ -129,6 +169,13 @@ const onDragEnd = (
 			...days,
 			[source.droppableId]: activities,
 		});
+		//	MARKERS
+		const newMarkers = parseMarkersDashboard({
+			...days,
+			[source.droppableId]: activities,
+		});
+		setLocalMarkers(newMarkers);
+		//	////
 	}
 };
 
@@ -140,9 +187,12 @@ function EditTripPage() {
 	const [savedActivities, setSavedActivities] = useState<any>(null);
 	//  eslint-disable-next-line
 	const [days, setDays] = useState<any>(null);
+	//  eslint-disable-next-line
+	const [localMarkers, setLocalMarkers] = useState(null);
 
 	//	MAP CONTROL
-	const [mapSelected, setMapSelected] = useState(false);
+	const mapSelected = useSelector(selectViewingMap);
+	const prevViewport = useSelector(selectPrevViewportCoords);
 	// ACTIVITY DETAIL CONTROL
 	const [selectedActivity, setSelectedActivity] = useState(false);
 
@@ -157,7 +207,6 @@ function EditTripPage() {
 						`${BASE_URL}trip/tripById/${id}`
 					);
 					const jsonTripDetails = await fetchTripDetails.json();
-					console.log('json', jsonTripDetails);
 					dispatch(setSelectedTrip(jsonTripDetails));
 				} catch (e) {
 					console.log(e);
@@ -166,7 +215,7 @@ function EditTripPage() {
 		};
 		getTripDetails();
 	}, [id]);
-	//	//////////////////2. SET YOUR TRIP DAYS STATE /////////////////
+	//	//////////////////2. SET YOUR TRIP DAYS & MARKER STATE /////////////////
 
 	useEffect(() => {
 		if (!tripDetails) return;
@@ -174,13 +223,17 @@ function EditTripPage() {
 			tripDetails.startDate,
 			tripDetails.tripDay.length
 		);
+		//	///PARSE YOUR TRIP INTO A MAP OF DAYS//////////
 		//  eslint-disable-next-line
 		const tripDayMap: any = {};
 		//  eslint-disable-next-line
 		tripDetails.tripDay.forEach((day: any) => {
 			tripDayMap[dateList[day.dayIndex]] = day.tripDayActivities;
 		});
+		//	////////////////////////////////////////////////
 		setDays(tripDayMap);
+		//	//////PUT INITIAL MARKER STATE LOGIC HERE////////////
+		//	////////////////////////////////////////////////////
 	}, [tripDetails]);
 
 	//	//////////////////3. SET YOUR TRIP ACTIVITIES STATE /////////////////
@@ -200,6 +253,23 @@ function EditTripPage() {
 		getActivities();
 	}, []);
 
+	//	/////////////////SET MARKERS ON CHANGE///////////////////////
+	useEffect(() => {
+		if (!localMarkers) return;
+		dispatch(setSpecificMarkers(localMarkers));
+	}, [localMarkers]);
+	//	///////////////////////////////////////////////////////////////
+	//	/////////////////SET INITIAL MAP VIEWPORT///////////////////////
+	useEffect(() => {
+		const initializeMap = async () => {
+			const viewport = await getViewportWithId(tripDetails.googlePlaceId);
+			dispatch(setMapViewport(viewport));
+		};
+		if (!tripDetails) return;
+		initializeMap();
+	}, [tripDetails]);
+	//	///////////////////////////////////////////////////////////////
+
 	return (
 		<>
 			{/* eslint-disable-next-line */}
@@ -211,7 +281,8 @@ function EditTripPage() {
 							days,
 							setDays,
 							savedActivities,
-							setSavedActivities
+							setSavedActivities,
+							setLocalMarkers
 						)
 					}
 				>
@@ -244,10 +315,22 @@ function EditTripPage() {
 									zIndex: '1',
 								}}
 							>
-								<Button onClick={() => setMapSelected(false)}>
+								<Button
+									onClick={() => {
+										dispatch(setViewingMap(false));
+										dispatch(setMapViewport(prevViewport));
+									}}
+								>
 									Activities
 								</Button>
-								<Button onClick={() => setMapSelected(true)}>Map</Button>
+								<Button
+									onClick={() => {
+										dispatch(setViewingMap(true));
+										setSelectedActivity(false);
+									}}
+								>
+									Map
+								</Button>
 							</Paper>
 							{mapSelected ? (
 								<Map />

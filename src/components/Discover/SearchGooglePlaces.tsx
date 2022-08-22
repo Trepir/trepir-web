@@ -7,23 +7,11 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-import { getDetails, getGeocode, getLatLng } from 'use-places-autocomplete';
+import { getDetails } from 'use-places-autocomplete';
 import { useNavigate } from 'react-router-dom';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
-import { setMapCenter, setMapViewport } from '../../app/reducers/mapSlice';
-
-// function loadScript(src: string, position: HTMLElement | null, id: string) {
-// 	if (!position) {
-// 		return;
-// 	}
-
-// 	const script = document.createElement('script');
-// 	script.setAttribute('async', '');
-// 	script.setAttribute('id', id);
-// 	script.src = src;
-// 	position.appendChild(script);
-// }
+import { setMapViewport } from '../../app/reducers/mapSlice';
 
 const autocompleteService = { current: null };
 
@@ -45,38 +33,9 @@ export default function SearchGooglePlaces() {
 	//  FOR REUX
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	//  To give location coords to redux. Called by onChange
-	async function setMapCenterCoordinates(address: string) {
-		//	//////////////API CALL FUNCTION //////////////////////////////
-
-		try {
-			const results = await getGeocode({ address });
-
-			console.log(results);
-			const { lat, lng } = await getLatLng(results[0]);
-			dispatch(setMapCenter({ lat, lng }));
-			navigate('./map');
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	//	////////////////////////////////////////////////////////////////
 	const [value, setValue] = React.useState<PlaceType | null>(null);
 	const [inputValue, setInputValue] = React.useState('');
 	const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
-	// const loaded = React.useRef(false);
-
-	// if (typeof window !== 'undefined' && !loaded.current) {
-	// 	if (!document.querySelector('#google-maps')) {
-	// 		loadScript(
-	// 			`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`,
-	// 			document.querySelector('head'),
-	// 			'google-maps'
-	// 		);
-	// 	}
-
-	// 	loaded.current = true;
-	// }
 
 	const fetch = React.useMemo(
 		() =>
@@ -150,16 +109,20 @@ export default function SearchGooglePlaces() {
 			onChange={async (event: any, newValue: any) => {
 				setOptions(newValue ? [newValue, ...options] : options);
 				setValue(newValue);
-				//	//////////////ADDED DETAILS LOGIC HERE //////////////////////////////
+				//	//////////////ADDED DETAILS / MAP NAVIGATION LOGIC HERE //////////////////////////////
 				if (newValue) {
-					const details: any = await getDetails({
-						placeId: newValue.place_id.toString(),
-						fields: ['name', 'formatted_address', 'photos', 'geometry'],
-					});
-					dispatch(setMapViewport(details.geometry.viewport));
-					//	////////////// ///////////////////////////////////////////////////////
-					setMapCenterCoordinates(newValue.description);
+					try {
+						const details: any = await getDetails({
+							placeId: newValue.place_id.toString(),
+							fields: ['name', 'formatted_address', 'photos', 'geometry'],
+						});
+						dispatch(setMapViewport(details.geometry.viewport));
+						navigate('./map');
+					} catch (error) {
+						console.log(error);
+					}
 				}
+				//	////////////// ///////////////////////////////////////////////////////
 			}}
 			onInputChange={(event, newInputValue) => {
 				setInputValue(newInputValue);

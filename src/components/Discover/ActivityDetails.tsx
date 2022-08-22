@@ -1,12 +1,17 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { setMarkers } from '../../app/reducers/mapSlice';
+import {
+	selectPrevViewportCoords,
+	setMapViewport,
+	// setMarkers,
+} from '../../app/reducers/mapSlice';
 
 function ActivityDetails({ setSelectedActivity, activity }: any) {
 	const dispatch = useDispatch();
+	const prevViewport = useSelector(selectPrevViewportCoords);
 	function handleClick() {
-		dispatch(setMarkers());
+		dispatch(setMapViewport(prevViewport));
 		setSelectedActivity(false);
 	}
 
