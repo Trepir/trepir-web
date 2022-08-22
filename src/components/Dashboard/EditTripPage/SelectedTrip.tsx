@@ -4,6 +4,7 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Activity from '../../Discover/Activity';
 
 function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
+	console.log(days);
 	const idMap: any = {};
 	//	eslint-disable-next-line
 	for (const [key, value] of Object.entries(days)) {
@@ -81,7 +82,7 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 														}}
 													>
 														<Activity
-															activity={activity}
+															activity={activity.dayActivity.activity}
 															setSelectedActivity={setSelectedActivity}
 														/>
 													</div>

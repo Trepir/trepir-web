@@ -27,22 +27,36 @@ import {
 	selectViewingMap,
 	setViewingMap,
 } from '../../../app/reducers/dashboardSlice';
+import {
+	addActivityToTrip,
+	removeActivityFromTrip,
+	reorderTripDay,
+	sortDay,
+} from '../../../utils/editTripUtils';
 
 //	Handle All Of The Drag Logic
-const onDragEnd = (
+const onDragEnd = async (
 	result: any,
 	days: any,
 	setDays: any,
 	savedActivities: any,
 	setSavedActivities: any,
-	setLocalMarkers: any
+	setLocalMarkers: any,
+	dayIdMap: any
 ) => {
 	const { source, destination } = result;
 	//	/////////FAIL CHECKS/////////////////////
 	//	CHECK: DROPPING AT A DROPPPABLE LOCATION
-	console.log(result);
 	if (!result.destination) {
+		//	//WORKING HERE///////////
 		const dayActivities = [...days[source.droppableId]];
+		const tripDayActivity = dayActivities[source.index];
+		console.log('activity:', tripDayActivity);
+		const tripDayActivityId = tripDayActivity.id;
+		console.log(tripDayActivity);
+		console.log(tripDayActivityId);
+		await removeActivityFromTrip(tripDayActivityId);
+		//	//WORKING HERE///////////
 
 		dayActivities.splice(source.index, 1);
 		setDays({
@@ -77,6 +91,11 @@ const onDragEnd = (
 		destination.droppableId === 'favoritedActivities'
 	) {
 		const dayActivities = [...days[source.droppableId]];
+		//	//WORKING HERE///////////
+		const tripDayActivity = dayActivities[source.index];
+		const tripDayActivityId = tripDayActivity.id;
+		await removeActivityFromTrip(tripDayActivityId);
+		//	//WORKING HERE///////////
 
 		dayActivities.splice(source.index, 1);
 		setDays({
@@ -103,15 +122,28 @@ const onDragEnd = (
 		const destActivities = [...days[destination.droppableId]];
 		//	remove act from source, and add to dest
 		const [removed] = sourceActivities.splice(source.index, 1);
-		const removedCopy = { ...removed, id: removed.id.concat('x') };
+		const removedCopy = { ...removed };
 		//	add the activity that was removed to the dest activities
-		destActivities.splice(destination.index, 0, removed);
+		//	////////////////////	WORKING HERE /////////////////////////////////////
+		const addedActivityId = removedCopy.id;
+		const tripDayId = dayIdMap[destination.droppableId];
+		const { index } = destination;
+
+		const updatedDay = await addActivityToTrip(
+			tripDayId,
+			addedActivityId,
+			index
+		);
+		console.log('destActivities:', destActivities);
+		console.log('updatedDay:', updatedDay);
+		//	//////////////////////	WORKING HERE /////////////////////////////////////
+		// destActivities.splice(destination.index, 0, removed);
 		// add the copy of the removed activity, with a new id, to the source activities
 		sourceActivities.push(removedCopy);
 		//	set the days
 		setDays({
 			...days,
-			[destination.droppableId]: destActivities,
+			[destination.droppableId]: updatedDay,
 		});
 		//	set your act list
 		setSavedActivities({
@@ -139,13 +171,34 @@ const onDragEnd = (
 		//	identify destactivities
 		const destActivities = [...days[destination.droppableId]];
 
+		// WORKING HERE//////////////////
+		//	1. remove
+		const activityToRemove = sourceActivities[source.index];
+		const tripDayActivityIdToRemove = activityToRemove.id;
+		await removeActivityFromTrip(tripDayActivityIdToRemove);
 		const [removed] = sourceActivities.splice(source.index, 1);
+		// 2. add
+		const removedCopy = { ...removed };
+		console.log(removedCopy);
+		const addedActivityId = removedCopy.dayActivity.activityId;
+		console.log(addedActivityId);
+		const tripDayId = dayIdMap[destination.droppableId];
+		const { index } = destination;
+		console.log(index);
+		const updatedDay = await addActivityToTrip(
+			tripDayId,
+			addedActivityId,
+			index
+		);
+
+		// WORKING HERE//////////////////
+
 		destActivities.splice(destination.index, 0, removed);
 
 		setDays({
 			...days,
 			[source.droppableId]: sourceActivities,
-			[destination.droppableId]: destActivities,
+			[destination.droppableId]: updatedDay,
 		});
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
@@ -162,12 +215,30 @@ const onDragEnd = (
 		source.droppableId !== 'favoritedActivities' &&
 		source.droppableId === destination.droppableId
 	) {
+		console.log('source:', source);
+		console.log('dest:', destination);
+		//	///////////////WORKING HERE/////////////////////
+		const tripDayId = dayIdMap[destination.droppableId];
+		const { index } = destination;
+		const dayActivities = [...days[source.droppableId]];
+		const tripDayActivity = dayActivities[source.index];
+		const tripDayActivityId = tripDayActivity.id;
+		const updatedDay = await reorderTripDay(
+			tripDayId,
+			tripDayActivityId,
+			index
+		);
+
+		//	///////////////WORKING HERE/////////////////////
+
 		const activities = [...days[source.droppableId]];
-		const [removed] = activities.splice(source.index, 1);
-		activities.splice(destination.index, 0, removed);
+		// console.log('activities:', activities);
+
+		// const [removed] = activities.splice(source.index, 1);
+		// activities.splice(destination.index, 0, removed);
 		setDays({
 			...days,
-			[source.droppableId]: activities,
+			[source.droppableId]: updatedDay,
 		});
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
@@ -187,6 +258,9 @@ function EditTripPage() {
 	const [savedActivities, setSavedActivities] = useState<any>(null);
 	//  eslint-disable-next-line
 	const [days, setDays] = useState<any>(null);
+	//  eslint-disable-next-line
+	const [dayIdMap, setDayIdMap] = useState<any>(null);
+
 	//  eslint-disable-next-line
 	const [localMarkers, setLocalMarkers] = useState(null);
 
@@ -225,13 +299,20 @@ function EditTripPage() {
 		);
 		//	///PARSE YOUR TRIP INTO A MAP OF DAYS//////////
 		//  eslint-disable-next-line
-		const tripDayMap: any = {};
+		const tripDayActivityMap: any = {};
+		const tripDayIdMap: any = {};
 		//  eslint-disable-next-line
 		tripDetails.tripDay.forEach((day: any) => {
-			tripDayMap[dateList[day.dayIndex]] = day.tripDayActivities;
+			const tripDayCopy = [...day.tripDayActivities];
+			const sortedActivities = sortDay(tripDayCopy);
+			console.log(sortedActivities);
+			tripDayActivityMap[dateList[day.dayIndex]] = sortedActivities;
+			tripDayIdMap[dateList[day.dayIndex]] = day.id;
 		});
+
 		//	////////////////////////////////////////////////
-		setDays(tripDayMap);
+		setDays(tripDayActivityMap);
+		setDayIdMap(tripDayIdMap);
 		//	//////PUT INITIAL MARKER STATE LOGIC HERE////////////
 		//	////////////////////////////////////////////////////
 	}, [tripDetails]);
@@ -282,7 +363,8 @@ function EditTripPage() {
 							setDays,
 							savedActivities,
 							setSavedActivities,
-							setLocalMarkers
+							setLocalMarkers,
+							dayIdMap
 						)
 					}
 				>
