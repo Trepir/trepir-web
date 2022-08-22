@@ -22,7 +22,10 @@ import FormStepTwo from './FormStepTwo';
 import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
 import { selectTravelList } from '../../../features/createTravel/travelListSlice';
 import TravelEventList from './TravelEventList';
-import createTrip from '../../../features/createTrip/createTripService';
+import {
+	createTrip,
+	addInitialActivities,
+} from '../../../features/createTrip/createTripService';
 import { addTrip } from '../../../features/createTrip/tripListSlice';
 import { selectUid } from '../../../app/reducers/authSlice';
 import {
@@ -75,7 +78,7 @@ function FormStepper() {
 			setSkipped(newSkipped);
 			setValidated(false);
 			alertRef.current = false;
-			if (activeStep === steps.length - 1) {
+			if (activeStep === steps.length) {
 				//	UID FAIL CHECK
 				if (!uid) {
 					alert('not logged in');
@@ -92,11 +95,16 @@ function FormStepper() {
 				});
 
 				dispatch(addTrip(createdTrip));
-				setActiveStep((prevActiveStep) => prevActiveStep + 1);
+				// setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				// Pending call to backend and use trip id for params
 				//	SET YOUR SELECTED TRIP BEFORE NAIGATING TO edit page
-				dispatch(setSelectedTripId(createdTrip.id));
 				navigate('../trip');
+				dispatch(setSelectedTripId(createdTrip.id));
+				await addInitialActivities(
+					newTrip.initialTripFavorites,
+					uid,
+					createdTrip.id
+				);
 			}
 		}
 	};
@@ -179,7 +187,7 @@ function FormStepper() {
 						);
 					})}
 				</Stepper>
-				{activeStep === steps.length ? (
+				{activeStep === steps.length + 1 ? (
 					<>
 						<Typography component="span" sx={{ mt: 2, mb: 1 }}>
 							All steps completed - you&apos;re finished
@@ -210,7 +218,7 @@ function FormStepper() {
 								</Button>
 							)}
 							<Button onClick={handleNext}>
-								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+								{activeStep === steps.length ? 'Finish' : 'Next'}
 							</Button>
 						</Box>
 					</>

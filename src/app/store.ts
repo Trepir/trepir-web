@@ -6,6 +6,7 @@ import accommodationListReducer from '../features/createAccommodation/accommodat
 import createTravelReducer from '../features/createTravel/createTravelSlice';
 import createActivityReducer from '../features/createActivity/createActivitySlice';
 import favoriteActivityReducer from '../features/createActivity/favoriteActivitySlice';
+import userFavoriteActivityReducer from './reducers/userSlice';
 import travelListReducer from '../features/createTravel/travelListSlice';
 import tripListReducer from '../features/createTrip/tripListSlice';
 import selectedTripReducer from '../features/createTrip/selectedTripSlice';
@@ -25,6 +26,7 @@ export const store = configureStore({
 		travelList: travelListReducer,
 		tripList: tripListReducer,
 		favoriteActivity: favoriteActivityReducer,
+		userFavoriteActivities: userFavoriteActivityReducer,
 		selectedTrip: selectedTripReducer,
 		newActivity: createActivityReducer,
 		map: mapReducer,
