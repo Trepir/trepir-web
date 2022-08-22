@@ -14,6 +14,7 @@ import TripForm from './TripForm';
 import DashboardHome from '../../components/Dashboard/DashboardHome/DashboardHome';
 import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
 import { resetMap } from '../../app/reducers/mapSlice';
+import { fetchFavoriteActivities } from '../../features/createActivity/favoriteActivitySlice';
 
 function Dashboard() {
 	// ////LOAD MAP
@@ -23,6 +24,7 @@ function Dashboard() {
 	//  eslint-disable-next-line
 	const tripList = useSelector(selectTripList);
 	const uid = useSelector(selectUid);
+	// CURRENTLY ADD TO TRIP ONLY WORKS IF WE GO THROUGH DASHBOARD
 	useEffect(() => {
 		const getTripList = async () => {
 			try {
@@ -36,8 +38,14 @@ function Dashboard() {
 					body: JSON.stringify({ uid }),
 				});
 				const jsonUserDetails = await userDetails.json();
-				const { trips } = jsonUserDetails;
+				const { trips, favoriteActivities } = jsonUserDetails;
 				dispatch(addAllTrips(trips));
+				if (favoriteActivities.length) {
+					favoriteActivities.forEach((activity: any) => {
+						console.log('added', activity.activityId);
+						dispatch(fetchFavoriteActivities(activity.activityId));
+					});
+				}
 			} catch (e) {
 				console.log(e);
 			}
