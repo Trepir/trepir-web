@@ -29,19 +29,27 @@ function TravelEvent(props: Props) {
 			<Card
 				sx={{
 					display: 'flex',
-					width: 350,
+					width: 340,
 					height: 160,
 					padding: '0 0 0 10px',
 					flexShrink: 0,
 					alignItems: 'center',
 					textDecoration: 'none',
+					borderRadius: 5,
+
 					gap: 1,
 				}}
 				elevation={5}
 				onClick={() => handleClick()}
 			>
 				<Avatar
-					sx={{ bgcolor: '#DEF5ED', width: 140, height: 140, color: '#7ED3B7' }}
+					sx={{
+						bgcolor: '#DEF5ED',
+						width: 140,
+						height: 140,
+						color: '#7ED3B7',
+						borderRadius: 4,
+					}}
 					variant="rounded"
 				>
 					<Airplane fill="#7ED3B7" />
