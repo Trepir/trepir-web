@@ -24,9 +24,7 @@ function Discover() {
 					<Route path="/" element={<HomePage />} />
 					<Route path="/map/*" element={<MapPage />} />
 				</Routes>
-			) : (
-				<>loadingmap</>
-			)}
+			) : null}
 		</div>
 	);
 }

@@ -1,3 +1,7 @@
+:root {
+	--primaryColor: #1cb985;
+}
+
 .dashboard-container {
 	display: flex;
 	height: 100vh;
@@ -11,11 +15,12 @@
 	gap: 1rem;
 	align-items: center;
 }
-/* .MuiBox-root {
+.css-1t6c9ts {
 	display: flex;
 	gap: 2rem;
-	justify-content: center; */
-/* } */
+	font-weight: 900;
+	justify-content: center;
+}
 
 a:link {
 	text-decoration: none;
@@ -33,10 +38,6 @@ a:active {
 	text-decoration: underline;
 }
 
-.selectedLink {
-	background-color: grey;
-}
-
 a:-webkit-any-link {
 	text-decoration: none;
 	color: inherit;
@@ -45,4 +46,9 @@ a:-webkit-any-link {
 .css-2uchni {
 	display: flex;
 	gap: 1rem;
+}
+
+.navbar-link-item {
+	padding: 1rem 2rem 1rem 2rem;
+	border-radius: 12px;
 }

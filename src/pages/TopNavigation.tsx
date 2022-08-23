@@ -1,4 +1,6 @@
 import './TopNavigation.css';
+import { onAuthStateChanged } from 'firebase/auth';
+
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -10,39 +12,42 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	selectDisplayName,
-	selectUid,
-	setUid,
-} from '../app/reducers/authSlice';
+import { selectUid, setUid } from '../app/reducers/authSlice';
 import { logOut } from '../utils/firebase/firebaseFunctions';
 import { gilroyExtra } from '../App';
+import auth from '../utils/firebase/firebaseConfig';
 
-const trepirLogo = require('../assets/logo3.png');
+const trepirLogo = require('../assets/logo-white.png');
+
+export const primaryColor = '#1CB985';
 
 const isActiveStyle = {
 	textDecoration: 'none',
-	backgroundColor: '#eee',
+	backgroundColor: primaryColor,
+	color: 'white',
 };
 
 const pages = [
 	<NavLink
 		to="/discover"
+		className="navbar-link-item"
 		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
 	>
 		Discover
 	</NavLink>,
 	<NavLink
 		to="/dashboard"
+		className="navbar-link-item"
 		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
 	>
 		Dashboard
 	</NavLink>,
 	<NavLink
 		to="/playground"
+		className="navbar-link-item"
 		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
 	>
 		Playground
@@ -56,7 +61,6 @@ function TopNavigation() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const uid = useSelector(selectUid);
-	const displayName = useSelector(selectDisplayName);
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
 		null
@@ -91,6 +95,26 @@ function TopNavigation() {
 		}
 	};
 
+	const [pending, setPending] = useState(true);
+	const [currentUser, setCurrentUser] = useState<any>();
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(
+			auth,
+			(user) => {
+				if (user) setCurrentUser(user);
+				setPending(false);
+			},
+			(error) => {
+				console.log('not logged in', error);
+				setPending(false);
+			}
+		);
+
+		return unsubscribe;
+	}, []);
+
+	if (pending) return null;
+
 	return (
 		<AppBar position="static" sx={{ zIndex: 1000 }}>
 			<Container maxWidth="xl">
@@ -99,7 +123,7 @@ function TopNavigation() {
 						<img
 							src={trepirLogo}
 							alt="trepir-logo"
-							style={{ height: '36px', width: '36px' }}
+							style={{ height: '33px', width: '36px', marginBottom: '3px' }}
 						/>
 						<Typography
 							variant="h5"
@@ -110,10 +134,12 @@ function TopNavigation() {
 								mr: 2,
 								display: { xs: 'none', md: 'flex' },
 								fontFamily: gilroyExtra,
-								fontWeight: 'bolder',
-								letterSpacing: '.3rem',
+								fontWeight: '900',
+								letterSpacing: '0.1rem',
 								color: 'primary',
+								fontSize: '2rem',
 								textDecoration: 'none',
+								textAlign: 'center',
 							}}
 						>
 							TREPIR
@@ -121,19 +147,13 @@ function TopNavigation() {
 					</div>
 					<div>
 						<Box
-							sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+							sx={{
+								flexGrow: 1,
+								display: { xs: 'flex', md: 'none' },
+								backgroundColor: primaryColor,
+							}}
 							className="navbar-links"
 						>
-							{/* <IconButton
-								size="large"
-								aria-label="account of current user"
-								aria-controls="menu-appbar"
-								aria-haspopup="true"
-								onClick={handleOpenNavMenu}
-								color="inherit"
-							>
-								<MenuIcon />
-							</IconButton> */}
 							<Menu
 								id="menu-appbar"
 								anchorEl={anchorElNav}
@@ -152,21 +172,16 @@ function TopNavigation() {
 									display: { xs: 'block', md: 'none' },
 								}}
 							>
-								{pages.map((page) => (
-									<MenuItem
-										key={pages.indexOf(page)}
-										onClick={handleCloseNavMenu}
-									>
-										<Typography
-											textAlign="center"
-											sx={{
-												fontFamily: gilroyExtra,
-											}}
+								<div className="navbar-link-container">
+									{pages.map((page) => (
+										<MenuItem
+											key={pages.indexOf(page)}
+											onClick={handleCloseNavMenu}
 										>
-											{page}
-										</Typography>
-									</MenuItem>
-								))}
+											<Typography textAlign="center">{page}</Typography>
+										</MenuItem>
+									))}
+								</div>
 							</Menu>
 						</Box>
 					</div>
@@ -180,7 +195,7 @@ function TopNavigation() {
 							display: { xs: 'flex', md: 'none' },
 							flexGrow: 1,
 							fontFamily: gilroyExtra,
-							fontWeight: 700,
+							fontWeight: 900,
 							letterSpacing: '.3rem',
 							color: 'inherit',
 							textDecoration: 'none',
@@ -193,7 +208,13 @@ function TopNavigation() {
 							<Button
 								key={pages.indexOf(page)}
 								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: 'black', display: 'block' }}
+								sx={{
+									my: 2,
+									color: 'white',
+									display: 'block',
+									fontFamily: gilroyExtra,
+									fontWeight: 'bold',
+								}}
 							>
 								{page}
 							</Button>
@@ -210,17 +231,18 @@ function TopNavigation() {
 											md: 'flex',
 											alignItems: 'center',
 										},
-										fontFamily: gilroyExtra,
+										fontWeight: 'bold',
 										textDecoration: 'none',
 									}}
 								>
-									{displayName}
+									{currentUser?.email}
 								</Typography>
 								<Tooltip title="Open settings">
 									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 										<Avatar
-											alt={displayName || 'Username'}
+											alt={currentUser?.email || 'Username'}
 											src="/static/images/avatar/2.jpg"
+											sx={{ backgroundColor: primaryColor }}
 										/>
 									</IconButton>
 								</Tooltip>

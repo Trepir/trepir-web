@@ -9,7 +9,6 @@ import SelectedTrip from './SelectedTrip';
 import { tripDateFormatter } from '../../../utils/dateUtils';
 import {
 	selectTripDetails,
-	selectTripId,
 	setSelectedTrip,
 } from '../../../features/createTrip/selectedTripSlice';
 import { BASE_URL } from '../../../features/createTrip/createTripService';
@@ -260,7 +259,7 @@ const onDragEnd = async (
 function EditTripPage() {
 	const dispatch = useDispatch();
 	const uid = useSelector(selectUid);
-	const tripId: string = useSelector(selectTripId);
+	const tripId: string | null = localStorage.getItem('tripId');
 	const { tripDetails } = useSelector(selectTripDetails);
 	//  eslint-disable-next-line
 	const [savedActivities, setSavedActivities] = useState<any>(null);
@@ -283,8 +282,9 @@ function EditTripPage() {
 		const getTripDetails = async () => {
 			//	TRIPID FAIL CHECK DO NOT REMOVE
 			//		THIS USEEFFECT NOW WATCH THE TRIPID VALUE AND WILL GET CALLED WHEN IT CHANGES
-			if (tripId) {
+			if (tripId?.length) {
 				try {
+					console.log('tripId', tripId);
 					const fetchTripDetails = await fetch(
 						`${BASE_URL}trip/tripById/${tripId}`
 					);
@@ -303,14 +303,14 @@ function EditTripPage() {
 		if (!tripDetails) return;
 		const dateList = tripDateFormatter(
 			tripDetails.startDate,
-			tripDetails.tripDay.length
+			tripDetails.tripDay?.length
 		);
 		//	///PARSE YOUR TRIP INTO A MAP OF DAYS//////////
 		//  eslint-disable-next-line
 		const tripDayActivityMap: any = {};
 		const tripDayIdMap: any = {};
 		//  eslint-disable-next-line
-		tripDetails.tripDay.forEach((day: any) => {
+		tripDetails.tripDay?.forEach((day: any) => {
 			const tripDayCopy = [...day.tripDayActivities];
 			const sortedActivities = sortDay(tripDayCopy);
 			tripDayActivityMap[dateList[day.dayIndex]] = sortedActivities;
@@ -460,9 +460,7 @@ function EditTripPage() {
 						</Box>
 					</Box>
 				</DragDropContext>
-			) : (
-				<>nope</>
-			)}
+			) : null}
 		</>
 	);
 }
