@@ -43,17 +43,24 @@ const appTheme = createTheme({
 	components: {
 		MuiCssBaseline: {
 			styleOverrides: `
-        @font-face {
-          font-family: 'gilroyLight';
-        }
+			@font-face {
+				font-family: gilroy;
+				src: url('./assets/Gilroy-FREE/Gilroy-ExtraBold.otf');
+				font-weight: bold;
+			}
+			@font-face {
+				font-family: gilroy;
+				src: url('./assets/Gilroy-FREE/Gilroy-Light.otf');
+				font-weight: normal;
+			}
       `,
 		},
 
 		MuiAppBar: {
 			styleOverrides: {
 				colorPrimary: {
-					backgroundColor: 'white',
-					color: primaryColor,
+					backgroundColor: '#13996D',
+					color: 'white',
 				},
 			},
 		},

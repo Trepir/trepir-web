@@ -20,28 +20,34 @@ import { logOut } from '../utils/firebase/firebaseFunctions';
 import { gilroyExtra } from '../App';
 import auth from '../utils/firebase/firebaseConfig';
 
-const trepirLogo = require('../assets/logo3.png');
+const trepirLogo = require('../assets/logo-white.png');
+
+export const primaryColor = '#1CB985';
 
 const isActiveStyle = {
 	textDecoration: 'none',
-	backgroundColor: '#eee',
+	backgroundColor: primaryColor,
+	color: 'white',
 };
 
 const pages = [
 	<NavLink
 		to="/discover"
+		className="navbar-link-item"
 		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
 	>
 		Discover
 	</NavLink>,
 	<NavLink
 		to="/dashboard"
+		className="navbar-link-item"
 		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
 	>
 		Dashboard
 	</NavLink>,
 	<NavLink
 		to="/playground"
+		className="navbar-link-item"
 		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
 	>
 		Playground
@@ -117,7 +123,7 @@ function TopNavigation() {
 						<img
 							src={trepirLogo}
 							alt="trepir-logo"
-							style={{ height: '36px', width: '36px' }}
+							style={{ height: '33px', width: '36px', marginBottom: '3px' }}
 						/>
 						<Typography
 							variant="h5"
@@ -128,10 +134,12 @@ function TopNavigation() {
 								mr: 2,
 								display: { xs: 'none', md: 'flex' },
 								fontFamily: gilroyExtra,
-								fontWeight: 'bolder',
-								letterSpacing: '.3rem',
+								fontWeight: '900',
+								letterSpacing: '0.1rem',
 								color: 'primary',
+								fontSize: '2rem',
 								textDecoration: 'none',
+								textAlign: 'center',
 							}}
 						>
 							TREPIR
@@ -139,7 +147,11 @@ function TopNavigation() {
 					</div>
 					<div>
 						<Box
-							sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+							sx={{
+								flexGrow: 1,
+								display: { xs: 'flex', md: 'none' },
+								backgroundColor: primaryColor,
+							}}
 							className="navbar-links"
 						>
 							<Menu
@@ -160,21 +172,16 @@ function TopNavigation() {
 									display: { xs: 'block', md: 'none' },
 								}}
 							>
-								{pages.map((page) => (
-									<MenuItem
-										key={pages.indexOf(page)}
-										onClick={handleCloseNavMenu}
-									>
-										<Typography
-											textAlign="center"
-											sx={{
-												fontFamily: gilroyExtra,
-											}}
+								<div className="navbar-link-container">
+									{pages.map((page) => (
+										<MenuItem
+											key={pages.indexOf(page)}
+											onClick={handleCloseNavMenu}
 										>
-											{page}
-										</Typography>
-									</MenuItem>
-								))}
+											<Typography textAlign="center">{page}</Typography>
+										</MenuItem>
+									))}
+								</div>
 							</Menu>
 						</Box>
 					</div>
@@ -188,7 +195,7 @@ function TopNavigation() {
 							display: { xs: 'flex', md: 'none' },
 							flexGrow: 1,
 							fontFamily: gilroyExtra,
-							fontWeight: 700,
+							fontWeight: 900,
 							letterSpacing: '.3rem',
 							color: 'inherit',
 							textDecoration: 'none',
@@ -201,7 +208,13 @@ function TopNavigation() {
 							<Button
 								key={pages.indexOf(page)}
 								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: 'black', display: 'block' }}
+								sx={{
+									my: 2,
+									color: 'white',
+									display: 'block',
+									fontFamily: gilroyExtra,
+									fontWeight: 'bold',
+								}}
 							>
 								{page}
 							</Button>
@@ -218,7 +231,7 @@ function TopNavigation() {
 											md: 'flex',
 											alignItems: 'center',
 										},
-										fontFamily: gilroyExtra,
+										fontWeight: 'bold',
 										textDecoration: 'none',
 									}}
 								>
@@ -229,6 +242,7 @@ function TopNavigation() {
 										<Avatar
 											alt={currentUser?.email || 'Username'}
 											src="/static/images/avatar/2.jpg"
+											sx={{ backgroundColor: primaryColor }}
 										/>
 									</IconButton>
 								</Tooltip>

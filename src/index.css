@@ -1,17 +1,23 @@
 @font-face {
-	font-family: gilroy-extrabold;
+	font-family: gilroy;
 	src: url('./assets/Gilroy-FREE/Gilroy-ExtraBold.otf');
+	font-weight: bold;
 }
 @font-face {
-	font-family: gilroy-light;
+	font-family: gilroy;
 	src: url('./assets/Gilroy-FREE/Gilroy-Light.otf');
+	font-weight: normal;
 }
 
+.MuiButtonBase-root {
+	font-family: 'gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+}
 body {
 	margin: 0;
-	font-family: 'gilroy-light', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-		'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-		'Helvetica Neue', sans-serif;
+	font-family: 'gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
