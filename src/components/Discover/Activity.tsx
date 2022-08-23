@@ -23,6 +23,7 @@ import // selectFavoriteActivities,
 // toggleFavoriteActivity,
 '../../features/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../app/reducers/dashboardSlice';
+import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
 // import {
 // 	saveActivityToTrip,
@@ -30,7 +31,6 @@ import { selectViewingMap } from '../../app/reducers/dashboardSlice';
 // } from '../../features/createActivity/favoriteActivityService';
 // import { selectUid } from '../../app/reducers/authSlice';
 // import { selectTripList } from '../../features/createTrip/tripListSlice';
-
 
 type Props = {
 	activity: any;
@@ -44,10 +44,10 @@ function Activity(props: Props) {
 	// const favoriteActivities = useSelector(selectFavoriteActivities);
 	// const uid: string | null = useSelector(selectUid);
 	// const tripList: any = useSelector(selectTripList);
+	const isTripSelected = useSelector(selectTripId);
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
-
 
 	function handleClick() {
 		if (page === 'discover') {
