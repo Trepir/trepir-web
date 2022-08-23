@@ -26,7 +26,15 @@ function DashboardHome() {
 		>
 			<Typography variant="h3">Select trip to view</Typography>
 			<Typography variant="h6">or</Typography>
-			<Button variant="contained" component={Link} to="createtrip">
+			<Button
+				variant="contained"
+				component={Link}
+				to="createtrip"
+				sx={{
+					borderRadius: '18px',
+					color: '#fff',
+				}}
+			>
 				Create New Trip
 			</Button>
 		</Box>

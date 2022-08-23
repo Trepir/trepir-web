@@ -1,4 +1,5 @@
 // import { useLoadScript } from '@react-google-maps/api';
+import './Discover.css';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';

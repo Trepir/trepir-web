@@ -165,7 +165,13 @@ function FormStepper() {
 
 	return (
 		<div className="trip-form-container">
-			<Box sx={{ width: '100%' }}>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+				}}
+			>
 				<Stepper activeStep={activeStep}>
 					{steps.map((label, index) => {
 						const stepProps: StepProps = { completed: false };
