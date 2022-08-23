@@ -14,11 +14,11 @@ function HomePage() {
 				// backgroundColor: 'black',
 			}}
 		>
-			<img
+			{/* <img
 				src="globe.gif"
 				alt="globe"
 				style={{ position: 'absolute', width: '100vw', height: '100vh' }}
-			/>
+			/> */}
 			<div style={{ zIndex: 2, color: 'white' }}>Where do you want to go?</div>
 			<SearchGooglePlaces />
 		</Box>

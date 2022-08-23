@@ -44,6 +44,7 @@ function FilteredActivitiesList({ setSelectedActivity }: any) {
 			>
 				{activities?.map((activity: any) => (
 					<Activity
+						key={activity.id}
 						activity={activity}
 						setSelectedActivity={setSelectedActivity}
 					/>

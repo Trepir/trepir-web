@@ -23,12 +23,14 @@ import // selectFavoriteActivities,
 // toggleFavoriteActivity,
 '../../features/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../app/reducers/dashboardSlice';
+
 // import {
 // 	saveActivityToTrip,
 // 	updateFavoriteActivity,
 // } from '../../features/createActivity/favoriteActivityService';
 // import { selectUid } from '../../app/reducers/authSlice';
 // import { selectTripList } from '../../features/createTrip/tripListSlice';
+
 
 type Props = {
 	activity: any;
@@ -46,7 +48,6 @@ function Activity(props: Props) {
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
 
-	// const favoriteColor: boolean = favoriteActivities.includes(activity.id);
 
 	function handleClick() {
 		if (page === 'discover') {
@@ -62,6 +63,9 @@ function Activity(props: Props) {
 		}
 		if (page === 'dashboard' && viewingDashboardMap === false) {
 			setSelectedActivity(activity);
+		}
+		if (page === 'dashboard' && !isTripSelected.tripId) {
+			console.log('add activity');
 		}
 		dispatch(
 			setMapPan({

@@ -22,7 +22,10 @@ import FormStepTwo from './FormStepTwo';
 import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
 import { selectTravelList } from '../../../features/createTravel/travelListSlice';
 import TravelEventList from './TravelEventList';
-import createTrip from '../../../features/createTrip/createTripService';
+import {
+	createTrip,
+	addInitialActivities,
+} from '../../../features/createTrip/createTripService';
 import { addTrip } from '../../../features/createTrip/tripListSlice';
 import { selectUid } from '../../../app/reducers/authSlice';
 import {
@@ -30,6 +33,8 @@ import {
 	setSelectedTripId,
 } from '../../../features/createTrip/selectedTripSlice';
 import createTravel from '../../../features/createTravel/createTravelService';
+import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
+import FormStepThree from './FormStepThree';
 
 // import {
 // 	submitNewTrip,
@@ -40,7 +45,7 @@ function FormStepper() {
 	const travelList = useAppSelector(selectTravelList);
 	const submitRef: React.MutableRefObject<any> = useRef();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
-	const steps = ['Travel Details', 'Add Activities'];
+	const steps = ['General Information', 'Travel Details', 'Add Activities'];
 	const newTrip = useAppSelector(selectNewTrip);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -73,7 +78,7 @@ function FormStepper() {
 			setSkipped(newSkipped);
 			setValidated(false);
 			alertRef.current = false;
-			if (activeStep === steps.length - 1) {
+			if (activeStep === steps.length) {
 				//	UID FAIL CHECK
 				if (!uid) {
 					alert('not logged in');
@@ -81,15 +86,25 @@ function FormStepper() {
 				}
 				const createdTrip = await createTrip(newTrip, uid);
 				travelList.forEach(async (travelEvent: any) => {
+					console.log('travel', travelEvent);
 					await createTravel(travelEvent, uid, createdTrip.id);
+				});
+				accommodationList.forEach(async (accommodationEvent: any) => {
+					console.log('acc', accommodationEvent);
+					await createAccommodation(accommodationEvent, uid, createdTrip.id);
 				});
 
 				dispatch(addTrip(createdTrip));
-				setActiveStep((prevActiveStep) => prevActiveStep + 1);
+				// setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				// Pending call to backend and use trip id for params
 				//	SET YOUR SELECTED TRIP BEFORE NAIGATING TO edit page
-				dispatch(setSelectedTripId(createdTrip.id));
 				navigate('../trip');
+				dispatch(setSelectedTripId(createdTrip.id));
+				await addInitialActivities(
+					newTrip.initialTripFavorites,
+					uid,
+					createdTrip.id
+				);
 			}
 		}
 	};
@@ -141,6 +156,11 @@ function FormStepper() {
 			setValidated={setValidated}
 			setActiveStep={setActiveStep}
 		/>,
+		<FormStepThree
+			submitRef={submitRef}
+			setValidated={setValidated}
+			setActiveStep={setActiveStep}
+		/>,
 	];
 
 	return (
@@ -167,7 +187,7 @@ function FormStepper() {
 						);
 					})}
 				</Stepper>
-				{activeStep === steps.length ? (
+				{activeStep === steps.length + 1 ? (
 					<>
 						<Typography component="span" sx={{ mt: 2, mb: 1 }}>
 							All steps completed - you&apos;re finished
@@ -198,7 +218,7 @@ function FormStepper() {
 								</Button>
 							)}
 							<Button onClick={handleNext}>
-								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+								{activeStep === steps.length ? 'Finish' : 'Next'}
 							</Button>
 						</Box>
 					</>

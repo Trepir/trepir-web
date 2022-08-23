@@ -6,6 +6,17 @@
 	padding-top: 4rem;
 }
 
+.navbar-logo {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+.MuiBox-root {
+	display: flex;
+	gap: 2rem;
+	justify-content: center;
+}
+
 a:link {
 	text-decoration: none;
 }
@@ -20,4 +31,9 @@ a:hover {
 
 a:active {
 	text-decoration: underline;
+}
+
+a:-webkit-any-link {
+	text-decoration: none;
+	color: inherit;
 }
