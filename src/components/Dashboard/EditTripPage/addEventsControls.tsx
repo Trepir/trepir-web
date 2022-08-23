@@ -32,9 +32,9 @@ function AddEventsControls() {
 			<Box
 				sx={{
 					display: 'flex',
-					gap: 8,
+					gap: 5,
 					margin: '3vw 0 0 0',
-					width: '50vw',
+					width: '47vw',
 					justifyContent: 'center',
 				}}
 			>

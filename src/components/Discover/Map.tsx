@@ -12,7 +12,7 @@ import {
 //	We set these up outside of the googlemaps component becasue the map will accidentally rerender
 const mapContainerStyle = {
 	width: '51vw',
-	height: '100vh',
+	height: '93vh',
 };
 const center = { lat: 0, lng: 0 };
 
