@@ -391,6 +391,7 @@ function EditTripPage() {
 								display: 'flex',
 								flexDirection: 'column',
 								width: '50vw',
+								overflow: 'scroll',
 								alignItems: 'center',
 							}}
 						>

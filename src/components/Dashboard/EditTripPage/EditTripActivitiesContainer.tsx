@@ -24,7 +24,9 @@ function EditTripActivitiesContainer({
 							display: 'flex',
 							flexWrap: 'wrap',
 							margin: '3vw 0 0 5vw',
-							height: 0,
+							backgroundColor: 'blue',
+							width: '50vw',
+							height: 10,
 							gap: 10,
 						}}
 					>

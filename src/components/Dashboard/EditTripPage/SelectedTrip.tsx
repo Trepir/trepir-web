@@ -21,7 +21,7 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 		<Paper
 			elevation={20}
 			sx={{
-				borderRadius: 3,
+				borderRadius: '0 15px 15px 0',
 				padding: '1vw 0 0 2vw',
 				zIndex: '1',
 			}}
