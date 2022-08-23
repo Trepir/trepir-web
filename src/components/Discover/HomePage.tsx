@@ -26,7 +26,7 @@ function HomePage() {
 				alt="globe"
 				style={{ position: 'absolute', width: '100vw', height: '100vh' }}
 			/> */}
-				<Typography variant="h3" style={{ zIndex: 2, margin: '25vh 0 0 0' }}>
+				<Typography variant="h3" style={{ zIndex: 2, margin: '33vh 0 0 0' }}>
 					Where do you want to go?
 				</Typography>
 				{/* <div style={{ zIndex: 2, color: 'white', margin: '30vh 0 0 0' }}></div> */}

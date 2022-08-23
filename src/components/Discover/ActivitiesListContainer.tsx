@@ -54,6 +54,7 @@ function ActivitiesListContainer({ setSelectedActivity }: any) {
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
+						margin: '25vh 0 0 0',
 					}}
 				>
 					{tags.map((tag) => {
