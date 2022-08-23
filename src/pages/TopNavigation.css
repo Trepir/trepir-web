@@ -11,18 +11,11 @@
 	gap: 1rem;
 	align-items: center;
 }
-.navbar-login {
+/* .MuiBox-root {
 	display: flex;
-	align-items: flex-end;
-	justify-content: center;
-	color: black;
-}
-
-.MuiBox-root {
-	display: flex;
-	gap: 4rem;
-	justify-content: center;
-}
+	gap: 2rem;
+	justify-content: center; */
+/* } */
 
 a:link {
 	text-decoration: none;
