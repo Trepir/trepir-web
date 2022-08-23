@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import styled from '@emotion/styled';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -12,6 +13,12 @@ import { useNavigate } from 'react-router-dom';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
 import { setMapViewport } from '../../app/reducers/mapSlice';
+
+const CssTextField = styled(TextField)({
+	fieldset: {
+		border: 0,
+	},
+});
 
 const autocompleteService = { current: null };
 
@@ -96,7 +103,15 @@ export default function SearchGooglePlaces() {
 	return (
 		<Autocomplete
 			id="google-map-demo"
-			sx={{ width: 350, backgroundColor: 'white', zIndex: 3 }}
+			sx={{
+				width: 550,
+				backgroundColor: 'white',
+				zIndex: 3,
+				borderRadius: 8,
+				borderStyle: 'solid',
+				borderWidth: 2,
+				borderColor: 'rgba(28, 185, 133, 1)',
+			}}
 			getOptionLabel={(option) =>
 				typeof option === 'string' ? option : option.description
 			}
@@ -128,7 +143,12 @@ export default function SearchGooglePlaces() {
 				setInputValue(newInputValue);
 			}}
 			renderInput={(params) => (
-				<TextField {...params} label="Add a location" fullWidth />
+				<CssTextField
+					{...params}
+					label="Add a location"
+					fullWidth
+					// variant="standard"
+				/>
 			)}
 			renderOption={(props, option) => {
 				const matches =
@@ -147,7 +167,11 @@ export default function SearchGooglePlaces() {
 							<Grid item>
 								<Box
 									component={LocationOnIcon}
-									sx={{ color: 'text.secondary', mr: 2 }}
+									sx={{
+										color: 'text.secondary',
+										mr: 2,
+										// width: 50,
+									}}
 								/>
 							</Grid>
 							<Grid item xs>

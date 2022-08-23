@@ -153,13 +153,14 @@ function Activity(props: Props) {
 			<Card
 				sx={{
 					display: 'flex',
-					width: 350,
+					width: 340,
 					height: 160,
 					padding: '0 0 0 10px',
 					flexShrink: 0,
 					alignItems: 'center',
 					textDecoration: 'none',
 					position: 'relative',
+					borderRadius: 5,
 					// gap: 1,
 				}}
 				elevation={5}
@@ -171,7 +172,13 @@ function Activity(props: Props) {
 					alt="location pic"
 				/> */}
 				<Avatar
-					sx={{ bgcolor: '#DEF5ED', width: 140, height: 140, color: '#7ED3B7' }}
+					sx={{
+						bgcolor: '#DEF5ED',
+						width: 140,
+						height: 140,
+						color: '#7ED3B7',
+						borderRadius: 4,
+					}}
 					variant="rounded"
 					onClick={() => handleClick()}
 				>
@@ -209,10 +216,18 @@ function Activity(props: Props) {
 						</Typography>
 						<div style={{ display: 'flex', gap: 10 }}>
 							{activity.tags.length ? (
-								<Chip label={activity.tags[0]} style={{ width: 80 }} />
+								<Chip
+									label={activity.tags[0]}
+									style={{ width: 70 }}
+									size="small"
+								/>
 							) : null}
 							{activity.tags.length >= 2 ? (
-								<Chip label={activity.tags[1]} style={{ width: 80 }} />
+								<Chip
+									label={activity.tags[1]}
+									style={{ width: 70 }}
+									size="small"
+								/>
 							) : null}
 						</div>
 					</div>

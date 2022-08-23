@@ -25,10 +25,12 @@ function Tag({ label }: any) {
 	}
 	return (
 		<Chip
+			size="small"
+			style={{ width: 70 }}
 			onClick={() => handleClick(label)}
 			label={label}
 			variant={selected ? 'filled' : 'outlined'}
-			color="primary"
+			// color="primary"
 		/>
 	);
 }

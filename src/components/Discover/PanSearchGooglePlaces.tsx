@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import styled from '@emotion/styled';
+
 import Autocomplete from '@mui/material/Autocomplete';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Grid from '@mui/material/Grid';
@@ -11,6 +13,12 @@ import { getDetails } from 'use-places-autocomplete';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
 import { setMapViewport } from '../../app/reducers/mapSlice';
+
+const CssTextField = styled(TextField)({
+	fieldset: {
+		border: 0,
+	},
+});
 
 const autocompleteService = { current: null };
 
@@ -95,7 +103,15 @@ export default function PanSearchGooglePlaces() {
 	return (
 		<Autocomplete
 			id="google-map-demo"
-			sx={{ width: 500 }}
+			sx={{
+				width: 550,
+				backgroundColor: 'white',
+				zIndex: 3,
+				borderRadius: 8,
+				borderStyle: 'solid',
+				borderWidth: 2,
+				borderColor: 'rgba(28, 185, 133, 1)',
+			}}
 			getOptionLabel={(option) =>
 				typeof option === 'string' ? option : option.description
 			}
@@ -126,8 +142,9 @@ export default function PanSearchGooglePlaces() {
 				setInputValue(newInputValue);
 			}}
 			renderInput={(params) => (
-				<TextField
+				<CssTextField
 					{...params}
+					size="small"
 					label="In the mood for some salsa classes?"
 					fullWidth
 				/>

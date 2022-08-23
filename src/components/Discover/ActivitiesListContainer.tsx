@@ -28,24 +28,6 @@ function ActivitiesListContainer({ setSelectedActivity }: any) {
 		'Festivity',
 		'Sport',
 	];
-	// const initialState = {
-	// 	Relax: [],
-	// 	Landmark: [],
-	// 	Entertainment: [],
-	// 	Drinks: [],
-	// 	Restaurant: [],
-	// 	Adventure: [],
-	// 	Museum: [],
-	// 	Outdoors: [],
-	// 	Tour: [],
-	// 	Beach: [],
-	// 	Culture: [],
-	// 	Nightlife: [],
-	// 	Nature: [],
-	// 	Festivity: [],
-	// 	Sport: [],
-	// };
-	// const [activityMap, setActivityMap] = useState<any>(initialState);
 	const dispatch = useDispatch();
 	const viewportCoords: any = useSelector(selectViewportCoords);
 	const activities: any = useSelector(selectActivities);
@@ -65,23 +47,6 @@ function ActivitiesListContainer({ setSelectedActivity }: any) {
 		getActivities();
 	}, [viewportCoords]);
 
-	// useEffect(() => {
-	// 	if (!activities) return;
-	// 	setActivityMap(initialState);
-	// 	console.log(activityMap);
-	// 	const tags = Object.keys(activityMap);
-	// 	tags.forEach((tag) => {
-	// 		(activities as any[]).forEach((activity) => {
-	// 			if (activity.tags.includes(tag)) {
-	// 				activityMap[tag] = [...activityMap[tag], activity];
-	// 				const copy = { ...activityMap };
-	// 				console.log(copy);
-	// 				setActivityMap(copy);
-	// 			}
-	// 		});
-	// 	});
-	// }, [activities]);
-
 	return (
 		<div>
 			{activities ? (
@@ -91,19 +56,6 @@ function ActivitiesListContainer({ setSelectedActivity }: any) {
 						flexDirection: 'column',
 					}}
 				>
-					{/* {Object.entries(activityMap).map(([tag, filteredActivities]) =>
-						(filteredActivities as any).length ? (
-							<div>
-								<Typography variant="h5" style={{ alignSelf: 'flex-start' }}>
-									{tag}
-								</Typography>
-								<ActivitiesList
-									activities={filteredActivities}
-									setSelectedActivity={setSelectedActivity}
-								/>
-							</div>
-						) : null
-					)} */}
 					{tags.map((tag) => {
 						const filteredList = (activities as any[]).filter((activity) =>
 							activity.tags.includes(tag)

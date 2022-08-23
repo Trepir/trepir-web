@@ -18,13 +18,14 @@ function TagList() {
 		'Nature',
 		'Festivity',
 		'Sport',
+		'Kebab',
 	];
 	return (
 		<Box
 			sx={{
 				display: 'flex',
 				gap: 2,
-				width: '50vw',
+				width: '675px',
 				flexWrap: 'wrap',
 			}}
 		>
