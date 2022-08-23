@@ -48,13 +48,6 @@ const appTheme = createTheme({
         }
       `,
 		},
-		// MuiTextField: {
-		// 	styleOverrides: {
-		// 		root: {
-		// 			borderRadius: '12px',
-		// 		},
-		// 	},
-		// },
 
 		MuiAppBar: {
 			styleOverrides: {
