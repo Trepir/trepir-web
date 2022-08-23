@@ -30,7 +30,6 @@ function Tag({ label }: any) {
 			onClick={() => handleClick(label)}
 			label={label}
 			variant={selected ? 'filled' : 'outlined'}
-			// color="primary"
 		/>
 	);
 }

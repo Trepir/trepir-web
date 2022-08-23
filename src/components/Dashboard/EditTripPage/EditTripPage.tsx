@@ -435,22 +435,19 @@ function EditTripPage() {
 								<Map />
 							) : (
 								<div>
+									<AddEventsControls />
 									{selectedActivity ? (
-										<>
-											<div style={{ height: '6vh' }} />
+										<div style={{ margin: '17vh 0 0 0' }}>
 											<ActivityDetails
 												setSelectedActivity={setSelectedActivity}
 												activity={selectedActivity}
 											/>
-										</>
+										</div>
 									) : (
-										<>
-											<AddEventsControls />
-											<EditTripActivitiesContainer
-												savedActivities={savedActivities}
-												setSelectedActivity={setSelectedActivity}
-											/>
-										</>
+										<EditTripActivitiesContainer
+											savedActivities={savedActivities}
+											setSelectedActivity={setSelectedActivity}
+										/>
 									)}
 								</div>
 							)}

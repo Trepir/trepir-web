@@ -23,7 +23,7 @@ function FilteredActivitiesList({ setSelectedActivity }: any) {
 	return (
 		<Box
 			sx={{
-				backgroundColor: 'pink',
+				// backgroundColor: 'pink',
 				display: 'flex',
 				flexDirection: 'column',
 				margin: '25vh 0 0 0',
@@ -37,18 +37,17 @@ function FilteredActivitiesList({ setSelectedActivity }: any) {
 				style={{ alignSelf: 'flex-start', width: '48vw' }}
 			>
 				{appliedTags.map((tag) => (
-					<>{tag} - </>
+					<>{tag}, </>
 				))}
-				:
 			</Typography>
 			<Box
 				sx={{
+					// backgroundColor: 'pink',
 					display: 'flex',
-					// flexDirection: 'column',
+					width: '48vw',
+					padding: '20px 0 0 6px',
 					flexWrap: 'wrap',
 					gap: 2,
-					// overflow: 'scroll',
-					height: 180,
 				}}
 			>
 				{activities?.map((activity: any) => (

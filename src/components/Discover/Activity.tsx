@@ -1,36 +1,17 @@
-// import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
-import {
-	Avatar,
-	Box,
-	Chip,
-	// IconButton,
-	// Menu,
-	// MenuItem,
-	// Tooltip,
-} from '@mui/material';
+import { Avatar, Box, Chip } from '@mui/material';
 import Typography from '@mui/material/Typography';
-// import { PlaylistAdd } from '@mui/icons-material';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
 import LikeActivityControls from './LikeActivityControls';
 // import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
 
 import { selectPage, setMapPan, setMarkers } from '../../app/reducers/mapSlice';
 import // selectFavoriteActivities,
-// toggleFavoriteActivity,
 '../../features/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../app/reducers/dashboardSlice';
 import { selectTripId } from '../../features/createTrip/selectedTripSlice';
-
-// import {
-// 	saveActivityToTrip,
-// 	updateFavoriteActivity,
-// } from '../../features/createActivity/favoriteActivityService';
-// import { selectUid } from '../../app/reducers/authSlice';
-// import { selectTripList } from '../../features/createTrip/tripListSlice';
 
 type Props = {
 	activity: any;
@@ -38,12 +19,7 @@ type Props = {
 };
 
 function Activity(props: Props) {
-	// const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	// const open = Boolean(anchorEl);
 	const { activity, setSelectedActivity } = props;
-	// const favoriteActivities = useSelector(selectFavoriteActivities);
-	// const uid: string | null = useSelector(selectUid);
-	// const tripList: any = useSelector(selectTripList);
 	const isTripSelected = useSelector(selectTripId);
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
@@ -75,81 +51,10 @@ function Activity(props: Props) {
 		);
 	}
 
-	// const handleFavorite = () => {
-	// 	if (uid) {
-	// 		dispatch(toggleFavoriteActivity(activity.id));
-	// 		updateFavoriteActivity(uid, activity.id);
-	// 	}
-	// };
-
-	// const handleClickMenu = (event: any) => {
-	// 	setAnchorEl(event.currentTarget);
-	// };
-	// const handleClose = () => {
-	// 	setAnchorEl(null);
-	// };
-
-	// const handleAddToTrip = (tripId: string) => {
-	// 	if (uid) {
-	// 		saveActivityToTrip(uid, activity.id, tripId, favoriteActivities);
-	// 	}
-	// };
-
 	console.log(activity);
 
 	return (
 		<div>
-			{/* {uid ? (
-				<div className="favorite-buttons">
-					<IconButton
-						aria-label="favorite"
-						sx={{
-							position: 'relative',
-							color: `${favoriteColor ? 'red' : 'black'}`,
-						}}
-						onClick={handleFavorite}
-					>
-						<FavoriteIcon />
-					</IconButton>
-					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip title="Save to trip">
-							<IconButton onClick={handleClickMenu} sx={{ p: 0 }}>
-								<PlaylistAdd />
-							</IconButton>
-						</Tooltip>
-						<Menu
-							sx={{ mt: '45px' }}
-							id="menu-select-trip"
-							anchorEl={anchorEl}
-							anchorOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-							}}
-							open={Boolean(open)}
-							onClose={handleClose}
-						>
-							{tripList.userTrips.length
-								? tripList.userTrips.map((trip: any) => (
-										<MenuItem
-											key={trip.id}
-											onClick={() => {
-												handleAddToTrip(trip.id);
-												handleClose();
-											}}
-										>
-											<Typography>{trip.name}</Typography>
-										</MenuItem>
-								  ))
-								: null}
-						</Menu>
-					</Box>
-				</div>
-			) : null} */}
 			<Card
 				sx={{
 					display: 'flex',
@@ -191,13 +96,11 @@ function Activity(props: Props) {
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
-						// backgroundColor: 'pink',
 
 						justifyContent: 'space-between',
 						height: 140,
 						width: 170,
 						padding: '0 0 0 8px',
-						// gap: 3,
 					}}
 					onClick={() => handleClick()}
 				>
@@ -208,7 +111,6 @@ function Activity(props: Props) {
 						style={{
 							display: 'flex',
 							flexDirection: 'column',
-							// backgroundColor: 'blue',
 						}}
 					>
 						<Typography variant="subtitle1" noWrap>
