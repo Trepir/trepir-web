@@ -19,6 +19,8 @@ type Props = {
 };
 
 function Activity(props: Props) {
+	console.log('rendered');
+
 	const { activity, setSelectedActivity } = props;
 	const isTripSelected = useSelector(selectTripId);
 	const page = useSelector(selectPage);
@@ -51,8 +53,6 @@ function Activity(props: Props) {
 		);
 	}
 
-	console.log(activity);
-
 	return (
 		<div>
 			<Card
@@ -82,7 +82,7 @@ function Activity(props: Props) {
 						width: 140,
 						height: 140,
 						color: '#7ED3B7',
-						borderRadius: 4,
+						borderRadius: 3,
 					}}
 					variant="rounded"
 					onClick={() => handleClick()}
@@ -120,14 +120,14 @@ function Activity(props: Props) {
 							{activity.tags.length ? (
 								<Chip
 									label={activity.tags[0]}
-									style={{ width: 70 }}
+									style={{ width: 70, backgroundColor: '#ECCA72' }}
 									size="small"
 								/>
 							) : null}
 							{activity.tags.length >= 2 ? (
 								<Chip
 									label={activity.tags[1]}
-									style={{ width: 70 }}
+									style={{ width: 70, backgroundColor: '#ECCA72' }}
 									size="small"
 								/>
 							) : null}

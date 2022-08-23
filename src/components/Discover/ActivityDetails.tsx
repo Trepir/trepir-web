@@ -61,8 +61,7 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 									label={tag}
 									style={{
 										width: 70,
-										backgroundColor: '#BA8909 ',
-										color: 'white',
+										backgroundColor: '#ECCA72',
 									}}
 									size="small"
 								/>

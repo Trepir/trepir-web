@@ -116,7 +116,13 @@ function TopNavigation() {
 	if (pending) return null;
 
 	return (
-		<AppBar position="static" sx={{ zIndex: 1000 }}>
+		<AppBar
+			position="static"
+			sx={{
+				zIndex: 1000,
+			}}
+			elevation={10}
+		>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters className="navbar-container">
 					<div className="navbar-logo">

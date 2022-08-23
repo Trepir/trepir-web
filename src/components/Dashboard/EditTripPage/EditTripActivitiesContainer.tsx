@@ -23,7 +23,7 @@ function EditTripActivitiesContainer({
 						style={{
 							display: 'flex',
 							flexWrap: 'wrap',
-							margin: '18vh 0 0 5vw',
+							margin: '2.5vh 0 0 5vw',
 							width: '41vw',
 							height: 10,
 							gap: 10,

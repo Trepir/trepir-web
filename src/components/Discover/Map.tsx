@@ -8,11 +8,19 @@ import {
 	selectViewportCoords,
 	setMapViewport,
 } from '../../app/reducers/mapSlice';
+// import mapStyle from '../../utils/googleMaps/mapStyle';
+// import mapStyle from '../../utils/googleMaps/mapStyle2';
 
 //	We set these up outside of the googlemaps component becasue the map will accidentally rerender
 const mapContainerStyle = {
 	width: '51vw',
 	height: '93vh',
+};
+
+const options = {
+	// styles: mapStyle,
+	disableDefaultUI: true,
+	fullscreenControl: true,
 };
 const center = { lat: 0, lng: 0 };
 
@@ -65,7 +73,7 @@ function Map() {
 			zoom={2}
 			center={center}
 			onLoad={onMapLoad}
-			// options={options}
+			options={options}
 		>
 			{markers?.map((marker) => (
 				<MarkerF position={marker} />

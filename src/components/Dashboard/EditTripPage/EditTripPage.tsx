@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
-import { Button, Paper } from '@mui/material';
+import { Button, Divider, Paper } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 import EditTripActivitiesContainer from './EditTripActivitiesContainer';
 import SelectedTrip from './SelectedTrip';
@@ -404,21 +404,39 @@ function EditTripPage() {
 							}}
 						>
 							<Paper
+								elevation={0}
 								sx={{
 									display: 'flex',
-									width: 300,
-									height: 40,
+									width: '49vw',
+									height: 50,
 									justifyContent: 'center',
 									// gap: 7,
 									position: 'absolute',
-									margin: '1vh 0 0 0',
+									// margin: '0 0 0 0',
 									// top: 0,
 									zIndex: '2',
 								}}
 							>
 								<Button
-									variant={mapSelected ? 'text' : 'contained'}
-									style={{ width: 150 }}
+									disableElevation
+									// variant={mapSelected ? 'text' : 'contained'}
+									style={
+										mapSelected
+											? {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: 'white',
+													fontWeight: 'bold',
+													borderRadius: '0 0 0 0',
+											  }
+											: {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: '#d1d1d1',
+													fontWeight: 'bold',
+													borderRadius: '0 20px 0 0',
+											  }
+									}
 									onClick={() => {
 										dispatch(setViewingMap(false));
 										dispatch(setMapViewport(prevViewport));
@@ -427,8 +445,25 @@ function EditTripPage() {
 									Activities
 								</Button>
 								<Button
-									style={{ width: 150 }}
-									variant={mapSelected ? 'contained' : 'text'}
+									disableElevation
+									style={
+										mapSelected
+											? {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: '#d1d1d1',
+													fontWeight: 'bold',
+													borderRadius: '20px 0 0 0',
+											  }
+											: {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: 'white',
+													fontWeight: 'bold',
+													borderRadius: '0 0 0 0',
+											  }
+									}
+									// variant={mapSelected ? 'contained' : 'text'}
 									onClick={() => {
 										dispatch(setViewingMap(true));
 										setSelectedActivity(false);
@@ -442,8 +477,9 @@ function EditTripPage() {
 							) : (
 								<div>
 									<AddEventsControls />
+									<Divider style={{ margin: '15.5vh 0 0 0' }} />
 									{selectedActivity ? (
-										<div style={{ margin: '17vh 0 0 0' }}>
+										<div style={{ margin: '2vh 0 0 0' }}>
 											<ActivityDetails
 												setSelectedActivity={setSelectedActivity}
 												activity={selectedActivity}
