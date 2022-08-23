@@ -36,6 +36,7 @@ function AddEventsControls() {
 					margin: '3vw 0 0 0',
 					width: '47vw',
 					justifyContent: 'center',
+					backgroundColor: 'pink',
 				}}
 			>
 				<Button variant="contained" onClick={handleOpenActivity}>
@@ -48,6 +49,7 @@ function AddEventsControls() {
 					Add Accomodation
 				</Button>
 			</Box>
+
 			<Modal
 				open={openActivity}
 				onClose={handleCloseActivity}

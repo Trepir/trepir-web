@@ -30,8 +30,9 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 				elevation={9}
 				sx={{
 					borderRadius: '0 15px 15px 0',
-					padding: '1vw 0 0 2vw',
-					zIndex: '1',
+					margin: '0.1vh 0 0 0',
+					padding: '2vh 0 0 2vw',
+					zIndex: 1,
 					position: 'absolute',
 				}}
 			>
@@ -53,9 +54,8 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 							{(provided) => (
 								<>
 									<div>
-										<Divider textAlign="left">
-											<Typography variant="h5">{day}</Typography>
-										</Divider>
+										<Typography variant="h5">{day}</Typography>
+										<Divider style={{ width: '48.3vw' }} />
 									</div>
 
 									<div
@@ -65,12 +65,12 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 											// background: 'lightblue',
 											flexShrink: 0,
 
-											padding: '20px 0 0 20px',
+											padding: '20px 0 0 6px',
 											display: 'flex',
 											flexDirection: 'row',
 											overflowX: 'auto',
 											width: '48vw',
-											gap: 20,
+											gap: 120,
 											justifyContent: 'flex-start',
 											height: 180,
 											// minHeight: '8rem',
