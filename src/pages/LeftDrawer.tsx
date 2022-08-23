@@ -52,7 +52,7 @@ export default function SwipeableTemporaryDrawer() {
 			<Typography>Your trips</Typography>
 			<Divider />
 			<List>
-				{userTrips.length
+				{userTrips?.length
 					? userTrips.map((trip: any) => (
 							<ListItem key={trip.startDate} disablePadding>
 								<ListItemButton>
