@@ -27,7 +27,7 @@ function Login() {
 			);
 			console.log('userdet', user);
 			dispatch(setDisplayName(user.displayName));
-			if (uid) navigate('../dashboard');
+			navigate('../dashboard');
 
 			// dispatch(setUid(user.uid));
 		} catch (error) {

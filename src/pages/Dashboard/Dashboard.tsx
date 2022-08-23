@@ -67,9 +67,7 @@ function Dashboard() {
 						<Route path="/trip" element={<EditTripPage />} />
 					</Routes>
 				</>
-			) : (
-				<>loadingmap</>
-			)}
+			) : null}
 		</div>
 	);
 }

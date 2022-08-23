@@ -79,11 +79,11 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Navigate to="/discover" />} />
 						<Route path="/login" element={<Login />} />
-						<Route path="/dashboard/*" element={<Dashboard />} />
 						<Route path="/discover/*" element={<Discover />} />
 						<Route element={<PrivateRoutes />}>
 							<Route path="/private" element={<Private />} />
 							<Route path="/playground" element={<Playground />} />
+							<Route path="/dashboard/*" element={<Dashboard />} />
 						</Route>
 					</Routes>
 				</Router>

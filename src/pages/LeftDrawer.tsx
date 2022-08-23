@@ -13,6 +13,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useNavigate } from 'react-router-dom';
 import { selectTripList } from '../features/createTrip/tripListSlice';
 import { setSelectedTripId } from '../features/createTrip/selectedTripSlice';
+import { gilroyExtra } from '../App';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -49,7 +50,11 @@ export default function LeftDrawer() {
 			onClick={toggleDrawer(anchor, false)}
 			onKeyDown={toggleDrawer(anchor, false)}
 		>
-			<Typography>Your trips</Typography>
+			<Typography
+				sx={{ padding: '1.4rem', fontFamily: gilroyExtra, fontWeight: 900 }}
+			>
+				Your trips
+			</Typography>
 			<Divider />
 			<List>
 				{userTrips?.length
@@ -59,6 +64,8 @@ export default function LeftDrawer() {
 									<ListItemText
 										onClick={() => {
 											dispatch(setSelectedTripId(trip.id));
+											localStorage.setItem('tripId', '');
+											localStorage.setItem('tripId', trip.id);
 											navigate('trip');
 										}}
 										primary={trip.name}

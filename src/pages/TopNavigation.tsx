@@ -1,4 +1,6 @@
 import './TopNavigation.css';
+import { onAuthStateChanged } from 'firebase/auth';
+
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -10,16 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	selectDisplayName,
-	selectUid,
-	setUid,
-} from '../app/reducers/authSlice';
+import { selectUid, setUid } from '../app/reducers/authSlice';
 import { logOut } from '../utils/firebase/firebaseFunctions';
 import { gilroyExtra } from '../App';
+import auth from '../utils/firebase/firebaseConfig';
 
 const trepirLogo = require('../assets/logo3.png');
 
@@ -56,7 +55,6 @@ function TopNavigation() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const uid = useSelector(selectUid);
-	const displayName = useSelector(selectDisplayName);
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
 		null
@@ -91,6 +89,26 @@ function TopNavigation() {
 		}
 	};
 
+	const [pending, setPending] = useState(true);
+	const [currentUser, setCurrentUser] = useState<any>();
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(
+			auth,
+			(user) => {
+				if (user) setCurrentUser(user);
+				setPending(false);
+			},
+			(error) => {
+				console.log('not logged in', error);
+				setPending(false);
+			}
+		);
+
+		return unsubscribe;
+	}, []);
+
+	if (pending) return null;
+
 	return (
 		<AppBar position="static" sx={{ zIndex: 1000 }}>
 			<Container maxWidth="xl">
@@ -124,16 +142,6 @@ function TopNavigation() {
 							sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
 							className="navbar-links"
 						>
-							{/* <IconButton
-								size="large"
-								aria-label="account of current user"
-								aria-controls="menu-appbar"
-								aria-haspopup="true"
-								onClick={handleOpenNavMenu}
-								color="inherit"
-							>
-								<MenuIcon />
-							</IconButton> */}
 							<Menu
 								id="menu-appbar"
 								anchorEl={anchorElNav}
@@ -214,12 +222,12 @@ function TopNavigation() {
 										textDecoration: 'none',
 									}}
 								>
-									{displayName}
+									{currentUser?.email}
 								</Typography>
 								<Tooltip title="Open settings">
 									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 										<Avatar
-											alt={displayName || 'Username'}
+											alt={currentUser?.email || 'Username'}
 											src="/static/images/avatar/2.jpg"
 										/>
 									</IconButton>
