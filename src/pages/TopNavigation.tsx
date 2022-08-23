@@ -3,26 +3,50 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { AppBar, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUid, setUid } from '../app/reducers/authSlice';
+import {
+	selectDisplayName,
+	selectUid,
+	setUid,
+} from '../app/reducers/authSlice';
 import { logOut } from '../utils/firebase/firebaseFunctions';
 import { gilroyExtra } from '../App';
 
 const trepirLogo = require('../assets/logo3.png');
 
+const isActiveStyle = {
+	textDecoration: 'none',
+	backgroundColor: '#eee',
+};
+
 const pages = [
-	<Link to="/discover">Discover</Link>,
-	<Link to="/dashboard">Dashboard</Link>,
-	<Link to="/playground">Playground</Link>,
+	<NavLink
+		to="/discover"
+		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
+	>
+		Discover
+	</NavLink>,
+	<NavLink
+		to="/dashboard"
+		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
+	>
+		Dashboard
+	</NavLink>,
+	<NavLink
+		to="/playground"
+		style={({ isActive }: any) => (isActive ? isActiveStyle : {})}
+	>
+		Playground
+	</NavLink>,
 
 	// <Link to="/private">Private</Link>,
 ];
@@ -31,7 +55,8 @@ const pages = [
 function TopNavigation() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const loggedIn = useSelector(selectUid);
+	const uid = useSelector(selectUid);
+	const displayName = useSelector(selectDisplayName);
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
 		null
@@ -40,9 +65,9 @@ function TopNavigation() {
 		null
 	);
 
-	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElNav(event.currentTarget);
-	};
+	// const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+	// 	setAnchorElNav(event.currentTarget);
+	// };
 	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElUser(event.currentTarget);
 	};
@@ -67,7 +92,7 @@ function TopNavigation() {
 	};
 
 	return (
-		<AppBar position="static">
+		<AppBar position="static" sx={{ zIndex: 1000 }}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters className="navbar-container">
 					<div className="navbar-logo">
@@ -77,7 +102,7 @@ function TopNavigation() {
 							style={{ height: '36px', width: '36px' }}
 						/>
 						<Typography
-							variant="h6"
+							variant="h5"
 							noWrap
 							component="a"
 							href="/"
@@ -85,7 +110,7 @@ function TopNavigation() {
 								mr: 2,
 								display: { xs: 'none', md: 'flex' },
 								fontFamily: gilroyExtra,
-								fontWeight: 900,
+								fontWeight: 'bolder',
 								letterSpacing: '.3rem',
 								color: 'primary',
 								textDecoration: 'none',
@@ -94,13 +119,12 @@ function TopNavigation() {
 							TREPIR
 						</Typography>
 					</div>
-
 					<div>
 						<Box
 							sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
 							className="navbar-links"
 						>
-							<IconButton
+							{/* <IconButton
 								size="large"
 								aria-label="account of current user"
 								aria-controls="menu-appbar"
@@ -109,7 +133,7 @@ function TopNavigation() {
 								color="inherit"
 							>
 								<MenuIcon />
-							</IconButton>
+							</IconButton> */}
 							<Menu
 								id="menu-appbar"
 								anchorEl={anchorElNav}
@@ -133,7 +157,14 @@ function TopNavigation() {
 										key={pages.indexOf(page)}
 										onClick={handleCloseNavMenu}
 									>
-										<Typography textAlign="center">{page}</Typography>
+										<Typography
+											textAlign="center"
+											sx={{
+												fontFamily: gilroyExtra,
+											}}
+										>
+											{page}
+										</Typography>
 									</MenuItem>
 								))}
 							</Menu>
@@ -168,14 +199,27 @@ function TopNavigation() {
 							</Button>
 						))}
 					</Box>
-
 					<div className="navbar-login">
-						{loggedIn ? (
+						{uid ? (
 							<Box sx={{ flexGrow: 0 }}>
+								<Typography
+									noWrap
+									sx={{
+										display: {
+											xs: 'none',
+											md: 'flex',
+											alignItems: 'center',
+										},
+										fontFamily: gilroyExtra,
+										textDecoration: 'none',
+									}}
+								>
+									{displayName}
+								</Typography>
 								<Tooltip title="Open settings">
 									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 										<Avatar
-											alt="Remy Sharp"
+											alt={displayName || 'Username'}
 											src="/static/images/avatar/2.jpg"
 										/>
 									</IconButton>

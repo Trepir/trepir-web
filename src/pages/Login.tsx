@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import { useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { getAuth } from 'firebase/auth';
 
 import TextField from '@mui/material/TextField';
@@ -11,20 +11,23 @@ import {
 	loginEmailAndPassword,
 	loginGoogle,
 } from '../utils/firebase/firebaseFunctions';
-// import { useDispatch } from 'react-redux';
+import { selectUid, setDisplayName } from '../app/reducers/authSlice';
 
 function Login() {
 	const navigate = useNavigate();
-	// const dispatch = useDispatch();
+	const uid = useSelector(selectUid);
+	const dispatch = useDispatch();
 
 	const handleSubmitLogin = async (e: any) => {
 		e.preventDefault();
 		try {
-			await loginEmailAndPassword(
+			const user = await loginEmailAndPassword(
 				e.target.loginEmail.value,
 				e.target.loginPassword.value
 			);
-			navigate('../dashboard');
+			console.log('userdet', user);
+			dispatch(setDisplayName(user.displayName));
+			if (uid) navigate('../dashboard');
 
 			// dispatch(setUid(user.uid));
 		} catch (error) {
@@ -39,7 +42,7 @@ function Login() {
 				e.target.registerPassword.value,
 				e.target.registerUserName.value
 			);
-			navigate('../dashboard');
+			if (uid) navigate('../dashboard');
 		} catch (error) {
 			console.log(error);
 		}

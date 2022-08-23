@@ -16,7 +16,7 @@ import { setSelectedTripId } from '../features/createTrip/selectedTripSlice';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-export default function SwipeableTemporaryDrawer() {
+export default function LeftDrawer() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { userTrips } = useSelector(selectTripList);
