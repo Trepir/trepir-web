@@ -394,19 +394,23 @@ function EditTripPage() {
 								height: '93vh',
 								overflow: 'scroll',
 								alignItems: 'center',
+								backgroundColor: '#f9f9f9',
 							}}
 						>
 							<Paper
 								sx={{
 									display: 'flex',
-									width: 250,
+									width: 300,
+									height: 40,
 									justifyContent: 'center',
-									gap: 7,
+									// gap: 7,
 									position: 'absolute',
 									zIndex: '1',
 								}}
 							>
 								<Button
+									variant={mapSelected ? 'text' : 'contained'}
+									style={{ width: 150 }}
 									onClick={() => {
 										dispatch(setViewingMap(false));
 										dispatch(setMapViewport(prevViewport));
@@ -415,6 +419,8 @@ function EditTripPage() {
 									Activities
 								</Button>
 								<Button
+									style={{ width: 150 }}
+									variant={mapSelected ? 'contained' : 'text'}
 									onClick={() => {
 										dispatch(setViewingMap(true));
 										setSelectedActivity(false);
