@@ -7,14 +7,16 @@ function ActivitiesList({ setSelectedActivity, activities, title }: any) {
 			{activities.length ? (
 				<>
 					<Typography variant="h5" style={{ alignSelf: 'flex-start' }}>
-						{title}
+						{title}:
 					</Typography>
 					<Box
 						sx={{
 							display: 'flex',
 							gap: 2,
 							overflowX: 'scroll',
-							height: '23vh',
+							padding: '20px 0 0 6px',
+							width: '48vw',
+							height: 180,
 						}}
 					>
 						{activities?.map((activity: any) => (

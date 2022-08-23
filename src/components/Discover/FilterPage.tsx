@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { selectTagsApplied } from '../../app/reducers/discoverSlice';
 import ActivitiesListContainer from './ActivitiesListContainer';
 import ActivityDetails from './ActivityDetails';
@@ -12,7 +12,7 @@ function FilterPage() {
 	const tagsApplied = useSelector(selectTagsApplied);
 	const [selectedActivity, setSelectedActivity] = useState(false);
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+		<Box>
 			{selectedActivity ? (
 				<ActivityDetails
 					setSelectedActivity={setSelectedActivity}
@@ -20,24 +20,41 @@ function FilterPage() {
 				/>
 			) : (
 				<>
-					<Typography variant="h3">Activities</Typography>
-					<Box
-						sx={{
+					<div
+						style={{
+							position: 'fixed',
+							top: '6.95vh',
+							width: '48.5vw',
+							height: '25vh',
+							backgroundColor: 'white',
+							zIndex: 1,
 							display: 'flex',
-							width: '100%',
-							// justifyContent: 'center',
-							gap: 2,
+							flexDirection: 'column',
+							gap: 20,
 						}}
 					>
-						<PanSearchGooglePlaces />
-						<Button
-							variant="contained"
-							style={{ borderRadius: 18, width: 115 }}
+						<Typography variant="h3" style={{ margin: '20px 0 0 0' }}>
+							Activities
+						</Typography>
+						<Box
+							sx={{
+								display: 'flex',
+								width: '100%',
+								// justifyContent: 'center',
+								gap: 2,
+							}}
 						>
-							Search
-						</Button>
-					</Box>
-					<TagList />
+							<PanSearchGooglePlaces />
+							<Button
+								variant="contained"
+								style={{ borderRadius: 18, width: 115, height: 42 }}
+							>
+								Search
+							</Button>
+						</Box>
+						<TagList />
+						<Divider style={{ width: '48.3vw' }} />
+					</div>
 					{tagsApplied.length ? (
 						<FilteredActivitiesList setSelectedActivity={setSelectedActivity} />
 					) : (
