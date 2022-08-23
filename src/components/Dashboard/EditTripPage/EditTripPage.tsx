@@ -33,6 +33,8 @@ import {
 	reorderTripDay,
 	sortDay,
 } from '../../../utils/editTripUtils';
+import { getUserFavoriteActivities } from '../../../features/createActivity/favoriteActivityService';
+import { selectUid } from '../../../app/reducers/authSlice';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = async (
@@ -257,7 +259,8 @@ const onDragEnd = async (
 
 function EditTripPage() {
 	const dispatch = useDispatch();
-	const id = useSelector(selectTripId);
+	const uid = useSelector(selectUid);
+	const tripId: string = useSelector(selectTripId);
 	const { tripDetails } = useSelector(selectTripDetails);
 	//  eslint-disable-next-line
 	const [savedActivities, setSavedActivities] = useState<any>(null);
@@ -280,10 +283,10 @@ function EditTripPage() {
 		const getTripDetails = async () => {
 			//	TRIPID FAIL CHECK DO NOT REMOVE
 			//		THIS USEEFFECT NOW WATCH THE TRIPID VALUE AND WILL GET CALLED WHEN IT CHANGES
-			if (id) {
+			if (tripId) {
 				try {
 					const fetchTripDetails = await fetch(
-						`${BASE_URL}trip/tripById/${id}`
+						`${BASE_URL}trip/tripById/${tripId}`
 					);
 					const jsonTripDetails = await fetchTripDetails.json();
 					dispatch(setSelectedTrip(jsonTripDetails));
@@ -293,7 +296,7 @@ function EditTripPage() {
 			}
 		};
 		getTripDetails();
-	}, [id]);
+	}, [tripId]);
 	//	//////////////////2. SET YOUR TRIP DAYS & MARKER STATE /////////////////
 
 	useEffect(() => {
@@ -328,14 +331,17 @@ function EditTripPage() {
 
 	useEffect(() => {
 		const getActivities = async () => {
-			try {
-				const activities = await fetch(`${BASE_URL}activity/all`);
-				const jsonActivities = await activities.json();
-				setSavedActivities({
-					ActivitiesList: jsonActivities,
+			if (uid) {
+				const activities = await getUserFavoriteActivities(uid);
+				const savedActivityList: any[] = [];
+				activities.forEach((activity: any) => {
+					if (activity.tripId === tripId) {
+						savedActivityList.push(activity.activity);
+					}
 				});
-			} catch (e) {
-				console.log(e);
+				setSavedActivities({
+					ActivitiesList: savedActivityList,
+				});
 			}
 		};
 		getActivities();

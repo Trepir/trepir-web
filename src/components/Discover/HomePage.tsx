@@ -6,6 +6,7 @@ import { ReactComponent as Globe } from '../../assets/globe.svg';
 
 function HomePage() {
 	return (
+
 		<div style={{ overflow: 'hidden' }}>
 			<Box
 				sx={{
@@ -20,6 +21,7 @@ function HomePage() {
 				}}
 			>
 				{/* <img
+
 				src="globe.gif"
 				alt="globe"
 				style={{ position: 'absolute', width: '100vw', height: '100vh' }}
