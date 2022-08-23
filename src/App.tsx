@@ -26,7 +26,7 @@ import { setUid } from './app/reducers/authSlice';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Playground from './pages/playground/Playground';
 
-const primaryColor = '#1CB985';
+export const primaryColor = '#1CB985';
 export const gilroyLight = './assets/Gilroy-FREE/Gilroy-Light.otf';
 export const gilroyExtra = './assets/Gilroy-FREE/Gilroy-ExtraBold.otf';
 
@@ -48,6 +48,14 @@ const appTheme = createTheme({
         }
       `,
 		},
+		// MuiTextField: {
+		// 	styleOverrides: {
+		// 		root: {
+		// 			borderRadius: '12px',
+		// 		},
+		// 	},
+		// },
+
 		MuiAppBar: {
 			styleOverrides: {
 				colorPrimary: {

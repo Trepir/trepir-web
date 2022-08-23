@@ -183,7 +183,12 @@ export default function TripLocationSearch(props: Props) {
 				setInputValue(newInputValue);
 			}}
 			renderInput={(params) => (
-				<TextField {...params} label="Add a location" fullWidth />
+				<TextField
+					className="input-field"
+					{...params}
+					label="Add a location"
+					fullWidth
+				/>
 			)}
 			renderOption={(innerProps, option) => {
 				const matches =

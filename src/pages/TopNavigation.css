@@ -11,9 +11,16 @@
 	gap: 1rem;
 	align-items: center;
 }
+.navbar-login {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	color: black;
+}
+
 .MuiBox-root {
 	display: flex;
-	gap: 2rem;
+	gap: 4rem;
 	justify-content: center;
 }
 
@@ -33,7 +40,16 @@ a:active {
 	text-decoration: underline;
 }
 
+.selectedLink {
+	background-color: grey;
+}
+
 a:-webkit-any-link {
 	text-decoration: none;
 	color: inherit;
+}
+
+.css-2uchni {
+	display: flex;
+	gap: 1rem;
 }
