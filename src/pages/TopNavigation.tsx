@@ -9,13 +9,15 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { AppBar, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUid, setUid } from '../app/reducers/authSlice';
 import { logOut } from '../utils/firebase/firebaseFunctions';
+import { gilroyExtra } from '../App';
+
+const trepirLogo = require('../assets/logo3.png');
 
 const pages = [
 	<Link to="/discover">Discover</Link>,
@@ -67,66 +69,76 @@ function TopNavigation() {
 	return (
 		<AppBar position="static">
 			<Container maxWidth="xl">
-				<Toolbar disableGutters>
-					{/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-					<Typography
-						variant="h6"
-						noWrap
-						component="a"
-						href="/"
-						sx={{
-							mr: 2,
-							display: { xs: 'none', md: 'flex' },
-							fontFamily: 'arial',
-							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'primary',
-							textDecoration: 'none',
-						}}
-					>
-						TREPIR
-					</Typography>
-
-					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-						<IconButton
-							size="large"
-							aria-label="account of current user"
-							aria-controls="menu-appbar"
-							aria-haspopup="true"
-							onClick={handleOpenNavMenu}
-							color="inherit"
-						>
-							<MenuIcon />
-						</IconButton>
-						<Menu
-							id="menu-appbar"
-							anchorEl={anchorElNav}
-							anchorOrigin={{
-								vertical: 'bottom',
-								horizontal: 'left',
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: 'top',
-								horizontal: 'left',
-							}}
-							open={Boolean(anchorElNav)}
-							onClose={handleCloseNavMenu}
+				<Toolbar disableGutters className="navbar-container">
+					<div className="navbar-logo">
+						<img
+							src={trepirLogo}
+							alt="trepir-logo"
+							style={{ height: '36px', width: '36px' }}
+						/>
+						<Typography
+							variant="h6"
+							noWrap
+							component="a"
+							href="/"
 							sx={{
-								display: { xs: 'block', md: 'none' },
+								mr: 2,
+								display: { xs: 'none', md: 'flex' },
+								fontFamily: gilroyExtra,
+								fontWeight: 900,
+								letterSpacing: '.3rem',
+								color: 'primary',
+								textDecoration: 'none',
 							}}
 						>
-							{pages.map((page) => (
-								<MenuItem
-									key={pages.indexOf(page)}
-									onClick={handleCloseNavMenu}
-								>
-									<Typography textAlign="center">{page}</Typography>
-								</MenuItem>
-							))}
-						</Menu>
-					</Box>
-					<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+							TREPIR
+						</Typography>
+					</div>
+
+					<div>
+						<Box
+							sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+							className="navbar-links"
+						>
+							<IconButton
+								size="large"
+								aria-label="account of current user"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleOpenNavMenu}
+								color="inherit"
+							>
+								<MenuIcon />
+							</IconButton>
+							<Menu
+								id="menu-appbar"
+								anchorEl={anchorElNav}
+								anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'left',
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'left',
+								}}
+								open={Boolean(anchorElNav)}
+								onClose={handleCloseNavMenu}
+								sx={{
+									display: { xs: 'block', md: 'none' },
+								}}
+							>
+								{pages.map((page) => (
+									<MenuItem
+										key={pages.indexOf(page)}
+										onClick={handleCloseNavMenu}
+									>
+										<Typography textAlign="center">{page}</Typography>
+									</MenuItem>
+								))}
+							</Menu>
+						</Box>
+					</div>
 					<Typography
 						variant="h5"
 						noWrap
@@ -136,68 +148,73 @@ function TopNavigation() {
 							mr: 2,
 							display: { xs: 'flex', md: 'none' },
 							flexGrow: 1,
-							fontFamily: 'monospace',
+							fontFamily: gilroyExtra,
 							fontWeight: 700,
 							letterSpacing: '.3rem',
 							color: 'inherit',
 							textDecoration: 'none',
 						}}
 					>
-						LOGO
+						TREPIR
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						{pages.map((page) => (
 							<Button
 								key={pages.indexOf(page)}
 								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: 'white', display: 'block' }}
+								sx={{ my: 2, color: 'black', display: 'block' }}
 							>
 								{page}
 							</Button>
 						))}
 					</Box>
 
-					{loggedIn ? (
-						<Box sx={{ flexGrow: 0 }}>
-							<Tooltip title="Open settings">
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-									<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-								</IconButton>
-							</Tooltip>
-							<Menu
-								sx={{ mt: '45px' }}
-								id="menu-appbar"
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}
-							>
-								<MenuItem
-									key="1"
-									onClick={() => {
-										handleLogout();
-										handleCloseUserMenu();
+					<div className="navbar-login">
+						{loggedIn ? (
+							<Box sx={{ flexGrow: 0 }}>
+								<Tooltip title="Open settings">
+									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+										<Avatar
+											alt="Remy Sharp"
+											src="/static/images/avatar/2.jpg"
+										/>
+									</IconButton>
+								</Tooltip>
+								<Menu
+									sx={{ mt: '45px' }}
+									id="menu-appbar"
+									anchorEl={anchorElUser}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
 									}}
+									keepMounted
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									open={Boolean(anchorElUser)}
+									onClose={handleCloseUserMenu}
 								>
-									<Typography textAlign="center" component={Link} to="login">
-										Logout
-									</Typography>
-								</MenuItem>
-							</Menu>
-						</Box>
-					) : (
-						<Typography textAlign="center" component={Link} to="login">
-							Login
-						</Typography>
-					)}
+									<MenuItem
+										key="1"
+										onClick={() => {
+											handleLogout();
+											handleCloseUserMenu();
+										}}
+									>
+										<Typography textAlign="center" component={Link} to="login">
+											Logout
+										</Typography>
+									</MenuItem>
+								</Menu>
+							</Box>
+						) : (
+							<Typography textAlign="center" component={Link} to="login">
+								Login
+							</Typography>
+						)}
+					</div>
 				</Toolbar>
 			</Container>
 		</AppBar>
