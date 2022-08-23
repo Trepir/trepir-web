@@ -66,7 +66,7 @@ function LikeActivityControls({ activity }: any) {
 						aria-label="favorite"
 						sx={{
 							position: 'relative',
-							color: `${favoriteColor ? 'red' : 'black'}`,
+							color: `${favoriteColor ? 'red' : '#d1d1d1'}`,
 						}}
 						onClick={handleFavorite}
 					>
@@ -74,7 +74,10 @@ function LikeActivityControls({ activity }: any) {
 					</IconButton>
 					<Box sx={{ flexGrow: 0 }}>
 						<Tooltip title="Save to trip">
-							<IconButton onClick={handleClickMenu} sx={{ p: 0 }}>
+							<IconButton
+								onClick={handleClickMenu}
+								sx={{ p: 0, color: '#d1d1d1' }}
+							>
 								<PlaylistAdd />
 							</IconButton>
 						</Tooltip>
