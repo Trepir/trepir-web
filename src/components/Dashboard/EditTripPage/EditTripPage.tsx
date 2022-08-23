@@ -405,7 +405,9 @@ function EditTripPage() {
 									justifyContent: 'center',
 									// gap: 7,
 									position: 'absolute',
-									zIndex: '1',
+									margin: '1vh 0 0 0',
+									// top: 0,
+									zIndex: '2',
 								}}
 							>
 								<Button

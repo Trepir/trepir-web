@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
-import { Button, Modal } from '@mui/material';
+import { Button, Modal, Paper } from '@mui/material';
 import CreateActivityForm from './CreateActivity';
 import AddTravelForm from '../TripForm/AddTravelForm';
 import AddAccommodationForm from '../TripForm/AddAccommodationForm';
@@ -29,14 +29,20 @@ function AddEventsControls() {
 	const handleCloseAccommodation = () => setOpenAccommodation(false);
 	return (
 		<>
-			<Box
+			<Paper
 				sx={{
 					display: 'flex',
 					gap: 5,
-					margin: '3vw 0 0 0',
-					width: '47vw',
+					padding: '0 0 3vh 0',
+					margin: '0 0 0 0',
+					height: '12.5vh',
+					width: '49vw',
+					position: 'fixed',
+					left: '51vw',
+					zIndex: 1,
 					justifyContent: 'center',
-					backgroundColor: 'pink',
+					alignItems: 'flex-end',
+					// backgroundColor: 'pink',
 				}}
 			>
 				<Button variant="contained" onClick={handleOpenActivity}>
@@ -48,7 +54,7 @@ function AddEventsControls() {
 				<Button variant="contained" onClick={handleOpenAccommodation}>
 					Add Accomodation
 				</Button>
-			</Box>
+			</Paper>
 
 			<Modal
 				open={openActivity}
