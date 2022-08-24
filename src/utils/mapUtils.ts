@@ -47,3 +47,16 @@ export const parseMarkersDiscover = (activities: any[]) => {
 
 	return markers;
 };
+
+export const parseMarkersPlayground = (activities: any[]) => {
+	const markers: any[] = [];
+	console.log(activities);
+	activities.forEach((activity) => {
+		markers.push({
+			lat: activity.activity.location.latitude,
+			lng: activity.activity.location.longitude,
+		});
+	});
+
+	return markers;
+};

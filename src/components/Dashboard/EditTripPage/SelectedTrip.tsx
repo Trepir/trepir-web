@@ -30,7 +30,7 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 				elevation={9}
 				sx={{
 					borderRadius: '0 15px 15px 0',
-					margin: '0.1vh 0 0 0',
+					margin: '0 0 0 0',
 					padding: '2vh 0 0 2vw',
 					zIndex: 3,
 					position: 'absolute',
