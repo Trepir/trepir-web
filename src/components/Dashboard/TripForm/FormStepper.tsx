@@ -8,6 +8,8 @@ import {
 	Typography,
 	Divider,
 } from '@mui/material';
+import { DateTime } from 'luxon';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,6 +56,15 @@ function FormStepper() {
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const steps = ['General Information', 'Travel Details', 'Add Activities'];
 	const newTrip = useAppSelector(selectNewTrip);
+
+	const formattedStartDate = DateTime.fromISO(newTrip.startDate)
+		.toUTC()
+		.toFormat('MMM dd, yyyy');
+
+	const formattedEndDate = DateTime.fromISO(newTrip.endDate)
+		.toUTC()
+		.toFormat('MMM dd, yyyy');
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	///	ADDING UID LOGIC AND FAIL CHECK
@@ -62,16 +73,24 @@ function FormStepper() {
 	const [validated, setValidated] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
 	const [skipped, setSkipped] = useState(new Set());
+	const [photoUrl, setPhotoUrl] = useState(undefined);
 
-	const isStepOptional = (step: number) => step === 0;
+	const isStepOptional = (step: number) => step === -1;
 
 	const isStepSkipped = (step: number) => skipped.has(step);
 
 	// DO NOT REMOVE! THIS DETERMINES WHETHER THE TRAVEL/ACCOMMODATION SHOULD BE SENT TO BACK END
 	useEffect(() => {
+		const getPhotoUrl = async () => {
+			if (newTrip.placeDetails) {
+				const photoUrlResult = await newTrip.placeDetails.photos[0].getUrl();
+				setPhotoUrl(photoUrlResult);
+			}
+		};
+		getPhotoUrl();
 		dispatch(setSelectedTripId(null));
 		dispatch(setSelectedTrip(null));
-	}, []);
+	}, [newTrip.placeDetails]);
 
 	const handleNext = async () => {
 		let newSkipped = skipped;
@@ -208,6 +227,81 @@ function FormStepper() {
 						);
 					})}
 				</Stepper>
+				{activeStep === steps.length ? (
+					<Box
+						sx={{
+							display: 'flex',
+							width: '90%',
+							padding: 5,
+							alignItems: 'center',
+							justifyContent: 'center',
+
+							// backgroundColor: 'yellow',
+						}}
+					>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'column',
+								// backgroundColor: 'pink',
+								// justifyContent: 'space-around',
+								gap: '5vh',
+								width: '22vw',
+								margin: '0 1vw 0 0',
+							}}
+						>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'column',
+									gap: '2rem',
+								}}
+							>
+								<Typography variant="h4" style={{ fontWeight: 'bold' }}>
+									{newTrip.name}
+								</Typography>
+							</div>
+							<div>
+								<Typography
+									variant="h5"
+									style={{ color: 'rgba(28, 185, 133, 1)', fontWeight: 'bold' }}
+								>
+									Location:
+								</Typography>
+								<Typography variant="h6" style={{ marginBottom: '2rem' }}>
+									{newTrip.placeDetails
+										? newTrip.placeDetails.formatted_address
+										: null}
+								</Typography>
+								<Typography
+									variant="h5"
+									style={{ color: 'rgba(28, 185, 133, 1)', fontWeight: 'bold' }}
+								>
+									Dates:
+								</Typography>
+								<Typography variant="h6">
+									<strong>Start: </strong>
+									{newTrip.startDate ? formattedStartDate : null}
+								</Typography>
+								<Typography variant="h6">
+									<strong>End: </strong>
+									{newTrip.startDate ? formattedEndDate : null}
+								</Typography>
+							</div>
+						</Box>
+
+						<img
+							src={newTrip.placeDetails ? photoUrl : ''}
+							alt="location pic"
+							style={{
+								width: '17vw',
+								height: '17vw',
+								borderRadius: 15,
+								justifySelf: 'center',
+							}}
+						/>
+					</Box>
+				) : null}
 				{activeStep === steps.length + 1 ? (
 					<>
 						<Typography component="span" sx={{ mt: 2, mb: 1 }}>
@@ -228,7 +322,7 @@ function FormStepper() {
 								color="inherit"
 								disabled={activeStep === 0}
 								onClick={handleBack}
-								sx={{ mr: 1 }}
+								sx={{ mr: 1, fontWeight: 'bold' }}
 							>
 								Back
 							</Button>
@@ -238,13 +332,14 @@ function FormStepper() {
 									Skip
 								</Button>
 							)}
-							<Button onClick={handleNext}>
+							<Button onClick={handleNext} sx={{ fontWeight: 'bold' }}>
 								{activeStep === steps.length ? 'Finish' : 'Next'}
 							</Button>
 						</Box>
 					</>
 				)}
 			</Box>
+
 			<Divider />
 			<div className="travel-event-container">
 				<div className="travel-event-list">

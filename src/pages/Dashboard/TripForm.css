@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 60vw;
-	height: 40vh;
+	height: 35vh;
 	border-radius: 4px;
 }
 
@@ -22,7 +22,7 @@
 }
 .step-container {
 	display: flex;
-	height: 30vh;
+	height: 25vh;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -52,13 +52,20 @@
 .travel-event-list {
 	display: flex;
 	flex-direction: column;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 0.5rem;
 	gap: 2rem;
-	height: 40vh;
+	height: 28vh;
 	overflow: scroll;
 }
 
 .favorite-activities-container {
 	width: 100%;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 0.5rem;
+	height: 28vh;
 	display: flex;
 	overflow-x: scroll;
 	gap: 1rem;

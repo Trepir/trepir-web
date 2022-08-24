@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Box, Button, Modal } from '@mui/material';
+import { Box, Fab, Modal } from '@mui/material';
 
 import { useAppSelector } from '../../../app/hooks';
 
@@ -31,7 +31,9 @@ function FormStepTwo(props: Props) {
 		transform: 'translate(-50%, -50%)',
 		width: '40vw',
 		bgcolor: 'background.paper',
-		border: `2px solid ${primaryColor}`,
+		border: '4px solid',
+		borderColor: primaryColor,
+		borderRadius: '12px',
 		boxShadow: 24,
 		p: 4,
 	};
@@ -51,14 +53,20 @@ function FormStepTwo(props: Props) {
 	return (
 		<div className="step-container">
 			<div className="modal-buttons-container">
-				<Button
-					variant="contained"
+				<Fab
+					variant="extended"
 					className="modal-button"
+					size="large"
 					onClick={handleOpenAccommodation}
-					sx={{ fontWeight: 'bold' }}
+					style={{
+						// borderRadius: '18px',
+						color: 'white',
+						backgroundColor: 'rgba(28, 185, 133, 1)',
+						fontWeight: 'bold',
+					}}
 				>
-					Add Accommodation Details
-				</Button>
+					Add housing
+				</Fab>
 				<Modal
 					open={openAccommodation}
 					onClose={handleCloseAccommodation}
@@ -71,14 +79,20 @@ function FormStepTwo(props: Props) {
 						/>
 					</Box>
 				</Modal>
-				<Button
-					variant="contained"
+				<Fab
+					variant="extended"
 					className="modal-button"
 					onClick={handleOpenTravel}
-					sx={{ fontWeight: 'bold' }}
+					size="large"
+					style={{
+						// borderRadius: '18px',
+						color: 'white',
+						backgroundColor: 'rgba(28, 185, 133, 1)',
+						fontWeight: 'bold',
+					}}
 				>
-					Add Travel Details
-				</Button>
+					Add Travel
+				</Fab>
 				<Modal
 					open={openTravel}
 					onClose={handleCloseTravel}

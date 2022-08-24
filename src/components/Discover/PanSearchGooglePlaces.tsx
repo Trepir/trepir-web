@@ -111,6 +111,24 @@ export default function PanSearchGooglePlaces() {
 				borderStyle: 'solid',
 				borderWidth: 2,
 				borderColor: 'rgba(28, 185, 133, 1)',
+				'& .MuiOutlinedInput-notchedOutline': {
+					borderStyle: 'none',
+				},
+				' & .MuiInputLabel-shrink': {
+					display: 'none',
+				},
+				' & .MuiInputLabel-root': {
+					display: 'none',
+				},
+				' & .MuiInputLabel-formControl': {
+					display: 'none',
+				},
+				' & .MuiFormLabel-root': {
+					display: 'none',
+				},
+				' & .MuiInputLabel-filled': {
+					display: 'none',
+				},
 			}}
 			getOptionLabel={(option) =>
 				typeof option === 'string' ? option : option.description
