@@ -5,24 +5,25 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { Avatar, Box, Chip } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import LikeActivityControls from './LikeActivityControls';
-// import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
 
 import { selectPage, setMapPan, setMarkers } from '../../app/reducers/mapSlice';
 import // selectFavoriteActivities,
 '../../features/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../app/reducers/dashboardSlice';
-import { selectTripId } from '../../features/createTrip/selectedTripSlice';
+// import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
-type Props = {
-	activity: any;
-	setSelectedActivity: any;
-};
+// type Props = {
+// 	activity: any;
+// 	setSelectedActivity: any;
+// 	dragging: boolean;
+// };
 
-function Activity(props: Props) {
-	console.log('rendered');
+function Activity(props: any) {
+	//	eslint-disable-next-line
+	const { activity, setSelectedActivity, dragging } = props;
+	// const isTripSelected = useSelector(selectTripId);
+	const isTripSelected = localStorage.getItem('tripId');
 
-	const { activity, setSelectedActivity } = props;
-	const isTripSelected = useSelector(selectTripId);
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
@@ -42,7 +43,7 @@ function Activity(props: Props) {
 		if (page === 'dashboard' && viewingDashboardMap === false) {
 			setSelectedActivity(activity);
 		}
-		if (page === 'dashboard' && !isTripSelected.tripId) {
+		if (page === 'dashboard' && !isTripSelected) {
 			console.log('add activity');
 		}
 		dispatch(
@@ -70,12 +71,6 @@ function Activity(props: Props) {
 				}}
 				elevation={5}
 			>
-				{/* <img
-					src={
-						activity.location ? activity.location.photoUrl[0] : fallbackPhoto
-					}
-					alt="location pic"
-				/> */}
 				<Avatar
 					sx={{
 						bgcolor: '#DEF5ED',
@@ -84,7 +79,7 @@ function Activity(props: Props) {
 						color: '#7ED3B7',
 						borderRadius: 3,
 					}}
-					variant="rounded"
+					// src={dragging ? '' : activity.location.photoUrl[0]}
 					onClick={() => handleClick()}
 				>
 					<EventAvailableIcon
@@ -99,7 +94,7 @@ function Activity(props: Props) {
 
 						justifyContent: 'space-between',
 						height: 140,
-						width: 170,
+						width: 165,
 						padding: '0 0 0 8px',
 					}}
 					onClick={() => handleClick()}

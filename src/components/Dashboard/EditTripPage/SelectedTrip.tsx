@@ -84,7 +84,9 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 												index={index}
 											>
 												{/* eslint-disable-next-line */}
-												{(provided) => {
+												{(provided, snapShot) => {
+													const { isDragging } = snapShot;
+
 													return (
 														<div
 															ref={provided.innerRef}
@@ -108,6 +110,7 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 																<Activity
 																	activity={activity.dayActivity.activity}
 																	setSelectedActivity={setSelectedActivity}
+																	dragging={isDragging}
 																/>
 															) : (
 																<Activity

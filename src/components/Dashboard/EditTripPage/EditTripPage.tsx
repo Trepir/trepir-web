@@ -133,6 +133,7 @@ const onDragEnd = async (
 		const addedActivityId = removedCopy.id;
 		const tripDayId = dayIdMap[destination.droppableId];
 		const { index } = destination;
+		console.log(destActivities);
 		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
 		// BEFORE CALLING BE QUICKLY SET STATE
 		setDays({
@@ -166,7 +167,7 @@ const onDragEnd = async (
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
 			...days,
-			[destination.droppableId]: destActivities,
+			[destination.droppableId]: updatedDay,
 		});
 		setLocalMarkers(newMarkers);
 		//	////

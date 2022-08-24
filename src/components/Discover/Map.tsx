@@ -21,6 +21,17 @@ const options = {
 	// styles: mapStyle,
 	disableDefaultUI: true,
 	fullscreenControl: true,
+	// minZoom: 2,
+	// maxZoom: 20,
+	restriction: {
+		latLngBounds: {
+			east: 179.9999,
+			north: 85,
+			south: -85,
+			west: -179.9999,
+		},
+		strictBounds: true,
+	},
 };
 const center = { lat: 0, lng: 0 };
 

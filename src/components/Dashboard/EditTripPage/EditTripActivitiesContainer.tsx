@@ -38,7 +38,8 @@ function EditTripActivitiesContainer({
 									index={index}
 								>
 									{/* eslint-disable-next-line */}
-									{(provided) => {
+									{(provided, snapShot) => {
+										const { isDragging } = snapShot;
 										return (
 											<div
 												ref={provided.innerRef}
@@ -51,6 +52,7 @@ function EditTripActivitiesContainer({
 												<Activity
 													activity={activity}
 													setSelectedActivity={setSelectedActivity}
+													dragging={isDragging}
 												/>
 											</div>
 										);
