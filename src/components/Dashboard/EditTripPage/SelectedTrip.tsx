@@ -99,13 +99,19 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 															{/* eslint-disable-next-line */}
 															{activity.travelEvent ? (
 																<TravelEvent activity={activity.travelEvent} />
-															) : activity.accommodation ? (
+															) : //	eslint-disable-next-line
+															activity.accommodation ? (
 																<AccommodationEvent
 																	activity={activity.accommodation}
 																/>
-															) : (
+															) : activity.dayActivity ? (
 																<Activity
 																	activity={activity.dayActivity.activity}
+																	setSelectedActivity={setSelectedActivity}
+																/>
+															) : (
+																<Activity
+																	activity={activity}
 																	setSelectedActivity={setSelectedActivity}
 																/>
 															)}

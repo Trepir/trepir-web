@@ -46,8 +46,6 @@ const onDragEnd = async (
 	dayIdMap: any
 ) => {
 	const { source, destination } = result;
-	console.log('source:', source);
-	console.log('destination:', destination);
 
 	//	/////////FAIL CHECKS/////////////////////
 	//	CHECK: DROPPING AT A DROPPPABLE LOCATION
@@ -56,14 +54,14 @@ const onDragEnd = async (
 		const dayActivities = [...days[source.droppableId]];
 		const tripDayActivity = dayActivities[source.index];
 		const tripDayActivityId = tripDayActivity.id;
-		await removeActivityFromTrip(tripDayActivityId);
 		//	//WORKING HERE///////////
-
+		//	set day before awaiting
 		dayActivities.splice(source.index, 1);
 		setDays({
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		await removeActivityFromTrip(tripDayActivityId);
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
 			...days,
@@ -95,7 +93,6 @@ const onDragEnd = async (
 		//	//WORKING HERE///////////
 		const tripDayActivity = dayActivities[source.index];
 		const tripDayActivityId = tripDayActivity.id;
-		await removeActivityFromTrip(tripDayActivityId);
 		//	//WORKING HERE///////////
 
 		dayActivities.splice(source.index, 1);
@@ -103,6 +100,7 @@ const onDragEnd = async (
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		await removeActivityFromTrip(tripDayActivityId);
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
 			...days,
@@ -118,25 +116,40 @@ const onDragEnd = async (
 
 	//	IF SOURCE=SAVED ACTIVITES & DEST=DAY
 	if (source.droppableId === 'favoritedActivities') {
-		//	identify source and dest activities
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+		const sourceActivitiesQuick = [...savedActivities.ActivitiesList];
+		const destActivitiesQuick = [...days[destination.droppableId]];
+		const [removedQuick] = sourceActivitiesQuick.splice(source.index, 1);
+		destActivitiesQuick.splice(destination.index, 0, removedQuick);
+		sourceActivitiesQuick.push(removedQuick);
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
+
 		const sourceActivities = [...savedActivities.ActivitiesList];
 		const destActivities = [...days[destination.droppableId]];
-		//	remove act from source, and add to dest
 		const [removed] = sourceActivities.splice(source.index, 1);
 		const removedCopy = { ...removed };
-		//	add the activity that was removed to the dest activities
-		//	////////////////////	WORKING HERE /////////////////////////////////////
 		const addedActivityId = removedCopy.id;
 		const tripDayId = dayIdMap[destination.droppableId];
 		const { index } = destination;
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
+		// BEFORE CALLING BE QUICKLY SET STATE
+		setDays({
+			...days,
+			[destination.droppableId]: destActivitiesQuick,
+		});
+		//	set your act list
+		setSavedActivities({
+			ActivitiesList: sourceActivitiesQuick,
+		});
+		// UPON RESPONSE SET AGAIN
 
 		const updatedDay = await addActivityToTrip(
 			tripDayId,
 			addedActivityId,
 			index
 		);
-		console.log('destActivities:', destActivities);
-		console.log('updatedDay:', updatedDay);
 		//	//////////////////////	WORKING HERE /////////////////////////////////////
 		// destActivities.splice(destination.index, 0, removed);
 		// add the copy of the removed activity, with a new id, to the source activities
@@ -166,47 +179,66 @@ const onDragEnd = async (
 		source.droppableId !== 'favoritedActivities' &&
 		source.droppableId !== destination.droppableId
 	) {
+		//	QUICKLY SET STATE FOR ANIMATION/////
 		//	identify source activities
+		const sourceActivitiesQuick = [...days[source.droppableId]];
+
+		//	identify destactivities
+		const destActivitiesQuick = [...days[destination.droppableId]];
+
+		const [removedQuick] = sourceActivitiesQuick.splice(source.index, 1);
+		destActivitiesQuick.splice(destination.index, 0, removedQuick);
+
+		//	QUICKLY SET STATE FOR ANIMATION/////
+
+		// WORKING HERE FOR BACKEND LOGIC//////////////////
+		//	identify source activities (and remove from source)
 		const sourceActivities = [...days[source.droppableId]];
+		const tripDayActivity = sourceActivities[source.index];
+		const tripDayActivityId = tripDayActivity.id;
+		console.log(tripDayActivity);
+
+		console.log(typeof tripDayActivityId);
 
 		//	identify destactivities
 		const destActivities = [...days[destination.droppableId]];
 
-		// WORKING HERE//////////////////
 		//	1. remove
-		// const activityToRemove = sourceActivities[source.index];
-		// const tripDayActivityIdToRemove = activityToRemove.id;
-		// await removeActivityFromTrip(tripDayActivityIdToRemove);
 		const [removed] = sourceActivities.splice(source.index, 1);
 		//	If its a travel event or accomodation then return
 		if (removed.travelEvent || removed.accommodation) return;
 		// 2. add
 		const removedCopy = { ...removed };
-		console.log(removedCopy);
 		// check if activity or travel event
 		const addedActivityId = removedCopy.dayActivity.activityId;
 
-		console.log(addedActivityId);
 		const tripDayId = dayIdMap[destination.droppableId];
-		console.log('tripdayId:', tripDayId);
 		const { index } = destination;
-		console.log(index);
+
+		// BEFORE CALLING BE QUICKLY SET STATE
+		setDays({
+			...days,
+			[source.droppableId]: sourceActivitiesQuick,
+			[destination.droppableId]: destActivitiesQuick,
+		});
+
+		await removeActivityFromTrip(tripDayActivityId);
 		const updatedDay = await addActivityToTrip(
 			tripDayId,
 			addedActivityId,
 			index
 		);
 
-		// WORKING HERE//////////////////
-
-		destActivities.splice(destination.index, 0, removed);
+		// UPON RESPONSE SET AGAIN
 
 		setDays({
 			...days,
 			[source.droppableId]: sourceActivities,
 			[destination.droppableId]: updatedDay,
 		});
+		// WORKING HERE FOR BACKEND LOGIC//////////////////
 		//	MARKERS
+		destActivities.splice(destination.index, 0, removed);
 		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: sourceActivities,
@@ -223,30 +255,39 @@ const onDragEnd = async (
 	) {
 		console.log('source:', source);
 		console.log('dest:', destination);
-		//	///////////////WORKING HERE/////////////////////
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+		const activitiesQuick = [...days[source.droppableId]];
+		const [removedQuick] = activitiesQuick.splice(source.index, 1);
+		activitiesQuick.splice(destination.index, 0, removedQuick);
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
 		const tripDayId = dayIdMap[destination.droppableId];
 		const { index } = destination;
 		const dayActivities = [...days[source.droppableId]];
 		const tripDayActivity = dayActivities[source.index];
 		const tripDayActivityId = tripDayActivity.id;
+
+		// BEFORE CALLING BE QUICKLY SET STATE
+		setDays({
+			...days,
+			[source.droppableId]: activitiesQuick,
+		});
+
 		const updatedDay = await reorderTripDay(
 			tripDayId,
 			tripDayActivityId,
 			index
 		);
 
-		//	///////////////WORKING HERE/////////////////////
-
-		const activities = [...days[source.droppableId]];
-		// console.log('activities:', activities);
-
-		// const [removed] = activities.splice(source.index, 1);
-		// activities.splice(destination.index, 0, removed);
+		// UPON RESPONSE SET AGAIN
 		setDays({
 			...days,
 			[source.droppableId]: updatedDay,
 		});
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
 		//	MARKERS
+		const activities = [...days[source.droppableId]];
 		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: activities,

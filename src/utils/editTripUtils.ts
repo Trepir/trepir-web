@@ -21,8 +21,6 @@ export const addActivityToTrip = async (
 	order: number
 ) => {
 	try {
-		console.log('here');
-
 		console.log(tripDayId, activityId, order);
 
 		const updatedDay = await fetch(`${BASE_URL}trip/addActivity`, {
@@ -65,11 +63,13 @@ export const reorderTripDay = async (
 
 export const removeActivityFromTrip = async (tripDayActivityId: string) => {
 	try {
+		console.log(tripDayActivityId);
 		const updatedDay = await fetch(`${BASE_URL}trip/deleteEvent`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ id: tripDayActivityId }),
 		});
+		console.log('here');
 		const jsonUpdatedDay = await updatedDay.json();
 
 		console.log(jsonUpdatedDay);
