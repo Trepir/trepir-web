@@ -22,7 +22,7 @@
 }
 .step-container {
 	display: flex;
-	height: 25vh;
+	height: 30vh;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
