@@ -1,9 +1,9 @@
 // import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import ModeOfTravelIcon from '@mui/icons-material/ModeOfTravel';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Avatar, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DateTime } from 'luxon';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -39,15 +39,15 @@ function Trip(props: Props) {
 		<Card
 			sx={{
 				display: 'flex',
-				width: 370,
-				height: 160,
-				padding: '0 0 0 10px',
+				flexDirection: 'column',
+				width: 360,
+				height: 250,
 				flexShrink: 0,
 				alignItems: 'center',
-				textDecoration: 'none',
+				padding: 1,
 				borderRadius: 5,
 
-				gap: 1,
+				// gap: 1,
 			}}
 			elevation={5}
 			onClick={() => handleClick()}
@@ -55,77 +55,58 @@ function Trip(props: Props) {
 			<Avatar
 				sx={{
 					bgcolor: '#DEF5ED',
-					width: 140,
-					height: 140,
+					width: 360,
+					height: 180,
 					color: '#7ED3B7',
-					borderRadius: 3,
+					borderRadius: 3.5,
 				}}
 				src={trip.photoUrl.length ? trip.photoUrl : ''}
 			>
 				<ModeOfTravelIcon style={{ width: 110, height: 110 }} fill="#7ED3B7" />
 			</Avatar>
-			<Box
-				sx={{
-					width: 190,
+			<div
+				style={{
 					display: 'flex',
-					flexDirection: 'column',
-					// alignItems: 'center',
-					alignSelf: 'center',
+					width: 355,
+					justifyContent: 'space-between',
+					padding: '0 3px 0 3px',
 				}}
 			>
-				<Typography
-					variant="h5"
-					noWrap
-					style={{
-						alignSelf: 'flex-start',
-						width: 230,
-					}}
-				>
-					{trip.name}
-				</Typography>
-				<Typography
-					variant="body2"
-					noWrap
-					style={{
-						alignSelf: 'flex-start',
-						width: 230,
-					}}
-				>
-					Location: {trip.googleLocationName}
-				</Typography>
-
-				<div
-					style={{
+				<Box
+					sx={{
 						display: 'flex',
 						flexDirection: 'column',
-						justifyContent: 'center',
-						maxWidth: 'fit-content',
+						alignSelf: 'flex-start',
 					}}
 				>
 					<Typography
-						variant="body1"
+						variant="h6"
 						noWrap
-						style={
-							{
-								// alignSelf: 'flex-start',
-								// width: 230,
-							}
-						}
-					>
-						{formattedStartDate}
-					</Typography>
-					<KeyboardArrowDownIcon
-						fontSize="medium"
 						style={{
-							color: '#7ED3B7',
-							alignSelf: 'center',
+							alignSelf: 'flex-start',
+							width: 300,
+							fontWeight: 'bold',
 						}}
-					/>
-					<Typography variant="body1" noWrap>
-						{formattedEndDate}
+					>
+						{trip.name}
 					</Typography>
-				</div>
-			</Box>
+					<Typography
+						variant="body2"
+						noWrap
+						style={{
+							alignSelf: 'flex-start',
+							width: 300,
+						}}
+					>
+						Location: {trip.googleLocationName}
+					</Typography>
+
+					<Typography variant="body2">
+						{formattedStartDate} - {formattedEndDate}
+					</Typography>
+				</Box>
+				<ArrowForwardIosIcon style={{ alignSelf: 'center' }} />
+			</div>
 		</Card>
 	);
 }

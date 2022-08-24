@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 // import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Fab } from '@mui/material';
+import { Divider, Fab } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
@@ -47,22 +47,60 @@ function DashboardHome() {
 				</Typography>
 
 				{userTrips.length ? (
-					<Box
-						sx={{
-							display: 'flex',
-							height: 180,
-							overflowX: 'scroll',
-							width: '100vw',
-							gap: 3,
-							padding: '20px 0 0 0',
-							justifyContent: 'center',
-						}}
-					>
-						{userTrips.map((trip) => (
-							<Trip trip={trip} />
-						))}
-					</Box>
-				) : null}
+					// <div style={{ display: 'flex', width: 400, position: 'relative' }}>
+					// 	<img
+					// 		src="cameraFilm.png"
+					// 		alt="film"
+					// 		style={{ position: 'absolute', left: -275, top: -30 }}
+					// 	/>
+					<div style={{ display: 'flex' }}>
+						<Divider
+							orientation="vertical"
+							style={{
+								height: 300,
+							}}
+						/>
+						<Box
+							sx={{
+								display: 'flex',
+								height: 300,
+								overflowX: 'scroll',
+								// width: 360,
+								maxWidth: '62vw',
+								padding: '0 1vw 0 1vw',
+								gap: 3,
+								zIndex: 1,
+								// justifyContent: 'center',
+								alignItems: 'center',
+								// backgroundColor: 'pink',
+								position: 'relative',
+							}}
+						>
+							{userTrips.map((trip) => (
+								<Trip trip={trip} />
+							))}
+						</Box>
+						<Divider
+							orientation="vertical"
+							style={{
+								height: 300,
+							}}
+						/>
+					</div>
+				) : // 	<img
+				// 		src="cameraFilm.png"
+				// 		alt="film"
+				// 		style={{
+				// 			position: 'absolute',
+				// 			transform: 'scaleX(-1)',
+				// 			// transform: 'scale(1.5)',
+				// 			right: -275,
+				// 			top: -30,
+				// 			// backgroundColor: 'pink',
+				// 		}}
+				// 	/>
+				// </div>
+				null}
 			</div>
 			<Typography variant="h4" style={{ fontWeight: 'bold' }}>
 				or
@@ -74,6 +112,8 @@ function DashboardHome() {
 				size="large"
 				style={{
 					// borderRadius: '18px',
+					display: 'flex',
+					gap: 10,
 					color: 'white',
 					backgroundColor: 'rgba(28, 185, 133, 1)',
 					fontWeight: 'bold',
