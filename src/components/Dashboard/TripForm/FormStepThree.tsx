@@ -1,8 +1,13 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUserFavoriteActivities } from '../../../app/reducers/userSlice';
-import { setInitialTripFavorites } from '../../../features/createTrip/createTripSlice';
+import { getActivitiesByCoordinates } from '../../../features/createActivity/createActivityService';
+import {
+	selectNewTrip,
+	setInitialTripFavorites,
+} from '../../../features/createTrip/createTripSlice';
+import { parseMapViewport } from '../../../utils/mapUtils';
 import Activity from '../../Discover/Activity';
 
 type Props = {
@@ -14,8 +19,35 @@ type Props = {
 function FormStepThree(props: Props) {
 	const dispatch = useDispatch();
 	const favoriteActivities: any = useSelector(selectUserFavoriteActivities);
+	const { placeDetails } = useSelector(selectNewTrip);
+
 	const { submitRef, setValidated, setActiveStep } = props;
+	const [activitiesbyCoordinates, setActivitiesbyCoordinates] = useState<any>(
+		[]
+	);
 	const [initialActivities, setInitialActivities] = useState<any[]>([]);
+
+	useEffect(() => {
+		const getLocationActivities = async () => {
+			const parsedViewport = await parseMapViewport(
+				placeDetails.geometry.viewport
+			);
+			const activityListByCoord = await getActivitiesByCoordinates(
+				parsedViewport
+			);
+			console.log('locActivities', activityListByCoord);
+			console.log('favActivities', favoriteActivities.activityList);
+			const filteredActivities = favoriteActivities.activityList.filter(
+				(favActivity: any) =>
+					activityListByCoord.some(
+						(locActivity: any) => favActivity.activityId === locActivity.id
+					)
+			);
+			console.log(filteredActivities);
+			setActivitiesbyCoordinates(filteredActivities);
+		};
+		getLocationActivities();
+	}, []);
 
 	const handleClick = () => {
 		console.log('hello');
@@ -31,14 +63,14 @@ function FormStepThree(props: Props) {
 	return (
 		<div className="step-container">
 			<div className="favorite-activities-container">
-				{favoriteActivities.activityList
-					? favoriteActivities.activityList.map((favoriteActivity: any) => (
+				{activitiesbyCoordinates.length
+					? activitiesbyCoordinates.map((favoriteActivity: any) => (
 							<div>
 								<Button
+									variant="contained"
+									sx={{ mb: '0.2rem', borderRadius: '18px' }}
 									onClick={() => handleAddToTrip(favoriteActivity.id)}
-									disabled={initialActivities.includes(
-										favoriteActivity.activity.id
-									)}
+									disabled={initialActivities.includes(favoriteActivity.id)}
 								>
 									Add
 								</Button>

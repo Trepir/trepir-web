@@ -103,7 +103,7 @@ function CreateActivityForm(props: Props) {
 	const dispatch = useAppDispatch();
 
 	function refreshPage() {
-		if (tripId) {
+		if (tripId !== '') {
 			window.location.reload();
 		}
 	}
