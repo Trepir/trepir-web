@@ -12,6 +12,7 @@ import {
 	InputLabel,
 	Select,
 	MenuItem,
+	Typography,
 } from '@mui/material';
 
 import { useSelector } from 'react-redux';
@@ -102,8 +103,14 @@ function AddTravelForm(props: Props) {
 				<Box
 					mb={2}
 					className="modal-form-container"
-					sx={{ alignItems: 'flex-start' }}
+					sx={{ alignItems: 'center' }}
 				>
+					<Typography
+						variant="h6"
+						style={{ alignSelf: 'center', fontWeight: 'bold' }}
+					>
+						Add travel details
+					</Typography>
 					<TripLocationSearch inputLabel="travelDepartureLocation" />
 					{alertRef.current ? (
 						<Alert severity="error">Please insert a departure location!</Alert>
@@ -116,7 +123,7 @@ function AddTravelForm(props: Props) {
 						id="departureDate"
 						label="Departure date"
 						type="date"
-						sx={{ width: '40%' }}
+						sx={{ width: '50%' }}
 						{...register('departureDate')}
 						error={!!errors.departureDate}
 						InputLabelProps={{
@@ -124,7 +131,7 @@ function AddTravelForm(props: Props) {
 						}}
 						onChange={handleStartDate}
 					/>
-					<FormControl {...register('travelType')} sx={{ width: '40%' }}>
+					<FormControl {...register('travelType')} sx={{ width: '50%' }}>
 						<InputLabel id="flightNumber">Travel Type</InputLabel>
 						<Select
 							variant="filled"
@@ -146,7 +153,7 @@ function AddTravelForm(props: Props) {
 							id="flightNumber"
 							label="Flight Number"
 							type="text"
-							sx={{ width: '40%' }}
+							sx={{ width: '50%' }}
 							{...register('flightNumber')}
 							error={!!errors.flightNumber}
 							InputLabelProps={{

@@ -16,7 +16,7 @@
 	box-sizing: border-box;
 }
 .form-row {
-	min-width: 40%;
+	min-width: 50%;
 	display: flex;
 	justify-content: space-between;
 }

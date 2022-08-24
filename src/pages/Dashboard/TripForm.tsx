@@ -7,7 +7,11 @@ import FormStepper from '../../components/Dashboard/TripForm/FormStepper';
 function TripForm() {
 	return (
 		<>
-			<Fab component={Link} to="../" style={{ position: 'absolute', left: 0 }}>
+			<Fab
+				component={Link}
+				to="../"
+				style={{ position: 'absolute', left: '1rem', top: '10vh' }}
+			>
 				<ArrowBackIcon />
 			</Fab>
 			<div className="dashboard-container">

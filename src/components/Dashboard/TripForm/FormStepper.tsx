@@ -108,9 +108,14 @@ function FormStepper() {
 				localStorage.setItem('tripId', createdTrip.id);
 				navigate('../trip');
 				dispatch(setSelectedTripId(createdTrip.id));
-				await addInitialActivities(
+				console.log(
+					'test faves',
 					newTrip.initialTripFavorites,
 					uid,
+					createdTrip.id
+				);
+				await addInitialActivities(
+					newTrip.initialTripFavorites,
 					createdTrip.id
 				);
 				dispatch(resetTravelList);

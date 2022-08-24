@@ -51,7 +51,10 @@ export const createTripSlice = createSlice({
 					1
 				);
 			} else {
-				state.initialTripFavorites.push(action.payload);
+				state.initialTripFavorites = [
+					...state.initialTripFavorites,
+					action.payload,
+				];
 			}
 		},
 	},

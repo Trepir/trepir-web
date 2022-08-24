@@ -4,15 +4,19 @@ import { Button, Modal, Paper } from '@mui/material';
 import CreateActivityForm from './CreateActivity';
 import AddTravelForm from '../TripForm/AddTravelForm';
 import AddAccommodationForm from '../TripForm/AddAccommodationForm';
+import { primaryColor } from '../../../pages/TopNavigation';
 
 const style = {
+	alignItems: 'center',
 	position: 'absolute' as 'absolute',
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	width: '40vw',
+	width: '50vw',
 	bgcolor: 'background.paper',
-	border: '2px solid #000',
+	border: '4px solid',
+	borderColor: primaryColor,
+	borderRadius: '12px',
 	boxShadow: 24,
 	p: 4,
 };

@@ -44,16 +44,15 @@ export const createTrip = async (tripInput: any, uid: string) => {
 
 export const addInitialActivities = async (
 	initialActivities: any,
-	uid: string,
 	tripId: string
 ) => {
 	try {
+		console.log(initialActivities);
 		await fetch(`${BASE_URL}activity/initialFavoriteActivities`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				activityId: initialActivities,
-				uid,
+				favoriteId: initialActivities,
 				tripId,
 			}),
 		});

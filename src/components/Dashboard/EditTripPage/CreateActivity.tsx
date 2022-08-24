@@ -146,7 +146,7 @@ function CreateActivityForm(props: Props) {
 						id="activityName"
 						label="Name"
 						type="text"
-						sx={{ width: 220 }}
+						sx={{ width: '50%' }}
 						{...register('activityName')}
 						error={!!errors.activityName}
 						InputLabelProps={{
@@ -157,7 +157,7 @@ function CreateActivityForm(props: Props) {
 						id="activityDescription"
 						label="Description"
 						type="text"
-						sx={{ width: 220 }}
+						sx={{ width: '50%' }}
 						{...register('activityDescription')}
 						error={!!errors.activityDescription}
 						InputLabelProps={{
@@ -193,14 +193,20 @@ function CreateActivityForm(props: Props) {
 						<Select
 							labelId="activityTags"
 							id="activityTags"
+							label="Tags"
 							multiple
 							value={newActivity.tag}
 							onChange={handleActivityTags}
 							input={<OutlinedInput id="activityTags" label="Activities" />}
+							sx={{ width: '100%' }}
 							renderValue={(selected) => (
 								<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
 									{selected.map((value: string) => (
-										<Chip key={value} label={value} />
+										<Chip
+											key={value}
+											label={value}
+											sx={{ width: 70, backgroundColor: '#ECCA72' }}
+										/>
 									))}
 								</Box>
 							)}

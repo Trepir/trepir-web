@@ -73,6 +73,7 @@ function FormStepOne(props: Props) {
 						variant="outlined"
 						label="Name of the trip"
 						className="input-field"
+						sx={{ width: '50%' }}
 						autoFocus
 						{...register('name')}
 						error={!!errors.name}
@@ -90,7 +91,7 @@ function FormStepOne(props: Props) {
 								shrink: true,
 							}}
 							onChange={handleStartDate}
-							sx={{ minWidth: '15%' }}
+							sx={{ minWidth: '15%', width: '50%' }}
 						/>
 						<TextField
 							id="endDate"
@@ -102,7 +103,7 @@ function FormStepOne(props: Props) {
 								shrink: true,
 							}}
 							onChange={handleEndDate}
-							sx={{ minWidth: '15%' }}
+							sx={{ minWidth: '15%', width: '50%' }}
 						/>
 					</div>
 					{/* Added an invisible button that gets artificially clicked by the parent component when next is clicked. */}

@@ -23,6 +23,7 @@ function FormStepThree(props: Props) {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
 	const handleAddToTrip = (id: any) => {
+		console.log(id);
 		dispatch(setInitialTripFavorites(id));
 		setInitialActivities((prev: any) => [...prev, id]);
 	};
@@ -34,7 +35,7 @@ function FormStepThree(props: Props) {
 					? favoriteActivities.activityList.map((favoriteActivity: any) => (
 							<div>
 								<Button
-									onClick={() => handleAddToTrip(favoriteActivity.activity.id)}
+									onClick={() => handleAddToTrip(favoriteActivity.id)}
 									disabled={initialActivities.includes(
 										favoriteActivity.activity.id
 									)}

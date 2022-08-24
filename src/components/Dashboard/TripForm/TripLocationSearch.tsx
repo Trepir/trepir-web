@@ -153,7 +153,7 @@ export default function TripLocationSearch(props: Props) {
 		<Autocomplete
 			id="location"
 			sx={{
-				width: '40%',
+				width: '50%',
 			}}
 			getOptionLabel={(option) =>
 				typeof option === 'string' ? option : option.description

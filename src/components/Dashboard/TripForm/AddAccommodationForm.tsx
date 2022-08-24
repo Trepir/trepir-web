@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Box, Button, TextField, Alert } from '@mui/material';
+import { Box, Button, TextField, Alert, Typography } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
@@ -63,9 +63,9 @@ function AddAccommodationForm(props: Props) {
 		if (isValid && newAccommodation.location) {
 			dispatch(addAccommodation(newAccommodation));
 			if (tripId && uid) {
-				handleCloseAccommodation();
 				await createAccommodation(newAccommodation, uid, tripId, data);
 			}
+			handleCloseAccommodation();
 		}
 	};
 
@@ -73,6 +73,12 @@ function AddAccommodationForm(props: Props) {
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Box mb={2} className="modal-form-container">
+					<Typography
+						variant="h6"
+						style={{ alignSelf: 'center', fontWeight: 'bold' }}
+					>
+						Add housing
+					</Typography>
 					<TripLocationSearch inputLabel="accommodationLocation" />
 					{alertRef.current ? (
 						<Alert severity="error">Please insert a location!</Alert>
@@ -81,7 +87,7 @@ function AddAccommodationForm(props: Props) {
 						id="checkinDate"
 						label="Check-in date"
 						type="date"
-						sx={{ width: '40%' }}
+						sx={{ width: '50%' }}
 						{...register('checkinDate')}
 						error={!!errors.checkinDate}
 						InputLabelProps={{
@@ -93,7 +99,7 @@ function AddAccommodationForm(props: Props) {
 						id="checkoutDate"
 						label="Check-out date"
 						type="date"
-						sx={{ width: '40%' }}
+						sx={{ width: '50%' }}
 						{...register('checkoutDate')}
 						error={!!errors.checkoutDate}
 						InputLabelProps={{
