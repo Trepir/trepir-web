@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 // import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Fab } from '@mui/material';
+import { Divider, Fab, Paper } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
@@ -25,7 +25,7 @@ function DashboardHome() {
 	return (
 		<Box
 			sx={{
-				margin: '20vh 0 0 0',
+				margin: '15vh 0 0 0',
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
@@ -34,55 +34,102 @@ function DashboardHome() {
 				width: '100vw',
 			}}
 		>
-			<div
+			<img
+				src="dashboardBackground.png"
+				alt="travel"
 				style={{
+					position: 'absolute',
+					top: '6.5vh',
+					zIndex: -1,
+					width: '100vw',
+					height: '93.5vh',
+					filter: 'blur(8px)',
+					WebkitFilter: 'blur(8px)',
+				}}
+			/>
+			<Paper
+				sx={{
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'center',
+					gap: '3vh',
 					alignItems: 'center',
+					minWidth: '28vw',
+					minHeight: '24vh',
+					zIndex: 1,
+					borderRadius: 5,
+					padding: 3,
 				}}
+				elevation={20}
 			>
-				<Typography style={{ fontWeight: 'bold' }} variant="h4">
-					Select trip to view
-				</Typography>
-
 				{userTrips.length ? (
-					<Box
-						sx={{
-							display: 'flex',
-							height: 180,
-							overflowX: 'scroll',
-							width: '100vw',
-							gap: 3,
-							padding: '20px 0 0 0',
-							justifyContent: 'center',
-						}}
-					>
-						{userTrips.map((trip) => (
-							<Trip trip={trip} />
-						))}
-					</Box>
-				) : null}
-			</div>
-			<Typography variant="h4" style={{ fontWeight: 'bold' }}>
-				or
-			</Typography>
-			<Fab
-				variant="extended"
-				component={Link}
-				to="createtrip"
-				size="large"
-				onClick={() => localStorage.setItem('tripId', '')}
-				style={{
-					// borderRadius: '18px',
-					color: 'white',
-					backgroundColor: 'rgba(28, 185, 133, 1)',
-					fontWeight: 'bold',
-				}}
-			>
-				<AddCircleOutlineIcon />
-				Create New Trip
-			</Fab>
+
+					<>
+						<Typography style={{ fontWeight: 'bold' }} variant="h4">
+							Select trip to view
+						</Typography>
+						<div style={{ display: 'flex' }}>
+							<Divider
+								orientation="vertical"
+								style={{
+									height: 300,
+								}}
+							/>
+							<Box
+								sx={{
+									display: 'flex',
+									height: 300,
+									overflowX: 'scroll',
+									// width: 360,
+									maxWidth: '62vw',
+									padding: '0 1vw 0 1vw',
+									gap: 3,
+									zIndex: 1,
+									// justifyContent: 'center',
+									alignItems: 'center',
+									// backgroundColor: 'pink',
+									// position: 'relative',
+								}}
+							>
+								{userTrips.map((trip) => (
+									<Trip trip={trip} />
+								))}
+							</Box>
+							<Divider
+								orientation="vertical"
+								style={{
+									height: 300,
+								}}
+							/>
+						</div>
+						<Typography variant="h4" style={{ fontWeight: 'bold' }}>
+							or
+						</Typography>
+					</>
+				) : (
+					<Typography variant="h4" style={{ fontWeight: 'bold' }}>
+						Start planning your next trip
+					</Typography>
+				)}
+				<Fab
+					variant="extended"
+					component={Link}
+					to="createtrip"
+					size="large"
+					style={{
+						// borderRadius: '18px',
+						display: 'flex',
+						gap: 10,
+						color: 'white',
+						backgroundColor: 'rgba(28, 185, 133, 1)',
+						fontWeight: 'bold',
+					}}
+				>
+					<AddCircleOutlineIcon />
+					Create New Trip
+				</Fab>
+			</Paper>
+
 		</Box>
 	);
 }

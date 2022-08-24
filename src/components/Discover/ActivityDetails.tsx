@@ -16,16 +16,7 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 	}
 	console.log(activity);
 	return (
-		<>
-			<IconButton
-				size="small"
-				onClick={() => handleClick()}
-				style={{
-					color: 'rgba(28, 185, 133, 1)',
-				}}
-			>
-				<ArrowBackIosNewIcon />
-			</IconButton>
+		<Box sx={{ width: '45vw' }}>
 			<Box
 				sx={{
 					display: 'flex',
@@ -33,6 +24,18 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 					// backgroundColor: 'yellow',
 				}}
 			>
+				<IconButton
+					size="small"
+					onClick={() => handleClick()}
+					style={{
+						color: 'rgba(28, 185, 133, 1)',
+						alignSelf: 'flex-start',
+						margin: '4px 0 0 0',
+						width: '2vw',
+					}}
+				>
+					<ArrowBackIosNewIcon />
+				</IconButton>
 				<Box
 					sx={{
 						display: 'flex',
@@ -61,7 +64,7 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 									label={tag}
 									style={{
 										width: 70,
-										backgroundColor: '#ECCA72',
+										// backgroundColor: '#ECCA72',
 										color: 'black',
 									}}
 									size="small"
@@ -90,13 +93,15 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 					}}
 				/>
 			</Box>
-			<Divider style={{ margin: '4vh 0 0 0' }} />
+			<Divider style={{ margin: '4vh 0 0 0', width: '47vw' }} />
 			<Box
 				sx={{
 					display: 'flex',
 					justifyContent: 'space-between',
 					width: '40vw',
-					padding: 2,
+					// padding: 2,
+					margin: '0 0 0 2vw',
+					// backgroundColor: 'orange',
 				}}
 			>
 				<div style={{ width: '23vw' }}>
@@ -126,7 +131,7 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 					</Typography>
 				</div>
 			</Box>
-		</>
+		</Box>
 	);
 }
 
