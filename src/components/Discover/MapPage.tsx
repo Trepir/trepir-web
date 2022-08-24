@@ -18,7 +18,7 @@ function MapPage() {
 					display: 'flex',
 					flexDirection: 'column',
 					overflowY: 'scroll',
-					margin: '0.1vh 0 0 0',
+					margin: '0 0 0 0',
 					backgroundColor: 'white',
 
 					padding: '2vh 0 0 2vw',

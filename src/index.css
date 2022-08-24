@@ -8,6 +8,13 @@
 	src: url('./assets/Gilroy-FREE/Gilroy-Light.otf');
 	font-weight: normal;
 }
+:root {
+	--color-logo: red;
+}
+
+.activityCard {
+	background-color: var(--color-logo);
+}
 
 .MuiButtonBase-root {
 	font-family: 'gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',

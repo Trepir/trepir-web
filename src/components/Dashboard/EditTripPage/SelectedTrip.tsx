@@ -30,9 +30,9 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 				elevation={9}
 				sx={{
 					borderRadius: '0 15px 15px 0',
-					margin: '0.1vh 0 0 0',
+					margin: '0 0 0 0',
 					padding: '2vh 0 0 2vw',
-					zIndex: 2,
+					zIndex: 3,
 					position: 'absolute',
 				}}
 			>
@@ -84,7 +84,9 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 												index={index}
 											>
 												{/* eslint-disable-next-line */}
-												{(provided) => {
+												{(provided, snapShot) => {
+													const { isDragging } = snapShot;
+
 													return (
 														<div
 															ref={provided.innerRef}
@@ -99,13 +101,20 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 															{/* eslint-disable-next-line */}
 															{activity.travelEvent ? (
 																<TravelEvent activity={activity.travelEvent} />
-															) : activity.accommodation ? (
+															) : //	eslint-disable-next-line
+															activity.accommodation ? (
 																<AccommodationEvent
 																	activity={activity.accommodation}
 																/>
-															) : (
+															) : activity.dayActivity ? (
 																<Activity
 																	activity={activity.dayActivity.activity}
+																	setSelectedActivity={setSelectedActivity}
+																	dragging={isDragging}
+																/>
+															) : (
+																<Activity
+																	activity={activity}
 																	setSelectedActivity={setSelectedActivity}
 																/>
 															)}
