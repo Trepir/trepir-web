@@ -72,7 +72,7 @@ function TravelEvent(props: Props) {
 						style={{
 							alignSelf: 'flex-start',
 							width: 190,
-							// backgroundColor: 'blue',
+							fontWeight: 'bold',
 						}}
 					>
 						{activity.originLocation.locationName
@@ -91,8 +91,7 @@ function TravelEvent(props: Props) {
 						style={{
 							alignSelf: 'flex-start',
 							width: 190,
-							// height: 100,
-							// backgroundColor: 'blue',
+							fontWeight: 'bold',
 						}}
 					>
 						{activity.destinationLocation.locationName

@@ -449,7 +449,7 @@ function EditTripPage() {
 								elevation={0}
 								sx={{
 									display: 'flex',
-									width: '49vw',
+									width: '50vw',
 									height: 50,
 									justifyContent: 'center',
 									// gap: 7,

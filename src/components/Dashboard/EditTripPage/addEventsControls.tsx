@@ -51,6 +51,7 @@ function AddEventsControls() {
 					style={{
 						borderRadius: 15,
 						width: 128,
+						fontWeight: 'bold',
 					}}
 					onClick={handleOpenActivity}
 				>
@@ -61,6 +62,7 @@ function AddEventsControls() {
 					style={{
 						borderRadius: 15,
 						width: 128,
+						fontWeight: 'bold',
 					}}
 					onClick={handleOpenTravel}
 				>
@@ -71,6 +73,7 @@ function AddEventsControls() {
 					style={{
 						borderRadius: 15,
 						width: 128,
+						fontWeight: 'bold',
 					}}
 					onClick={handleOpenAccommodation}
 				>

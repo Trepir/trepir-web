@@ -52,7 +52,7 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 							gap: 10,
 						}}
 					>
-						<Typography variant="h4" style={{ color: 'rgba(28, 185, 133, 1)' }}>
+						<Typography variant="h4" style={{ fontWeight: 'bold' }}>
 							{activity.name}
 						</Typography>
 						<div style={{ display: 'flex', gap: 10 }}>
@@ -70,7 +70,10 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 						</div>
 					</div>
 					<div>
-						<Typography variant="h5" style={{ color: 'rgba(28, 185, 133, 1)' }}>
+						<Typography
+							variant="h5"
+							style={{ color: 'rgba(28, 185, 133, 1)', fontWeight: 'bold' }}
+						>
 							Description:
 						</Typography>
 						<Typography variant="h6">{activity.description}</Typography>
@@ -97,7 +100,10 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 				}}
 			>
 				<div style={{ width: '23vw' }}>
-					<Typography variant="h6" style={{ color: 'rgba(28, 185, 133, 1)' }}>
+					<Typography
+						variant="h6"
+						style={{ color: 'rgba(28, 185, 133, 1)', fontWeight: 'bold' }}
+					>
 						Address:
 					</Typography>
 					<Typography variant="body1">
@@ -105,7 +111,10 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 					</Typography>
 				</div>
 				<div style={{ width: '17vw' }}>
-					<Typography variant="h6" style={{ color: 'rgba(28, 185, 133, 1)' }}>
+					<Typography
+						variant="h6"
+						style={{ color: 'rgba(28, 185, 133, 1)', fontWeight: 'bold' }}
+					>
 						Duration:
 					</Typography>
 					<Typography variant="body1">
