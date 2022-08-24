@@ -61,7 +61,7 @@ function AccommodationEvent(props: Props) {
 						width: 190,
 					}}
 				>
-					<Typography variant="h6">
+					<Typography variant="h6" style={{ fontWeight: 'bold' }}>
 						{activity.location.locationName
 							? activity.location.locationName
 							: activity.location.name}

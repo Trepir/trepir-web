@@ -21,6 +21,9 @@ const options = {
 	// styles: mapStyle,
 	disableDefaultUI: true,
 	fullscreenControl: true,
+	// fullScreenControlOptions: {
+	// 	position: map,
+	// },
 	// minZoom: 2,
 	// maxZoom: 20,
 	// restriction: {
@@ -33,6 +36,7 @@ const options = {
 	// strictBounds: true,
 	// },
 };
+
 const center = { lat: 0, lng: 0 };
 
 function Map() {

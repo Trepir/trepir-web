@@ -36,7 +36,10 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 					position: 'absolute',
 				}}
 			>
-				<Typography variant="h3" style={{ margin: '0 0 2.5vw 0' }}>
+				<Typography
+					variant="h4"
+					style={{ margin: '0 0 2.5vw 0', fontWeight: 'bold' }}
+				>
 					{tripName}
 				</Typography>
 				<div

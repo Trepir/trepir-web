@@ -13,6 +13,7 @@ function HomePage() {
 				flexDirection: 'column',
 				alignItems: 'center',
 				gap: '4vh',
+				// backgroundColor: 'black',
 			}}
 		>
 			<img
