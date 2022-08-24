@@ -36,7 +36,7 @@ function AddAccommodationForm(props: Props) {
 	const tripId = localStorage.getItem('tripId');
 
 	function refreshPage() {
-		if (tripId !== '') window.location.reload();
+		if (tripId) window.location.reload();
 	}
 
 	const {

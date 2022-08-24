@@ -79,7 +79,7 @@ function Activity(props: any) {
 						color: '#7ED3B7',
 						borderRadius: 3,
 					}}
-					// src={dragging ? '' : activity.location.photoUrl[0]}
+					src={dragging ? '' : activity.location.photoUrl[0]}
 					onClick={() => handleClick()}
 				>
 					<EventAvailableIcon
