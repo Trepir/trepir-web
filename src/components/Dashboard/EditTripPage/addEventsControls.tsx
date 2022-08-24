@@ -33,9 +33,9 @@ function AddEventsControls() {
 				sx={{
 					display: 'flex',
 					gap: 5,
-					padding: '0 0 3vh 0',
+					padding: '0 0 3.5vh 0',
 					margin: '0 0 0 0',
-					height: '12.5vh',
+					height: '12vh',
 					width: '49vw',
 					position: 'fixed',
 					left: '51vw',
@@ -44,15 +44,37 @@ function AddEventsControls() {
 					alignItems: 'flex-end',
 					// backgroundColor: 'pink',
 				}}
+				elevation={0}
 			>
-				<Button variant="contained" onClick={handleOpenActivity}>
+				<Button
+					variant="contained"
+					style={{
+						borderRadius: 15,
+						width: 128,
+					}}
+					onClick={handleOpenActivity}
+				>
 					Add Activity
 				</Button>
-				<Button variant="contained" onClick={handleOpenTravel}>
+				<Button
+					variant="contained"
+					style={{
+						borderRadius: 15,
+						width: 128,
+					}}
+					onClick={handleOpenTravel}
+				>
 					Add Travel
 				</Button>
-				<Button variant="contained" onClick={handleOpenAccommodation}>
-					Add Accomodation
+				<Button
+					variant="contained"
+					style={{
+						borderRadius: 15,
+						width: 128,
+					}}
+					onClick={handleOpenAccommodation}
+				>
+					Add Housing
 				</Button>
 			</Paper>
 

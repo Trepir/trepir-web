@@ -48,7 +48,7 @@ function TravelEvent(props: Props) {
 						width: 140,
 						height: 140,
 						color: '#7ED3B7',
-						borderRadius: 4,
+						borderRadius: 3,
 					}}
 					variant="rounded"
 				>
