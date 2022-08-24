@@ -11,10 +11,14 @@ export const accommodationListSlice = createSlice({
 		addAccommodation: (state, action: PayloadAction<any>) => {
 			state.push(action.payload);
 		},
+		resetAccommodationList: (state) => {
+			state.length = 0;
+		},
 	},
 });
 
-export const { addAccommodation } = accommodationListSlice.actions;
+export const { addAccommodation, resetAccommodationList } =
+	accommodationListSlice.actions;
 export const selectAccommodationList = (state: RootState) =>
 	state.accommodationList;
 

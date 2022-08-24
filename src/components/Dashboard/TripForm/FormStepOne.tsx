@@ -84,25 +84,25 @@ function FormStepOne(props: Props) {
 							id="startDate"
 							label="Start date"
 							type="date"
-							sx={{ width: 220 }}
 							{...register('startDate')}
 							error={!!errors.startDate}
 							InputLabelProps={{
 								shrink: true,
 							}}
 							onChange={handleStartDate}
+							sx={{ minWidth: '15%' }}
 						/>
 						<TextField
 							id="endDate"
 							label="End date"
 							type="date"
-							sx={{ width: 220 }}
 							{...register('endDate')}
 							error={!!errors.endDate}
 							InputLabelProps={{
 								shrink: true,
 							}}
 							onChange={handleEndDate}
+							sx={{ minWidth: '15%' }}
 						/>
 					</div>
 					{/* Added an invisible button that gets artificially clicked by the parent component when next is clicked. */}

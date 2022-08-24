@@ -1,8 +1,9 @@
-import { Box, Button, Card, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUserFavoriteActivities } from '../../../app/reducers/userSlice';
 import { setInitialTripFavorites } from '../../../features/createTrip/createTripSlice';
+import Activity from '../../Discover/Activity';
 
 type Props = {
 	submitRef: any;
@@ -40,41 +41,10 @@ function FormStepThree(props: Props) {
 								>
 									Add
 								</Button>
-								<Card
-									key={favoriteActivity.activity.id}
-									sx={{
-										display: 'flex',
-										width: 250,
-										height: 140,
-										flexShrink: 0,
-										textDecoration: 'none',
-									}}
-									elevation={10}
-								>
-									{/* <img
-					src={
-						activity.location ? activity.location.photoUrl[0] : fallbackPhoto
-					}
-					alt="location pic"
-				/> */}
-									<Box
-										sx={{
-											display: 'flex',
-											flexDirection: 'column',
-											gap: 3,
-										}}
-									>
-										<Typography
-											variant="h6"
-											style={{ alignSelf: 'flex-start' }}
-										>
-											{favoriteActivity.activity.name}
-										</Typography>
-										<Typography variant="subtitle1">
-											{favoriteActivity.activity.description}
-										</Typography>
-									</Box>
-								</Card>
+								<Activity
+									activity={favoriteActivity.activity}
+									setSelectedActivity={() => null}
+								/>
 							</div>
 					  ))
 					: null}

@@ -11,9 +11,18 @@
 }
 
 .navbar-logo {
+	width: 20vw;
 	display: flex;
 	gap: 1rem;
 	align-items: center;
+}
+.navbar-login {
+	width: 20vw;
+	display: flex;
+	justify-content: flex-end;
+}
+.navbar-links {
+	width: 60vw;
 }
 .css-1t6c9ts {
 	display: flex;

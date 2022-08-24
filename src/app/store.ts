@@ -25,7 +25,7 @@ export const store = configureStore({
 		newTravel: createTravelReducer,
 		travelList: travelListReducer,
 		tripList: tripListReducer,
-		favoriteActivity: favoriteActivityReducer,
+		favoriteActivities: favoriteActivityReducer,
 		userFavoriteActivities: userFavoriteActivityReducer,
 		selectedTrip: selectedTripReducer,
 		newActivity: createActivityReducer,

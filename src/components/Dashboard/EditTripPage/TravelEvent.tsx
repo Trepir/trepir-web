@@ -75,7 +75,9 @@ function TravelEvent(props: Props) {
 							// backgroundColor: 'blue',
 						}}
 					>
-						{activity.originLocation.locationName}
+						{activity.originLocation.locationName
+							? activity.originLocation.locationName
+							: activity.originLocation.name}
 					</Typography>
 					<KeyboardArrowDownIcon
 						fontSize="large"
@@ -93,8 +95,24 @@ function TravelEvent(props: Props) {
 							// backgroundColor: 'blue',
 						}}
 					>
-						{activity.destinationLocation.locationName}
+						{activity.destinationLocation.locationName
+							? activity.destinationLocation.locationName
+							: activity.destinationLocation.name}
 					</Typography>
+					{activity.originLocation.locationName ? null : (
+						<Typography
+							variant="h6"
+							noWrap
+							style={{
+								alignSelf: 'flex-start',
+								width: 190,
+								fontWeight: 'bold',
+								// backgroundColor: 'blue',
+							}}
+						>
+							{activity.departureDate}
+						</Typography>
+					)}
 				</Box>
 			</Card>
 		</div>

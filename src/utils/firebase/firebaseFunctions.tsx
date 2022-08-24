@@ -82,6 +82,9 @@ export const loginGoogle = async () => {
 		const provider = new GoogleAuthProvider();
 		const googleUser = await signInWithPopup(auth, provider);
 		console.log('googleuser:', googleUser);
+		if (googleUser?.user?.photoURL) {
+			localStorage.setItem('photoURL', googleUser.user.photoURL);
+		}
 		//	google does not split the first and last name for us
 		const user: any = {
 			firstName: '',
@@ -102,4 +105,5 @@ export const loginGoogle = async () => {
 
 export const logOut = async () => {
 	await signOut(auth);
+	localStorage.clear();
 };

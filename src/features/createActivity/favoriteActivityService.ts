@@ -9,6 +9,7 @@ export const updateFavoriteActivity = async (
 		uid,
 	};
 	try {
+		console.log('here');
 		const newFavoriteActivity = await fetch(`${BASE_URL}activity/favorite`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
