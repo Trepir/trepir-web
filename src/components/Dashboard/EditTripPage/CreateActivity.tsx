@@ -32,6 +32,14 @@ import {
 } from '../../../features/createActivity/createActivitySlice';
 import { createActivity } from '../../../features/createActivity/createActivityService';
 import { selectUid } from '../../../app/reducers/authSlice';
+import {
+	saveActivityToTrip,
+	// updateFavoriteActivity,
+} from '../../../features/createActivity/favoriteActivityService';
+import {
+	selectFavoriteActivities,
+	toggleFavoriteActivity,
+} from '../../../features/createActivity/favoriteActivitySlice';
 // import { selectUid } from '../../../app/reducers/authSlice';
 
 const ITEM_HEIGHT = 48;
@@ -85,16 +93,20 @@ type Props = {
 };
 
 function CreateActivityForm(props: Props) {
-	// function refreshPage() {
-	// 	window.location.reload();
-	// }
 	const { handleCloseActivity } = props;
 	const uid: string | null = useSelector(selectUid);
+	const tripId = localStorage.getItem('tripId');
 	const newActivity: any = useAppSelector(selectNewActivity);
+	const favoriteActivities = useSelector(selectFavoriteActivities);
 	const theme = useTheme();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
 
+	function refreshPage() {
+		if (tripId !== '') {
+			window.location.reload();
+		}
+	}
 	const {
 		register,
 		// setValue,
@@ -132,11 +144,23 @@ function CreateActivityForm(props: Props) {
 			await dispatch(submitActivityDurationHours(Number(durationHours)));
 			await dispatch(submitActivityDurationMinutes(Number(durationMinutes)));
 			console.log('idle?', newActivity);
-			if (uid) {
+			if (uid && tripId) {
 				const createdActivity = await createActivity(data, newActivity, uid);
 				console.log('response', createdActivity);
+				dispatch(toggleFavoriteActivity(createdActivity.id));
+				// const newFavoriteActivity = await updateFavoriteActivity(
+				// 	uid,
+				// 	createdActivity.id
+				// );
+				// console.log('response 2', newFavoriteActivity);
+				await saveActivityToTrip(
+					uid,
+					createdActivity.id,
+					tripId,
+					favoriteActivities
+				);
 				handleCloseActivity();
-				// refreshPage();
+				refreshPage();
 			}
 		}
 	};

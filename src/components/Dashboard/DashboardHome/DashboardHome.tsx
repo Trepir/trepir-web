@@ -72,6 +72,7 @@ function DashboardHome() {
 				component={Link}
 				to="createtrip"
 				size="large"
+				onClick={() => localStorage.setItem('tripId', '')}
 				style={{
 					// borderRadius: '18px',
 					color: 'white',

@@ -44,15 +44,16 @@ const AddTravelSchema = yup.object().shape({
 });
 
 function AddTravelForm(props: Props) {
-	// function refreshPage() {
-	// 	window.location.reload();
-	// }
 	const { handleCloseTravel } = props;
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
 	const newTravel: any = useAppSelector(selectNewTravel);
 	const uid: string | null = useSelector(selectUid);
 	const tripId = localStorage.getItem('tripId');
+
+	function refreshPage() {
+		if (tripId !== '') window.location.reload();
+	}
 
 	const {
 		register,
@@ -90,7 +91,7 @@ function AddTravelForm(props: Props) {
 			handleCloseTravel();
 			if (tripId && uid) {
 				await createTravel(newTravel, uid, tripId, data);
-				// refreshPage();
+				refreshPage();
 			}
 			// dispatch(submitTravelDepartureLocation(null));
 			// dispatch(submitTravelArrivalLocation(null));

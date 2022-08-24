@@ -103,7 +103,6 @@ function TravelEvent(props: Props) {
 							style={{
 								alignSelf: 'flex-start',
 								width: 190,
-								fontWeight: 'bold',
 								// backgroundColor: 'blue',
 							}}
 						>
