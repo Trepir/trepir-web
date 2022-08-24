@@ -12,6 +12,8 @@ import { loadGoogleApi } from '../../utils/googleMaps/googleService';
 import { getUserFavoriteActivities } from '../../features/createActivity/favoriteActivityService';
 import { setUserFavoriteActivities } from '../../app/reducers/userSlice';
 import { fetchFavoriteActivities } from '../../features/createActivity/favoriteActivitySlice';
+import { addAllTrips } from '../../features/createTrip/tripListSlice';
+import { BASE_URL } from '../../utils/editTripUtils';
 
 function Discover() {
 	const uid = useSelector(selectUid);
@@ -21,6 +23,27 @@ function Discover() {
 		dispatch(resetMap('discover'));
 		dispatch(resetDiscover());
 	}, []);
+	useEffect(() => {
+		const getTripList = async () => {
+			try {
+				//	UID FAIL CHECK DO NOT REMOVE
+				//		THIS USEEFFECT NOW WATCH THE UID VALUE AND WILL GET CALLED WHEN IT CHANGES
+				if (!uid) return;
+
+				const userDetails = await fetch(`${BASE_URL}user/signin`, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ uid }),
+				});
+				const jsonUserDetails = await userDetails.json();
+				const { trips } = jsonUserDetails;
+				dispatch(addAllTrips(trips));
+			} catch (e) {
+				console.log(e);
+			}
+		};
+		getTripList();
+	}, [uid]);
 	useEffect(() => {
 		const getFavorites = async () => {
 			if (uid) {
@@ -36,7 +59,7 @@ function Discover() {
 	}, [uid]);
 
 	return (
-		<div>
+		<div className="discover-container">
 			{map ? (
 				<Routes>
 					<Route path="/" element={<HomePage />} />

@@ -10,6 +10,10 @@
 	padding-top: 4rem;
 }
 
+.navbar-container {
+	height: 100%;
+}
+
 .navbar-logo {
 	width: 20vw;
 	display: flex;
