@@ -8,6 +8,7 @@ import { selectNewAccommodation } from '../../../features/createAccommodation/cr
 
 import AddAccommodationForm from './AddAccommodationForm';
 import AddTravelForm from './AddTravelForm';
+import { primaryColor } from '../../../pages/TopNavigation';
 
 type Props = {
 	submitRef: any;
@@ -28,9 +29,9 @@ function FormStepTwo(props: Props) {
 		top: '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
-		width: 400,
+		width: '40vw',
 		bgcolor: 'background.paper',
-		border: '2px solid #000',
+		border: `2px solid ${primaryColor}`,
 		boxShadow: 24,
 		p: 4,
 	};
@@ -50,7 +51,12 @@ function FormStepTwo(props: Props) {
 	return (
 		<div className="step-container">
 			<div className="modal-buttons-container">
-				<Button variant="contained" onClick={handleOpenAccommodation}>
+				<Button
+					variant="contained"
+					className="modal-button"
+					onClick={handleOpenAccommodation}
+					sx={{ fontWeight: 'bold' }}
+				>
 					Add Accommodation Details
 				</Button>
 				<Modal
@@ -60,10 +66,17 @@ function FormStepTwo(props: Props) {
 					aria-describedby="create-accommodation-modal"
 				>
 					<Box sx={style}>
-						<AddAccommodationForm handleCloseAccommodation={() => null} />
+						<AddAccommodationForm
+							handleCloseAccommodation={handleCloseAccommodation}
+						/>
 					</Box>
 				</Modal>
-				<Button variant="contained" onClick={handleOpenTravel}>
+				<Button
+					variant="contained"
+					className="modal-button"
+					onClick={handleOpenTravel}
+					sx={{ fontWeight: 'bold' }}
+				>
 					Add Travel Details
 				</Button>
 				<Modal
@@ -73,7 +86,7 @@ function FormStepTwo(props: Props) {
 					aria-describedby="create-travel-modal"
 				>
 					<Box sx={style}>
-						<AddTravelForm handleCloseTravel={() => null} />
+						<AddTravelForm handleCloseTravel={handleCloseTravel} />
 					</Box>
 				</Modal>
 			</div>

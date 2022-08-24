@@ -19,9 +19,14 @@ import {
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
-import { selectAccommodationList } from '../../../features/createAccommodation/accommodationList';
-import { selectTravelList } from '../../../features/createTravel/travelListSlice';
-import TravelEventList from './TravelEventList';
+import {
+	resetAccommodationList,
+	selectAccommodationList,
+} from '../../../features/createAccommodation/accommodationList';
+import {
+	resetTravelList,
+	selectTravelList,
+} from '../../../features/createTravel/travelListSlice';
 import {
 	createTrip,
 	addInitialActivities,
@@ -35,6 +40,8 @@ import {
 import createTravel from '../../../features/createTravel/createTravelService';
 import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
 import FormStepThree from './FormStepThree';
+import TravelEvent from '../EditTripPage/TravelEvent';
+import AccommodationEvent from '../EditTripPage/AccommodationEvent';
 
 // import {
 // 	submitNewTrip,
@@ -50,7 +57,7 @@ function FormStepper() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	///	ADDING UID LOGIC AND FAIL CHECK
-	const uid = useSelector(selectUid);
+	const uid: string | null = useSelector(selectUid);
 
 	const [validated, setValidated] = useState(false);
 	const [activeStep, setActiveStep] = useState(0);
@@ -98,6 +105,7 @@ function FormStepper() {
 				// setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				// Pending call to backend and use trip id for params
 				//	SET YOUR SELECTED TRIP BEFORE NAIGATING TO edit page
+				localStorage.setItem('tripId', createdTrip.id);
 				navigate('../trip');
 				dispatch(setSelectedTripId(createdTrip.id));
 				await addInitialActivities(
@@ -105,6 +113,8 @@ function FormStepper() {
 					uid,
 					createdTrip.id
 				);
+				dispatch(resetTravelList);
+				dispatch(resetAccommodationList);
 			}
 		}
 	};
@@ -235,13 +245,13 @@ function FormStepper() {
 				<div className="travel-event-list">
 					{accommodationList.length
 						? accommodationList.map((event) => (
-								<TravelEventList event={event} />
+								<AccommodationEvent activity={event} />
 						  ))
 						: null}
 				</div>
 				<div className="travel-event-list">
 					{travelList.length
-						? travelList.map((event) => <TravelEventList event={event} />)
+						? travelList.map((event) => <TravelEvent activity={event} />)
 						: null}
 				</div>
 			</div>

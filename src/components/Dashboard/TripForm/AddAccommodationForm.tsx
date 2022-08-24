@@ -18,7 +18,6 @@ import {
 import { addAccommodation } from '../../../features/createAccommodation/accommodationList';
 import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
 import { selectUid } from '../../../app/reducers/authSlice';
-import { selectTripId } from '../../../features/createTrip/selectedTripSlice';
 
 type Props = {
 	handleCloseAccommodation: () => void;
@@ -34,7 +33,7 @@ function AddAccommodationForm(props: Props) {
 	const dispatch = useAppDispatch();
 	const newAccommodation: any = useAppSelector(selectNewAccommodation);
 	const uid: string | null = useSelector(selectUid);
-	const tripId = useSelector(selectTripId);
+	const tripId = localStorage.getItem('tripId');
 
 	const {
 		register,
@@ -64,8 +63,8 @@ function AddAccommodationForm(props: Props) {
 		if (isValid && newAccommodation.location) {
 			dispatch(addAccommodation(newAccommodation));
 			if (tripId && uid) {
-				await createAccommodation(newAccommodation, uid, tripId, data);
 				handleCloseAccommodation();
+				await createAccommodation(newAccommodation, uid, tripId, data);
 			}
 		}
 	};
@@ -82,7 +81,7 @@ function AddAccommodationForm(props: Props) {
 						id="checkinDate"
 						label="Check-in date"
 						type="date"
-						sx={{ width: 220 }}
+						sx={{ width: '40%' }}
 						{...register('checkinDate')}
 						error={!!errors.checkinDate}
 						InputLabelProps={{
@@ -94,7 +93,7 @@ function AddAccommodationForm(props: Props) {
 						id="checkoutDate"
 						label="Check-out date"
 						type="date"
-						sx={{ width: 220 }}
+						sx={{ width: '40%' }}
 						{...register('checkoutDate')}
 						error={!!errors.checkoutDate}
 						InputLabelProps={{
@@ -102,7 +101,11 @@ function AddAccommodationForm(props: Props) {
 						}}
 						onChange={handleEndDate}
 					/>
-					<Button type="submit" aria-label="Save accommodation">
+					<Button
+						variant="contained"
+						type="submit"
+						aria-label="Save accommodation"
+					>
 						Save
 					</Button>
 				</Box>

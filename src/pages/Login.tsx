@@ -1,4 +1,6 @@
-import { Box } from '@mui/material';
+import './Login.css';
+
+import { Box, Divider } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -52,60 +54,110 @@ function Login() {
 			<Box
 				sx={{
 					width: '100vw',
-					height: '100vh',
+					height: '100%',
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'center',
 					alignItems: 'center',
 					gap: '10vw',
+					paddingTop: '20vh',
 				}}
 			>
-				<form
-					onSubmit={handleSubmitLogin}
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-				>
-					<TextField label="Email" name="loginEmail" required />
-					<TextField
-						label="Password"
-						name="loginPassword"
-						type="password"
-						required
-					/>
-
-					<Button type="submit" variant="contained" color="secondary">
-						Login
-					</Button>
-				</form>
-				<form
-					onSubmit={handleSubmitRegister}
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-				>
-					<TextField label="user name" name="registerUserName" required />
-					<TextField label="Email" name="registerEmail" required />
-					<TextField
-						label="Password"
-						name="registerPassword"
-						type="password"
-						required
-					/>
-
-					<Button type="submit" variant="contained" color="secondary">
-						Register
-					</Button>
-				</form>
-				<Fab variant="extended" onClick={loginGoogle} disabled>
-					Login With Google
-				</Fab>
+				<div className="auth-form-container">
+					<form
+						className="login-form"
+						onSubmit={handleSubmitLogin}
+						style={{
+							display: 'flex',
+							gap: '1rem',
+							flexDirection: 'column',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<Fab
+							variant="extended"
+							onClick={async () => {
+								const googleUser = await loginGoogle();
+								console.log('googleUser', googleUser);
+								if (googleUser.uid) navigate('../dashboard');
+							}}
+							color="secondary"
+							sx={{
+								fontWeight: 'bold',
+								width: '16vw',
+								padding: '1.7rem',
+								borderRadius: '4px',
+							}}
+						>
+							Login With Google
+						</Fab>
+						<TextField
+							label="Email"
+							name="loginEmail"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<TextField
+							label="Password"
+							name="loginPassword"
+							type="password"
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+							required
+						/>
+						<Button
+							type="submit"
+							variant="contained"
+							color="primary"
+							sx={{
+								fontWeight: 'bold',
+								width: '16vw',
+								padding: '0.8rem',
+							}}
+						>
+							Login
+						</Button>
+					</form>
+					<Divider orientation="vertical" />
+					<form
+						onSubmit={handleSubmitRegister}
+						style={{
+							display: 'flex',
+							gap: '1rem',
+							flexDirection: 'column',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<TextField
+							label="user name"
+							name="registerUserName"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<TextField
+							label="Email"
+							name="registerEmail"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<TextField
+							label="Password"
+							name="registerPassword"
+							type="password"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<Button
+							type="submit"
+							variant="contained"
+							color="primary"
+							sx={{ fontWeight: 'bold', width: '16vw', padding: '0.8rem' }}
+						>
+							Register
+						</Button>
+					</form>
+				</div>
 			</Box>
 		</div>
 	);

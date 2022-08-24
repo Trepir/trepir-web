@@ -6,7 +6,6 @@ import { ReactComponent as Globe } from '../../assets/globe.svg';
 
 function HomePage() {
 	return (
-
 		<div style={{ overflow: 'hidden' }}>
 			<Box
 				sx={{
@@ -32,7 +31,9 @@ function HomePage() {
 				{/* <div style={{ zIndex: 2, color: 'white', margin: '30vh 0 0 0' }}></div> */}
 				<SearchGooglePlaces />
 			</Box>
-			<Globe />
+			<div style={{ filter: 'blur(10px)' }}>
+				<Globe />
+			</div>
 		</div>
 	);
 }

@@ -61,10 +61,42 @@ function AccommodationEvent(props: Props) {
 						width: 190,
 					}}
 				>
-					<Typography variant="h6">{activity.location.locationName}</Typography>
-					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
-						{activity.state}
+					<Typography variant="h6">
+						{activity.location.locationName
+							? activity.location.locationName
+							: activity.location.name}
 					</Typography>
+					{activity.state ? (
+						<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
+							{activity.state}
+						</Typography>
+					) : null}
+					{activity.location.locationName ? null : (
+						<div>
+							<Typography
+								variant="h6"
+								style={{
+									alignSelf: 'flex-start',
+									lineHeight: '0.1rem',
+									paddingBottom: '0.2rem',
+								}}
+							>
+								Checkin:
+								<p>
+									<strong>{activity.checkinDate}</strong>
+								</p>
+							</Typography>
+							<Typography
+								variant="h6"
+								style={{ alignSelf: 'flex-start', lineHeight: '0.1rem' }}
+							>
+								Checkout:
+								<p>
+									<strong>{activity.checkoutDate}</strong>
+								</p>
+							</Typography>
+						</div>
+					)}
 				</Box>
 			</Card>
 		</div>

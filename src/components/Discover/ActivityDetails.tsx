@@ -62,6 +62,7 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 									style={{
 										width: 70,
 										backgroundColor: '#ECCA72',
+										color: 'black',
 									}}
 									size="small"
 								/>

@@ -3,21 +3,21 @@ import { RootState } from '../../app/store';
 
 export interface NewTravelState {
 	travelType: string;
-	departureLocation: any;
-	arrivalLocation: any;
+	originLocation: any;
+	destinationLocation: any;
 	departureDate: string;
 	flightNumber: string;
 }
 
 const initialState: NewTravelState = {
 	travelType: 'idle',
-	departureLocation: null,
-	arrivalLocation: null,
+	originLocation: null,
+	destinationLocation: null,
 	departureDate: 'idle',
 	flightNumber: 'idle',
 };
 
-export const createTravelSlice = createSlice({
+export const createTravelSlice: any = createSlice({
 	name: 'newTravel',
 	initialState,
 	reducers: {
@@ -27,14 +27,11 @@ export const createTravelSlice = createSlice({
 		changeTravelDepartureDate: (state, action: PayloadAction<any>) => {
 			state.departureDate = action.payload;
 		},
-		submitTravelDepartureLocation: (state, action: PayloadAction<any>) => {
-			state.departureLocation = action.payload;
+		submitTravelOriginLocation: (state, action: PayloadAction<any>) => {
+			state.originLocation = action.payload;
 		},
-		submitTravelArrivalLocation: (state, action: PayloadAction<any>) => {
-			state.arrivalLocation = action.payload;
-		},
-		changeAccommodationStartDate: (state, action: PayloadAction<any>) => {
-			state.departureDate = action.payload;
+		submitTravelDestinationLocation: (state, action: PayloadAction<any>) => {
+			state.destinationLocation = action.payload;
 		},
 		submitFlightNumber: (state, action: PayloadAction<any>) => {
 			state.flightNumber = action.payload;
@@ -45,8 +42,8 @@ export const createTravelSlice = createSlice({
 export const {
 	changeTravelType,
 	changeTravelDepartureDate,
-	submitTravelDepartureLocation,
-	submitTravelArrivalLocation,
+	submitTravelOriginLocation,
+	submitTravelDestinationLocation,
 	submitFlightNumber,
 } = createTravelSlice.actions;
 

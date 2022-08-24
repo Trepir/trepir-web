@@ -1,5 +1,6 @@
 import './TopNavigation.css';
 import { onAuthStateChanged } from 'firebase/auth';
+import { Person } from '@mui/icons-material';
 
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -61,7 +62,7 @@ function TopNavigation() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const uid = useSelector(selectUid);
-
+	const photoURL = localStorage.getItem('photoURL');
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
 		null
 	);
@@ -102,6 +103,7 @@ function TopNavigation() {
 			auth,
 			(user) => {
 				if (user) setCurrentUser(user);
+				console.log(user?.photoURL);
 				setPending(false);
 			},
 			(error) => {
@@ -241,15 +243,28 @@ function TopNavigation() {
 										textDecoration: 'none',
 									}}
 								>
-									{currentUser?.email}
+									{currentUser?.displayName
+										? currentUser.displayName
+										: currentUser.email}
 								</Typography>
 								<Tooltip title="Open settings">
 									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-										<Avatar
-											alt={currentUser?.email || 'Username'}
-											src="/static/images/avatar/2.jpg"
-											sx={{ backgroundColor: primaryColor }}
-										/>
+										{photoURL ? (
+											<Avatar variant="circular" sx={{ bgcolor: primaryColor }}>
+												<img src={photoURL} alt="profile-pic" />
+												<Person sx={{ bgcolor: primaryColor }} />
+											</Avatar>
+										) : (
+											<Avatar
+												alt={
+													currentUser?.displayName
+														? currentUser.displayName
+														: currentUser.email
+												}
+												src="/static/images/avatar/2.jpg"
+												sx={{ backgroundColor: primaryColor }}
+											/>
+										)}
 									</IconButton>
 								</Tooltip>
 								<Menu
@@ -282,7 +297,12 @@ function TopNavigation() {
 								</Menu>
 							</Box>
 						) : (
-							<Typography textAlign="center" component={Link} to="login">
+							<Typography
+								textAlign="center"
+								component={Link}
+								to="login"
+								sx={{ fontWeight: 'bold' }}
+							>
 								Login
 							</Typography>
 						)}
