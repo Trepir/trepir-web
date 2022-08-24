@@ -27,7 +27,10 @@ function FilterPage() {
 					gap: 20,
 				}}
 			>
-				<Typography variant="h3" style={{ margin: '20px 0 0 0' }}>
+				<Typography
+					variant="h4"
+					style={{ margin: '20px 0 0 0', fontWeight: 'bold' }}
+				>
 					Activities
 				</Typography>
 				<Box

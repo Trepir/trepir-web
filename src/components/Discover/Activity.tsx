@@ -79,7 +79,7 @@ function Activity(props: any) {
 						color: '#7ED3B7',
 						borderRadius: 3,
 					}}
-					// src={dragging ? '' : activity.location.photoUrl[0]}
+					src={dragging ? '' : activity.location.photoUrl[0]}
 					onClick={() => handleClick()}
 				>
 					<EventAvailableIcon
@@ -99,7 +99,10 @@ function Activity(props: any) {
 					}}
 					onClick={() => handleClick()}
 				>
-					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
+					<Typography
+						variant="h6"
+						style={{ alignSelf: 'flex-start', fontWeight: 'bold' }}
+					>
 						{activity.name}
 					</Typography>
 					<div
