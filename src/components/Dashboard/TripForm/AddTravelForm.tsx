@@ -44,6 +44,9 @@ const AddTravelSchema = yup.object().shape({
 });
 
 function AddTravelForm(props: Props) {
+	// function refreshPage() {
+	// 	window.location.reload();
+	// }
 	const { handleCloseTravel } = props;
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
@@ -87,6 +90,7 @@ function AddTravelForm(props: Props) {
 			handleCloseTravel();
 			if (tripId && uid) {
 				await createTravel(newTravel, uid, tripId, data);
+				// refreshPage();
 			}
 			// dispatch(submitTravelDepartureLocation(null));
 			// dispatch(submitTravelArrivalLocation(null));

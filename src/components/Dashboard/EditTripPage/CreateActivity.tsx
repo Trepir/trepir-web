@@ -85,6 +85,9 @@ type Props = {
 };
 
 function CreateActivityForm(props: Props) {
+	// function refreshPage() {
+	// 	window.location.reload();
+	// }
 	const { handleCloseActivity } = props;
 	const uid: string | null = useSelector(selectUid);
 	const newActivity: any = useAppSelector(selectNewActivity);
@@ -133,6 +136,7 @@ function CreateActivityForm(props: Props) {
 				const createdActivity = await createActivity(data, newActivity, uid);
 				console.log('response', createdActivity);
 				handleCloseActivity();
+				// refreshPage();
 			}
 		}
 	};

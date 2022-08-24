@@ -26,7 +26,10 @@ function HomePage() {
 					filter: 'blur(8px)',
 				}}
 			/>
-			<Typography variant="h3" style={{ zIndex: 2, margin: '30vh 0 0 0' }}>
+			<Typography
+				variant="h4"
+				style={{ zIndex: 2, margin: '30vh 0 0 0', fontWeight: 'bold' }}
+			>
 				Where do you want to go?
 			</Typography>
 			<SearchGooglePlaces />

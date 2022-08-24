@@ -9,7 +9,6 @@ export const parseMapViewport = async (viewport: any) => {
 };
 
 export const parseMarkersDashboard = (tripDayMap: any) => {
-	console.log(tripDayMap);
 	const markers: any[] = [];
 	const days: [any][] = Object.values(tripDayMap);
 	days.forEach((day) => {
@@ -32,7 +31,6 @@ export const parseMarkersDashboard = (tripDayMap: any) => {
 			}
 		});
 	});
-	console.log(markers);
 	return markers;
 };
 
@@ -50,7 +48,6 @@ export const parseMarkersDiscover = (activities: any[]) => {
 
 export const parseMarkersPlayground = (activities: any[]) => {
 	const markers: any[] = [];
-	console.log(activities);
 	activities.forEach((activity) => {
 		markers.push({
 			lat: activity.activity.location.latitude,

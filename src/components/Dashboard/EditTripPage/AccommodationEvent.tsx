@@ -12,7 +12,6 @@ type Props = {
 function AccommodationEvent(props: Props) {
 	const { activity } = props;
 	const dispatch = useDispatch();
-	console.log(activity);
 	function handleClick() {
 		dispatch(
 			setMapPan({

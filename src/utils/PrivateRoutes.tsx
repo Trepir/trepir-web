@@ -33,7 +33,6 @@ function PrivateRoutes() {
 			if (uid) {
 				const userFavorites: any[] = await getUserFavoriteActivities(uid);
 				dispatch(setUserFavoriteActivities(userFavorites));
-				console.log(userFavorites);
 				userFavorites.forEach((activity: any) => {
 					dispatch(fetchFavoriteActivities(activity.activityId));
 				});

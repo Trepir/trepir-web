@@ -26,8 +26,6 @@ function Playground() {
 		if (!favoritedActivities) return;
 		const markers = parseMarkersPlayground(favoritedActivities);
 		dispatch(setMarkers(markers));
-
-		console.log('hey  hey hye');
 	}, [favoritedActivities]);
 	return (
 		<div>
@@ -37,7 +35,6 @@ function Playground() {
 						height: '93vh',
 						width: '100vw',
 						display: 'flex',
-						backgroundColor: 'pink',
 					}}
 				>
 					<Box sx={{ width: '50vw' }} />
@@ -67,7 +64,9 @@ function Playground() {
 								zIndex: 2,
 							}}
 						>
-							<Typography variant="h3">Your Liked Activities</Typography>
+							<Typography variant="h4" style={{ fontWeight: 'bold' }}>
+								Your Liked Activities
+							</Typography>
 							<Divider
 								style={{
 									width: '49vw',

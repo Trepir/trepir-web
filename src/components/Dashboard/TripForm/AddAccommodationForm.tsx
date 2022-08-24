@@ -28,6 +28,9 @@ const AddAccommodationSchema = yup.object().shape({
 	checkoutDate: yup.string().required('Please select an end date'),
 });
 function AddAccommodationForm(props: Props) {
+	// function refreshPage() {
+	// 	window.location.reload();
+	// }
 	const { handleCloseAccommodation } = props;
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
@@ -66,6 +69,7 @@ function AddAccommodationForm(props: Props) {
 				await createAccommodation(newAccommodation, uid, tripId, data);
 			}
 			handleCloseAccommodation();
+			// refreshPage();
 		}
 	};
 

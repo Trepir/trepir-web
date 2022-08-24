@@ -14,8 +14,6 @@ function TravelEvent(props: Props) {
 	const { activity } = props;
 	const dispatch = useDispatch();
 
-	console.log(activity);
-
 	function handleClick() {
 		dispatch(
 			setMapPan({

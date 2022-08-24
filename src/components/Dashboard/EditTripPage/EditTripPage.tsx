@@ -326,7 +326,6 @@ function EditTripPage() {
 			//		THIS USEEFFECT NOW WATCH THE TRIPID VALUE AND WILL GET CALLED WHEN IT CHANGES
 			if (tripId?.length) {
 				try {
-					console.log('tripId', tripId);
 					const fetchTripDetails = await fetch(
 						`${BASE_URL}trip/tripById/${tripId}`
 					);

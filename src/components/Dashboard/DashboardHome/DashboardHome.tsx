@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 // import Button from '@mui/material/Button';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Fab } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -25,8 +26,6 @@ function DashboardHome() {
 		<Box
 			sx={{
 				margin: '20vh 0 0 0',
-				// height: '93vh',
-				// backgroundColor: 'pink',
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
@@ -43,7 +42,9 @@ function DashboardHome() {
 					alignItems: 'center',
 				}}
 			>
-				<Typography variant="h3">Select trip to view</Typography>
+				<Typography style={{ fontWeight: 'bold' }} variant="h4">
+					Select trip to view
+				</Typography>
 
 				{userTrips.length ? (
 					<Box
@@ -63,7 +64,9 @@ function DashboardHome() {
 					</Box>
 				) : null}
 			</div>
-			<Typography variant="h4">or</Typography>
+			<Typography variant="h4" style={{ fontWeight: 'bold' }}>
+				or
+			</Typography>
 			<Fab
 				variant="extended"
 				component={Link}
@@ -73,8 +76,10 @@ function DashboardHome() {
 					// borderRadius: '18px',
 					color: 'white',
 					backgroundColor: 'rgba(28, 185, 133, 1)',
+					fontWeight: 'bold',
 				}}
 			>
+				<AddCircleOutlineIcon />
 				Create New Trip
 			</Fab>
 		</Box>

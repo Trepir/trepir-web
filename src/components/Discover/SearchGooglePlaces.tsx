@@ -104,7 +104,7 @@ export default function SearchGooglePlaces() {
 		<Autocomplete
 			id="google-map-demo"
 			sx={{
-				width: 550,
+				width: 430,
 				backgroundColor: 'white',
 				zIndex: 3,
 				borderRadius: 8,

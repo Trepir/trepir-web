@@ -41,7 +41,6 @@ function Dashboard() {
 				dispatch(addAllTrips(trips));
 				if (favoriteActivities.length) {
 					favoriteActivities.forEach((activity: any) => {
-						console.log('added', activity.activityId);
 						dispatch(fetchFavoriteActivities(activity.activityId));
 					});
 				}
