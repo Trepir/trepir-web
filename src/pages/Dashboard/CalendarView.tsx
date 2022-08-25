@@ -12,9 +12,7 @@ function CalendarView() {
 	const id = useSelector(selectTripId);
 	const dispatch = useDispatch();
 	const { tripDetails } = useSelector(selectTripDetails);
-	console.log('details', tripDetails);
 	useEffect(() => {
-		console.log('id', id);
 		const getTripDetails = async () => {
 			//	TRIPID FAIL CHECK DO NOT REMOVE
 			//		THIS USEEFFECT NOW WATCH THE TRIPID VALUE AND WILL GET CALLED WHEN IT CHANGES
@@ -24,7 +22,6 @@ function CalendarView() {
 						`${BASE_URL}trip/tripById/${id}`
 					);
 					const jsonTripDetails = await fetchTripDetails.json();
-					console.log('json', jsonTripDetails);
 					dispatch(setSelectedTrip(jsonTripDetails));
 				} catch (e) {
 					console.log(e);

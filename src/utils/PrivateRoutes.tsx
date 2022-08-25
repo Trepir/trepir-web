@@ -16,8 +16,8 @@ function PrivateRoutes() {
 		const unsubscribe = onAuthStateChanged(
 			auth,
 			(user) => {
-				console.log(user);
 				setPending(false);
+				return user;
 			},
 			(error) => {
 				console.log('not logged in', error);
