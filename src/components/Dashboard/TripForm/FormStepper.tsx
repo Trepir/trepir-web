@@ -112,11 +112,9 @@ function FormStepper() {
 				}
 				const createdTrip = await createTrip(newTrip, uid);
 				travelList.forEach(async (travelEvent: any) => {
-					console.log('travel', travelEvent);
 					await createTravel(travelEvent, uid, createdTrip.id);
 				});
 				accommodationList.forEach(async (accommodationEvent: any) => {
-					console.log('acc', accommodationEvent);
 					await createAccommodation(accommodationEvent, uid, createdTrip.id);
 				});
 
@@ -127,12 +125,7 @@ function FormStepper() {
 				localStorage.setItem('tripId', createdTrip.id);
 				navigate('../trip');
 				dispatch(setSelectedTripId(createdTrip.id));
-				console.log(
-					'test faves',
-					newTrip.initialTripFavorites,
-					uid,
-					createdTrip.id
-				);
+
 				await addInitialActivities(
 					newTrip.initialTripFavorites,
 					createdTrip.id

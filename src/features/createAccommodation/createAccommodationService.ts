@@ -8,7 +8,6 @@ const createAccommodation = async (
 	tripId: string,
 	data: any = null
 ) => {
-	console.log('pre-fetch', accommodationInput);
 	let checkinDate;
 	let checkoutDate;
 	if (data) {
@@ -18,7 +17,6 @@ const createAccommodation = async (
 		checkinDate = accommodationInput.checkinDate;
 		checkoutDate = accommodationInput.checkoutDate;
 	}
-	console.log(checkinDate, checkoutDate);
 	const photoUrl = await accommodationInput.location.photos[0].getUrl();
 	const coordinates = await getLatLng(accommodationInput.location);
 
@@ -40,15 +38,12 @@ const createAccommodation = async (
 		tripId,
 	};
 
-	console.log('formattedTravel', formattedAccommodation);
-
 	const createdAccommodation = await fetch(`${BASE_URL}trip/addAccommodation`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(formattedAccommodation),
 	});
 	const jsonCreatedAccommodation = await createdAccommodation.json();
-	console.log('hello', jsonCreatedAccommodation);
 
 	return jsonCreatedAccommodation;
 };

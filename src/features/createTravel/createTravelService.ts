@@ -8,8 +8,6 @@ const createTravel = async (
 	tripId: string,
 	data: any = null
 ) => {
-	console.log('pre-fetch', travelInput);
-
 	// if (travelInput.departureDate) {
 	// 	const { departureDate, travelType } = travelInput;
 	// } else {
@@ -59,15 +57,12 @@ const createTravel = async (
 		tripId,
 	};
 
-	console.log('formattedTravel', formattedTravel);
-
 	const createdTravel = await fetch(`${BASE_URL}trip/addTravelEvent`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(formattedTravel),
 	});
 	const jsonCreatedTravel = await createdTravel.json();
-	console.log('hello', jsonCreatedTravel);
 
 	return jsonCreatedTravel;
 };

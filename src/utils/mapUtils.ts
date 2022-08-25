@@ -1,5 +1,4 @@
 export const parseMapViewport = async (viewport: any) => {
-	console.log(viewport);
 	const viewportCoords = {
 		latitudeLow: viewport.yb.lo,
 		latitudeHigh: viewport.yb.hi,

@@ -12,7 +12,6 @@ type Props = {
 function DaysView(props: Props) {
 	const { days, startDate, duration } = props;
 	const dateList = tripDateFormatter(startDate, duration);
-	console.log('datelist', dateList);
 	return (
 		<div>
 			{days.map((day: any) => (

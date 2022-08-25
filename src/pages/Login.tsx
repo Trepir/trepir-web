@@ -27,7 +27,6 @@ function Login() {
 				e.target.loginEmail.value,
 				e.target.loginPassword.value
 			);
-			console.log('userdet', user);
 			dispatch(setDisplayName(user.displayName));
 			navigate('../dashboard');
 
@@ -79,7 +78,6 @@ function Login() {
 							variant="extended"
 							onClick={async () => {
 								const googleUser = await loginGoogle();
-								console.log('googleUser', googleUser);
 								if (googleUser.uid) navigate('../dashboard');
 							}}
 							color="secondary"

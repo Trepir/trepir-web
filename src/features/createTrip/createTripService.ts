@@ -3,9 +3,6 @@ import { getLatLng } from 'use-places-autocomplete';
 export const BASE_URL = 'https://trepir.herokuapp.com/';
 
 export const createTrip = async (tripInput: any, uid: string) => {
-	// console.log('pre-fetch', tripInput);
-	// const formattedLocation = await parseLocationDetails(tripInput.location[0]);
-	// console.log(tripInput);
 	const photoUrl = await tripInput.placeDetails.photos[0].getUrl();
 	const { lat, lng } = await getLatLng(tripInput.placeDetails);
 	/* eslint-disable-next-line */
@@ -37,7 +34,6 @@ export const createTrip = async (tripInput: any, uid: string) => {
 		body: JSON.stringify(formattedTrip),
 	});
 	const jsonCreatedTrip = await createdTrip.json();
-	console.log('hello', jsonCreatedTrip);
 
 	return jsonCreatedTrip;
 };
@@ -47,7 +43,6 @@ export const addInitialActivities = async (
 	tripId: string
 ) => {
 	try {
-		console.log(initialActivities);
 		await fetch(`${BASE_URL}activity/initialFavoriteActivities`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

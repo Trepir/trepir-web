@@ -7,18 +7,14 @@ export const createActivity = async (
 	activityInput: any,
 	uid: string
 ) => {
-	console.log('pre-fetch', activityInput);
 	const { activityName, activityDescription, durationHours, durationMinutes } =
 		data;
 	const photoUrl = await activityInput.location.photos[0].getUrl();
-	console.log(photoUrl.toString());
 	const { lat, lng } = await getLatLng(activityInput.location);
 	/* eslint-disable-next-line */
 	const { formatted_address, name, place_id } = activityInput.location;
 
 	const formattedDuration = Math.floor(durationHours * 60 + durationMinutes);
-
-	console.log(activityInput.location);
 
 	const formattedActivity = {
 		name: activityName,
@@ -41,8 +37,6 @@ export const createActivity = async (
 		uid,
 	};
 
-	console.log(formattedActivity);
-
 	const createdActivity = await fetch(`${BASE_URL}activity/create`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -61,7 +55,6 @@ export const getActivities = async () => {
 };
 
 export const getActivitiesByCoordinates = async (viewportCoords: any) => {
-	console.log('service', viewportCoords);
 	try {
 		const activitiesByCoord = await fetch(`${BASE_URL}activity/coordinates`, {
 			method: 'POST',

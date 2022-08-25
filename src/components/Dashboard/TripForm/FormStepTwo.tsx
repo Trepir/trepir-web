@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 
 import { Box, Fab, Modal } from '@mui/material';
 
-import { useAppSelector } from '../../../app/hooks';
-
-import { selectNewAccommodation } from '../../../features/createAccommodation/createAccommodationSlice';
-
 import AddAccommodationForm from './AddAccommodationForm';
 import AddTravelForm from './AddTravelForm';
 import { primaryColor } from '../../../pages/TopNavigation';
@@ -39,13 +35,9 @@ function FormStepTwo(props: Props) {
 	};
 	// ////////////////////////////////////
 
-	const newAccommodation = useAppSelector(selectNewAccommodation);
-	console.log('hello there', newAccommodation);
-
 	const { submitRef, setValidated, setActiveStep } = props;
 
 	const handleClick = () => {
-		console.log('hello');
 		setValidated(true);
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
