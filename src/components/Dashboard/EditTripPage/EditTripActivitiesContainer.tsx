@@ -23,8 +23,9 @@ function EditTripActivitiesContainer({
 						style={{
 							display: 'flex',
 							flexWrap: 'wrap',
-							margin: '3vw 0 0 5vw',
-							height: 0,
+							margin: '2.5vh 0 0 5vw',
+							width: '41vw',
+							height: 10,
 							gap: 10,
 						}}
 					>
@@ -37,7 +38,8 @@ function EditTripActivitiesContainer({
 									index={index}
 								>
 									{/* eslint-disable-next-line */}
-									{(provided) => {
+									{(provided, snapShot) => {
+										const { isDragging } = snapShot;
 										return (
 											<div
 												ref={provided.innerRef}
@@ -50,6 +52,7 @@ function EditTripActivitiesContainer({
 												<Activity
 													activity={activity}
 													setSelectedActivity={setSelectedActivity}
+													dragging={isDragging}
 												/>
 											</div>
 										);

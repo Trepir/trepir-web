@@ -6,6 +6,7 @@ export interface NewTripState {
 	placeDetails: any;
 	startDate: string;
 	endDate: string;
+	initialTripFavorites: any[];
 }
 
 const initialState: NewTripState = {
@@ -13,6 +14,7 @@ const initialState: NewTripState = {
 	placeDetails: null,
 	startDate: 'idle',
 	endDate: 'idle',
+	initialTripFavorites: [],
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -42,6 +44,19 @@ export const createTripSlice = createSlice({
 		changeEndDate: (state, action: PayloadAction<any>) => {
 			state.endDate = action.payload;
 		},
+		setInitialTripFavorites: (state, action: PayloadAction<any[]>) => {
+			if (state.initialTripFavorites.includes(action.payload)) {
+				state.initialTripFavorites.splice(
+					state.initialTripFavorites.indexOf(action.payload),
+					1
+				);
+			} else {
+				state.initialTripFavorites = [
+					...state.initialTripFavorites,
+					action.payload,
+				];
+			}
+		},
 	},
 });
 
@@ -50,6 +65,7 @@ export const {
 	submitTripLocation,
 	changeStartDate,
 	changeEndDate,
+	setInitialTripFavorites,
 } = createTripSlice.actions;
 
 // The function below is called a selector and allows us to select a value from

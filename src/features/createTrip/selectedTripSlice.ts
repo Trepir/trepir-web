@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-const initialState: any = { tripId: 'idle', tripDetails: null };
+const initialState: any = { tripId: null, tripDetails: null };
 
 export const selectedTripSlice = createSlice({
 	name: 'selectedTrip',

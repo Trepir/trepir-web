@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Box, Button, TextField, Alert } from '@mui/material';
+import { Box, Button, TextField, Alert, Typography } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
@@ -18,7 +18,6 @@ import {
 import { addAccommodation } from '../../../features/createAccommodation/accommodationList';
 import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
 import { selectUid } from '../../../app/reducers/authSlice';
-import { selectTripId } from '../../../features/createTrip/selectedTripSlice';
 
 type Props = {
 	handleCloseAccommodation: () => void;
@@ -34,7 +33,11 @@ function AddAccommodationForm(props: Props) {
 	const dispatch = useAppDispatch();
 	const newAccommodation: any = useAppSelector(selectNewAccommodation);
 	const uid: string | null = useSelector(selectUid);
-	const tripId = useSelector(selectTripId);
+	const tripId = localStorage.getItem('tripId');
+
+	function refreshPage() {
+		if (tripId) window.location.reload();
+	}
 
 	const {
 		register,
@@ -65,8 +68,9 @@ function AddAccommodationForm(props: Props) {
 			dispatch(addAccommodation(newAccommodation));
 			if (tripId && uid) {
 				await createAccommodation(newAccommodation, uid, tripId, data);
-				handleCloseAccommodation();
 			}
+			handleCloseAccommodation();
+			refreshPage();
 		}
 	};
 
@@ -74,6 +78,12 @@ function AddAccommodationForm(props: Props) {
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Box mb={2} className="modal-form-container">
+					<Typography
+						variant="h6"
+						style={{ alignSelf: 'center', fontWeight: 'bold' }}
+					>
+						Add housing
+					</Typography>
 					<TripLocationSearch inputLabel="accommodationLocation" />
 					{alertRef.current ? (
 						<Alert severity="error">Please insert a location!</Alert>
@@ -82,7 +92,7 @@ function AddAccommodationForm(props: Props) {
 						id="checkinDate"
 						label="Check-in date"
 						type="date"
-						sx={{ width: 220 }}
+						sx={{ width: '50%' }}
 						{...register('checkinDate')}
 						error={!!errors.checkinDate}
 						InputLabelProps={{
@@ -94,7 +104,7 @@ function AddAccommodationForm(props: Props) {
 						id="checkoutDate"
 						label="Check-out date"
 						type="date"
-						sx={{ width: 220 }}
+						sx={{ width: '50%' }}
 						{...register('checkoutDate')}
 						error={!!errors.checkoutDate}
 						InputLabelProps={{
@@ -102,7 +112,11 @@ function AddAccommodationForm(props: Props) {
 						}}
 						onChange={handleEndDate}
 					/>
-					<Button type="submit" aria-label="Save accommodation">
+					<Button
+						variant="contained"
+						type="submit"
+						aria-label="Save accommodation"
+					>
 						Save
 					</Button>
 				</Box>

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-const initialState: string[] = [];
+const initialState: any = [];
 
 export const favoriteActivitySlice = createSlice({
 	name: 'favoriteActivities',
@@ -29,6 +29,6 @@ export const { toggleFavoriteActivity, fetchFavoriteActivities } =
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectFavoriteActivities = (state: RootState) =>
-	state.favoriteActivity;
+	state.favoriteActivities;
 
 export default favoriteActivitySlice.reducer;

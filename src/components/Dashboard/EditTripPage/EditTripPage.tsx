@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
-import { Button, Paper } from '@mui/material';
+import { Button, Divider, Paper } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 import EditTripActivitiesContainer from './EditTripActivitiesContainer';
 import SelectedTrip from './SelectedTrip';
@@ -9,7 +9,6 @@ import SelectedTrip from './SelectedTrip';
 import { tripDateFormatter } from '../../../utils/dateUtils';
 import {
 	selectTripDetails,
-	selectTripId,
 	setSelectedTrip,
 } from '../../../features/createTrip/selectedTripSlice';
 import { BASE_URL } from '../../../features/createTrip/createTripService';
@@ -33,6 +32,8 @@ import {
 	reorderTripDay,
 	sortDay,
 } from '../../../utils/editTripUtils';
+import { getUserFavoriteActivities } from '../../../features/createActivity/favoriteActivityService';
+import { selectUid } from '../../../app/reducers/authSlice';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = async (
@@ -45,8 +46,6 @@ const onDragEnd = async (
 	dayIdMap: any
 ) => {
 	const { source, destination } = result;
-	console.log('source:', source);
-	console.log('destination:', destination);
 
 	//	/////////FAIL CHECKS/////////////////////
 	//	CHECK: DROPPING AT A DROPPPABLE LOCATION
@@ -55,14 +54,14 @@ const onDragEnd = async (
 		const dayActivities = [...days[source.droppableId]];
 		const tripDayActivity = dayActivities[source.index];
 		const tripDayActivityId = tripDayActivity.id;
-		await removeActivityFromTrip(tripDayActivityId);
 		//	//WORKING HERE///////////
-
+		//	set day before awaiting
 		dayActivities.splice(source.index, 1);
 		setDays({
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		await removeActivityFromTrip(tripDayActivityId);
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
 			...days,
@@ -94,7 +93,6 @@ const onDragEnd = async (
 		//	//WORKING HERE///////////
 		const tripDayActivity = dayActivities[source.index];
 		const tripDayActivityId = tripDayActivity.id;
-		await removeActivityFromTrip(tripDayActivityId);
 		//	//WORKING HERE///////////
 
 		dayActivities.splice(source.index, 1);
@@ -102,6 +100,7 @@ const onDragEnd = async (
 			...days,
 			[source.droppableId]: dayActivities,
 		});
+		await removeActivityFromTrip(tripDayActivityId);
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
 			...days,
@@ -117,25 +116,41 @@ const onDragEnd = async (
 
 	//	IF SOURCE=SAVED ACTIVITES & DEST=DAY
 	if (source.droppableId === 'favoritedActivities') {
-		//	identify source and dest activities
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+		const sourceActivitiesQuick = [...savedActivities.ActivitiesList];
+		const destActivitiesQuick = [...days[destination.droppableId]];
+		const [removedQuick] = sourceActivitiesQuick.splice(source.index, 1);
+		destActivitiesQuick.splice(destination.index, 0, removedQuick);
+		sourceActivitiesQuick.push(removedQuick);
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
+
 		const sourceActivities = [...savedActivities.ActivitiesList];
 		const destActivities = [...days[destination.droppableId]];
-		//	remove act from source, and add to dest
 		const [removed] = sourceActivities.splice(source.index, 1);
 		const removedCopy = { ...removed };
-		//	add the activity that was removed to the dest activities
-		//	////////////////////	WORKING HERE /////////////////////////////////////
 		const addedActivityId = removedCopy.id;
 		const tripDayId = dayIdMap[destination.droppableId];
 		const { index } = destination;
+		console.log(destActivities);
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
+		// BEFORE CALLING BE QUICKLY SET STATE
+		setDays({
+			...days,
+			[destination.droppableId]: destActivitiesQuick,
+		});
+		//	set your act list
+		setSavedActivities({
+			ActivitiesList: sourceActivitiesQuick,
+		});
+		// UPON RESPONSE SET AGAIN
 
 		const updatedDay = await addActivityToTrip(
 			tripDayId,
 			addedActivityId,
 			index
 		);
-		console.log('destActivities:', destActivities);
-		console.log('updatedDay:', updatedDay);
 		//	//////////////////////	WORKING HERE /////////////////////////////////////
 		// destActivities.splice(destination.index, 0, removed);
 		// add the copy of the removed activity, with a new id, to the source activities
@@ -152,7 +167,7 @@ const onDragEnd = async (
 		//	MARKERS
 		const newMarkers = parseMarkersDashboard({
 			...days,
-			[destination.droppableId]: destActivities,
+			[destination.droppableId]: updatedDay,
 		});
 		setLocalMarkers(newMarkers);
 		//	////
@@ -165,47 +180,66 @@ const onDragEnd = async (
 		source.droppableId !== 'favoritedActivities' &&
 		source.droppableId !== destination.droppableId
 	) {
+		//	QUICKLY SET STATE FOR ANIMATION/////
 		//	identify source activities
+		const sourceActivitiesQuick = [...days[source.droppableId]];
+
+		//	identify destactivities
+		const destActivitiesQuick = [...days[destination.droppableId]];
+
+		const [removedQuick] = sourceActivitiesQuick.splice(source.index, 1);
+		destActivitiesQuick.splice(destination.index, 0, removedQuick);
+
+		//	QUICKLY SET STATE FOR ANIMATION/////
+
+		// WORKING HERE FOR BACKEND LOGIC//////////////////
+		//	identify source activities (and remove from source)
 		const sourceActivities = [...days[source.droppableId]];
+		const tripDayActivity = sourceActivities[source.index];
+		const tripDayActivityId = tripDayActivity.id;
+		console.log(tripDayActivity);
+
+		console.log(typeof tripDayActivityId);
 
 		//	identify destactivities
 		const destActivities = [...days[destination.droppableId]];
 
-		// WORKING HERE//////////////////
 		//	1. remove
-		// const activityToRemove = sourceActivities[source.index];
-		// const tripDayActivityIdToRemove = activityToRemove.id;
-		// await removeActivityFromTrip(tripDayActivityIdToRemove);
 		const [removed] = sourceActivities.splice(source.index, 1);
 		//	If its a travel event or accomodation then return
 		if (removed.travelEvent || removed.accommodation) return;
 		// 2. add
 		const removedCopy = { ...removed };
-		console.log(removedCopy);
 		// check if activity or travel event
 		const addedActivityId = removedCopy.dayActivity.activityId;
 
-		console.log(addedActivityId);
 		const tripDayId = dayIdMap[destination.droppableId];
-		console.log('tripdayId:', tripDayId);
 		const { index } = destination;
-		console.log(index);
+
+		// BEFORE CALLING BE QUICKLY SET STATE
+		setDays({
+			...days,
+			[source.droppableId]: sourceActivitiesQuick,
+			[destination.droppableId]: destActivitiesQuick,
+		});
+
+		await removeActivityFromTrip(tripDayActivityId);
 		const updatedDay = await addActivityToTrip(
 			tripDayId,
 			addedActivityId,
 			index
 		);
 
-		// WORKING HERE//////////////////
-
-		destActivities.splice(destination.index, 0, removed);
+		// UPON RESPONSE SET AGAIN
 
 		setDays({
 			...days,
 			[source.droppableId]: sourceActivities,
 			[destination.droppableId]: updatedDay,
 		});
+		// WORKING HERE FOR BACKEND LOGIC//////////////////
 		//	MARKERS
+		destActivities.splice(destination.index, 0, removed);
 		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: sourceActivities,
@@ -222,30 +256,39 @@ const onDragEnd = async (
 	) {
 		console.log('source:', source);
 		console.log('dest:', destination);
-		//	///////////////WORKING HERE/////////////////////
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+		const activitiesQuick = [...days[source.droppableId]];
+		const [removedQuick] = activitiesQuick.splice(source.index, 1);
+		activitiesQuick.splice(destination.index, 0, removedQuick);
+		//	///////////////FIRST SET STATE QUICKLY/////////////////////
+
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
 		const tripDayId = dayIdMap[destination.droppableId];
 		const { index } = destination;
 		const dayActivities = [...days[source.droppableId]];
 		const tripDayActivity = dayActivities[source.index];
 		const tripDayActivityId = tripDayActivity.id;
+
+		// BEFORE CALLING BE QUICKLY SET STATE
+		setDays({
+			...days,
+			[source.droppableId]: activitiesQuick,
+		});
+
 		const updatedDay = await reorderTripDay(
 			tripDayId,
 			tripDayActivityId,
 			index
 		);
 
-		//	///////////////WORKING HERE/////////////////////
-
-		const activities = [...days[source.droppableId]];
-		// console.log('activities:', activities);
-
-		// const [removed] = activities.splice(source.index, 1);
-		// activities.splice(destination.index, 0, removed);
+		// UPON RESPONSE SET AGAIN
 		setDays({
 			...days,
 			[source.droppableId]: updatedDay,
 		});
+		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
 		//	MARKERS
+		const activities = [...days[source.droppableId]];
 		const newMarkers = parseMarkersDashboard({
 			...days,
 			[source.droppableId]: activities,
@@ -257,7 +300,8 @@ const onDragEnd = async (
 
 function EditTripPage() {
 	const dispatch = useDispatch();
-	const id = useSelector(selectTripId);
+	const uid = useSelector(selectUid);
+	const tripId: string | null = localStorage.getItem('tripId');
 	const { tripDetails } = useSelector(selectTripDetails);
 	//  eslint-disable-next-line
 	const [savedActivities, setSavedActivities] = useState<any>(null);
@@ -280,10 +324,10 @@ function EditTripPage() {
 		const getTripDetails = async () => {
 			//	TRIPID FAIL CHECK DO NOT REMOVE
 			//		THIS USEEFFECT NOW WATCH THE TRIPID VALUE AND WILL GET CALLED WHEN IT CHANGES
-			if (id) {
+			if (tripId?.length) {
 				try {
 					const fetchTripDetails = await fetch(
-						`${BASE_URL}trip/tripById/${id}`
+						`${BASE_URL}trip/tripById/${tripId}`
 					);
 					const jsonTripDetails = await fetchTripDetails.json();
 					dispatch(setSelectedTrip(jsonTripDetails));
@@ -293,21 +337,21 @@ function EditTripPage() {
 			}
 		};
 		getTripDetails();
-	}, [id]);
+	}, [tripId]);
 	//	//////////////////2. SET YOUR TRIP DAYS & MARKER STATE /////////////////
 
 	useEffect(() => {
 		if (!tripDetails) return;
 		const dateList = tripDateFormatter(
 			tripDetails.startDate,
-			tripDetails.tripDay.length
+			tripDetails.tripDay?.length
 		);
 		//	///PARSE YOUR TRIP INTO A MAP OF DAYS//////////
 		//  eslint-disable-next-line
 		const tripDayActivityMap: any = {};
 		const tripDayIdMap: any = {};
 		//  eslint-disable-next-line
-		tripDetails.tripDay.forEach((day: any) => {
+		tripDetails.tripDay?.forEach((day: any) => {
 			const tripDayCopy = [...day.tripDayActivities];
 			const sortedActivities = sortDay(tripDayCopy);
 			tripDayActivityMap[dateList[day.dayIndex]] = sortedActivities;
@@ -328,14 +372,17 @@ function EditTripPage() {
 
 	useEffect(() => {
 		const getActivities = async () => {
-			try {
-				const activities = await fetch(`${BASE_URL}activity/all`);
-				const jsonActivities = await activities.json();
-				setSavedActivities({
-					ActivitiesList: jsonActivities,
+			if (uid) {
+				const activities = await getUserFavoriteActivities(uid);
+				const savedActivityList: any[] = [];
+				activities.forEach((activity: any) => {
+					if (activity.tripId === tripId) {
+						savedActivityList.push(activity.activity);
+					}
 				});
-			} catch (e) {
-				console.log(e);
+				setSavedActivities({
+					ActivitiesList: savedActivityList,
+				});
 			}
 		};
 		getActivities();
@@ -391,20 +438,46 @@ function EditTripPage() {
 								display: 'flex',
 								flexDirection: 'column',
 								width: '50vw',
+								height: '93vh',
+								overflow: 'scroll',
 								alignItems: 'center',
+								backgroundColor: '#f9f9f9',
 							}}
 						>
 							<Paper
+								elevation={0}
 								sx={{
 									display: 'flex',
-									width: 250,
+									width: '50vw',
+									height: 50,
 									justifyContent: 'center',
-									gap: 7,
+									// gap: 7,
 									position: 'absolute',
-									zIndex: '1',
+									// margin: '0 0 0 0',
+									// top: 0,
+									zIndex: '2',
 								}}
 							>
 								<Button
+									disableElevation
+									// variant={mapSelected ? 'text' : 'contained'}
+									style={
+										mapSelected
+											? {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: 'white',
+													fontWeight: 'bold',
+													borderRadius: '0 0 0 0',
+											  }
+											: {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: '#d1d1d1',
+													fontWeight: 'bold',
+													borderRadius: '0 20px 0 0',
+											  }
+									}
 									onClick={() => {
 										dispatch(setViewingMap(false));
 										dispatch(setMapViewport(prevViewport));
@@ -413,6 +486,25 @@ function EditTripPage() {
 									Activities
 								</Button>
 								<Button
+									disableElevation
+									style={
+										mapSelected
+											? {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: '#d1d1d1',
+													fontWeight: 'bold',
+													borderRadius: '20px 0 0 0',
+											  }
+											: {
+													width: '25vw',
+													color: 'black',
+													backgroundColor: 'white',
+													fontWeight: 'bold',
+													borderRadius: '0 0 0 0',
+											  }
+									}
+									// variant={mapSelected ? 'contained' : 'text'}
 									onClick={() => {
 										dispatch(setViewingMap(true));
 										setSelectedActivity(false);
@@ -425,31 +517,27 @@ function EditTripPage() {
 								<Map />
 							) : (
 								<div>
+									<AddEventsControls />
+									<Divider style={{ margin: '15.5vh 0 0 0' }} />
 									{selectedActivity ? (
-										<>
-											<div style={{ height: '6vh' }} />
+										<div style={{ margin: '2vh 0 0 0' }}>
 											<ActivityDetails
 												setSelectedActivity={setSelectedActivity}
 												activity={selectedActivity}
 											/>
-										</>
+										</div>
 									) : (
-										<>
-											<AddEventsControls />
-											<EditTripActivitiesContainer
-												savedActivities={savedActivities}
-												setSelectedActivity={setSelectedActivity}
-											/>
-										</>
+										<EditTripActivitiesContainer
+											savedActivities={savedActivities}
+											setSelectedActivity={setSelectedActivity}
+										/>
 									)}
 								</div>
 							)}
 						</Box>
 					</Box>
 				</DragDropContext>
-			) : (
-				<>nope</>
-			)}
+			) : null}
 		</>
 	);
 }

@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUid } from '../../app/reducers/authSlice';
 import { BASE_URL } from '../../features/createTrip/createTripService';
-import LeftDrawer from '../LeftDrawer';
 import { loadGoogleApi } from '../../utils/googleMaps/googleService';
 
 import {
@@ -42,7 +41,6 @@ function Dashboard() {
 				dispatch(addAllTrips(trips));
 				if (favoriteActivities.length) {
 					favoriteActivities.forEach((activity: any) => {
-						console.log('added', activity.activityId);
 						dispatch(fetchFavoriteActivities(activity.activityId));
 					});
 				}
@@ -59,14 +57,11 @@ function Dashboard() {
 	return (
 		<div>
 			{map ? (
-				<>
-					<LeftDrawer />
-					<Routes>
-						<Route path="/" element={<DashboardHome />} />
-						<Route path="/createtrip" element={<TripForm />} />
-						<Route path="/trip" element={<EditTripPage />} />
-					</Routes>
-				</>
+				<Routes>
+					<Route path="/" element={<DashboardHome />} />
+					<Route path="/createtrip" element={<TripForm />} />
+					<Route path="/trip" element={<EditTripPage />} />
+				</Routes>
 			) : (
 				<>loadingmap</>
 			)}

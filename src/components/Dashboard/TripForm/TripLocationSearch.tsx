@@ -12,8 +12,8 @@ import { useDispatch } from 'react-redux';
 import { submitTripLocation } from '../../../features/createTrip/createTripSlice';
 import { submitAccommodationLocation } from '../../../features/createAccommodation/createAccommodationSlice';
 import {
-	submitTravelArrivalLocation,
-	submitTravelDepartureLocation,
+	submitTravelDestinationLocation,
+	submitTravelOriginLocation,
 } from '../../../features/createTravel/createTravelSlice';
 import { submitActivityLocation } from '../../../features/createActivity/createActivitySlice';
 
@@ -63,10 +63,10 @@ export default function TripLocationSearch(props: Props) {
 				dispatch(submitAccommodationLocation(placeDetails));
 			}
 			if (inputLabel === 'travelDepartureLocation') {
-				dispatch(submitTravelDepartureLocation(placeDetails));
+				dispatch(submitTravelOriginLocation(placeDetails));
 			}
 			if (inputLabel === 'travelArrivalLocation') {
-				dispatch(submitTravelArrivalLocation(placeDetails));
+				dispatch(submitTravelDestinationLocation(placeDetails));
 			}
 			if (inputLabel === 'activityLocation') {
 				dispatch(submitActivityLocation(placeDetails));
@@ -152,7 +152,9 @@ export default function TripLocationSearch(props: Props) {
 	return (
 		<Autocomplete
 			id="location"
-			sx={{ width: 300 }}
+			sx={{
+				width: '50%',
+			}}
 			getOptionLabel={(option) =>
 				typeof option === 'string' ? option : option.description
 			}
@@ -183,7 +185,12 @@ export default function TripLocationSearch(props: Props) {
 				setInputValue(newInputValue);
 			}}
 			renderInput={(params) => (
-				<TextField {...params} label="Add a location" fullWidth />
+				<TextField
+					className="input-field"
+					{...params}
+					label="Add a location"
+					fullWidth
+				/>
 			)}
 			renderOption={(innerProps, option) => {
 				const matches =

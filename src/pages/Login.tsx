@@ -1,7 +1,9 @@
-import { Box } from '@mui/material';
+import './Login.css';
+
+import { Box, Divider } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import { useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { getAuth } from 'firebase/auth';
 
 import TextField from '@mui/material/TextField';
@@ -11,19 +13,22 @@ import {
 	loginEmailAndPassword,
 	loginGoogle,
 } from '../utils/firebase/firebaseFunctions';
-// import { useDispatch } from 'react-redux';
+import { selectUid, setDisplayName } from '../app/reducers/authSlice';
 
 function Login() {
 	const navigate = useNavigate();
-	// const dispatch = useDispatch();
+	const uid = useSelector(selectUid);
+	const dispatch = useDispatch();
 
 	const handleSubmitLogin = async (e: any) => {
 		e.preventDefault();
 		try {
-			await loginEmailAndPassword(
+			const user = await loginEmailAndPassword(
 				e.target.loginEmail.value,
 				e.target.loginPassword.value
 			);
+			console.log('userdet', user);
+			dispatch(setDisplayName(user.displayName));
 			navigate('../dashboard');
 
 			// dispatch(setUid(user.uid));
@@ -39,7 +44,7 @@ function Login() {
 				e.target.registerPassword.value,
 				e.target.registerUserName.value
 			);
-			navigate('../dashboard');
+			if (uid) navigate('../dashboard');
 		} catch (error) {
 			console.log(error);
 		}
@@ -49,60 +54,110 @@ function Login() {
 			<Box
 				sx={{
 					width: '100vw',
-					height: '100vh',
+					height: '100%',
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'center',
 					alignItems: 'center',
 					gap: '10vw',
+					paddingTop: '20vh',
 				}}
 			>
-				<form
-					onSubmit={handleSubmitLogin}
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-				>
-					<TextField label="Email" name="loginEmail" required />
-					<TextField
-						label="Password"
-						name="loginPassword"
-						type="password"
-						required
-					/>
-
-					<Button type="submit" variant="contained" color="secondary">
-						Login
-					</Button>
-				</form>
-				<form
-					onSubmit={handleSubmitRegister}
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-				>
-					<TextField label="user name" name="registerUserName" required />
-					<TextField label="Email" name="registerEmail" required />
-					<TextField
-						label="Password"
-						name="registerPassword"
-						type="password"
-						required
-					/>
-
-					<Button type="submit" variant="contained" color="secondary">
-						Register
-					</Button>
-				</form>
-				<Fab variant="extended" onClick={loginGoogle} disabled>
-					Login With Google
-				</Fab>
+				<div className="auth-form-container">
+					<form
+						className="login-form"
+						onSubmit={handleSubmitLogin}
+						style={{
+							display: 'flex',
+							gap: '1rem',
+							flexDirection: 'column',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<Fab
+							variant="extended"
+							onClick={async () => {
+								const googleUser = await loginGoogle();
+								console.log('googleUser', googleUser);
+								if (googleUser.uid) navigate('../dashboard');
+							}}
+							color="secondary"
+							sx={{
+								fontWeight: 'bold',
+								width: '16vw',
+								padding: '1.7rem',
+								borderRadius: '4px',
+							}}
+						>
+							Login With Google
+						</Fab>
+						<TextField
+							label="Email"
+							name="loginEmail"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<TextField
+							label="Password"
+							name="loginPassword"
+							type="password"
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+							required
+						/>
+						<Button
+							type="submit"
+							variant="contained"
+							color="primary"
+							sx={{
+								fontWeight: 'bold',
+								width: '16vw',
+								padding: '0.8rem',
+							}}
+						>
+							Login
+						</Button>
+					</form>
+					<Divider orientation="vertical" />
+					<form
+						onSubmit={handleSubmitRegister}
+						style={{
+							display: 'flex',
+							gap: '1rem',
+							flexDirection: 'column',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<TextField
+							label="user name"
+							name="registerUserName"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<TextField
+							label="Email"
+							name="registerEmail"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<TextField
+							label="Password"
+							name="registerPassword"
+							type="password"
+							required
+							sx={{ backgroundColor: 'white', width: '16vw' }}
+						/>
+						<Button
+							type="submit"
+							variant="contained"
+							color="primary"
+							sx={{ fontWeight: 'bold', width: '16vw', padding: '0.8rem' }}
+						>
+							Register
+						</Button>
+					</form>
+				</div>
 			</Box>
 		</div>
 	);

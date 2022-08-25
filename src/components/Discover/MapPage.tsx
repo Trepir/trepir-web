@@ -6,18 +6,22 @@ import Map from './Map';
 function MapPage() {
 	return (
 		<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-			<Box sx={{ width: '49vw' }} />
+			<Box sx={{ width: '50vw' }} />
 			<Paper
-				elevation={20}
+				elevation={9}
 				sx={{
 					width: '50vw',
-					height: '100vh',
-					borderRadius: 3,
+					height: '91vh',
+					borderRadius: '0 15px 15px 0',
 					zIndex: 4,
 					position: 'absolute',
 					display: 'flex',
 					flexDirection: 'column',
-					overflow: 'scroll',
+					overflowY: 'scroll',
+					margin: '0 0 0 0',
+					backgroundColor: 'white',
+
+					padding: '2vh 0 0 2vw',
 				}}
 			>
 				<FilterPage />

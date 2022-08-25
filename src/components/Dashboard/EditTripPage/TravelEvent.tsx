@@ -1,8 +1,10 @@
 import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
-import { Box } from '@mui/material';
+import { Avatar, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { setMapPan } from '../../../app/reducers/mapSlice';
+import { ReactComponent as Airplane } from '../../../assets/airplane.svg';
 
 type Props = {
 	activity: any;
@@ -25,27 +27,88 @@ function TravelEvent(props: Props) {
 			<Card
 				sx={{
 					display: 'flex',
-					width: 250,
-					height: 140,
+					width: 340,
+					height: 160,
+					padding: '0 0 0 10px',
 					flexShrink: 0,
+					alignItems: 'center',
 					textDecoration: 'none',
+					borderRadius: 5,
+
+					gap: 1,
 				}}
-				elevation={10}
+				elevation={5}
 				onClick={() => handleClick()}
 			>
+				<Avatar
+					sx={{
+						bgcolor: '#DEF5ED',
+						width: 140,
+						height: 140,
+						color: '#7ED3B7',
+						borderRadius: 3,
+					}}
+					variant="rounded"
+				>
+					<Airplane fill="#7ED3B7" />
+				</Avatar>
 				<Box
 					sx={{
+						// backgroundColor: 'blue',
+						// height: 140,
+						width: 190,
 						display: 'flex',
 						flexDirection: 'column',
-						gap: 3,
+						alignItems: 'center',
+						alignSelf: 'center',
+						// gap: 3,
 					}}
 				>
-					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
-						{activity.destinationLocation.locationName}
+					<Typography
+						variant="h6"
+						noWrap
+						style={{
+							alignSelf: 'flex-start',
+							width: 190,
+							fontWeight: 'bold',
+						}}
+					>
+						{activity.originLocation.locationName
+							? activity.originLocation.locationName
+							: activity.originLocation.name}
 					</Typography>
-					<Typography variant="h6">
-						{activity.originLocation.locationName}
+					<KeyboardArrowDownIcon
+						fontSize="large"
+						style={{
+							color: '#7ED3B7',
+						}}
+					/>
+					<Typography
+						variant="h6"
+						noWrap
+						style={{
+							alignSelf: 'flex-start',
+							width: 190,
+							fontWeight: 'bold',
+						}}
+					>
+						{activity.destinationLocation.locationName
+							? activity.destinationLocation.locationName
+							: activity.destinationLocation.name}
 					</Typography>
+					{activity.originLocation.locationName ? null : (
+						<Typography
+							variant="h6"
+							noWrap
+							style={{
+								alignSelf: 'flex-start',
+								width: 190,
+								// backgroundColor: 'blue',
+							}}
+						>
+							{activity.departureDate}
+						</Typography>
+					)}
 				</Box>
 			</Card>
 		</div>

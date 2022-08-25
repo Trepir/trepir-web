@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
-import { Button, Modal } from '@mui/material';
+import { Button, Modal, Paper } from '@mui/material';
 import CreateActivityForm from './CreateActivity';
 import AddTravelForm from '../TripForm/AddTravelForm';
 import AddAccommodationForm from '../TripForm/AddAccommodationForm';
+import { primaryColor } from '../../../pages/TopNavigation';
 
 const style = {
+	alignItems: 'center',
 	position: 'absolute' as 'absolute',
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	width: 400,
+	width: '50vw',
 	bgcolor: 'background.paper',
-	border: '2px solid #000',
+	border: '4px solid',
+	borderColor: primaryColor,
+	borderRadius: '12px',
 	boxShadow: 24,
 	p: 4,
 };
@@ -29,25 +33,58 @@ function AddEventsControls() {
 	const handleCloseAccommodation = () => setOpenAccommodation(false);
 	return (
 		<>
-			<Box
+			<Paper
 				sx={{
 					display: 'flex',
-					gap: 8,
-					margin: '3vw 0 0 0',
-					width: '50vw',
+					gap: 5,
+					padding: '0 0 3.5vh 0',
+					margin: '0 0 0 0',
+					height: '12vh',
+					width: '49vw',
+					position: 'fixed',
+					left: '51vw',
+					zIndex: 1,
 					justifyContent: 'center',
+					alignItems: 'flex-end',
+					// backgroundColor: 'pink',
 				}}
+				elevation={0}
 			>
-				<Button variant="contained" onClick={handleOpenActivity}>
+				<Button
+					variant="contained"
+					style={{
+						borderRadius: 15,
+						width: 128,
+						fontWeight: 'bold',
+					}}
+					onClick={handleOpenActivity}
+				>
 					Add Activity
 				</Button>
-				<Button variant="contained" onClick={handleOpenTravel}>
+				<Button
+					variant="contained"
+					style={{
+						borderRadius: 15,
+						width: 128,
+						fontWeight: 'bold',
+					}}
+					onClick={handleOpenTravel}
+				>
 					Add Travel
 				</Button>
-				<Button variant="contained" onClick={handleOpenAccommodation}>
-					Add Accomodation
+				<Button
+					variant="contained"
+					style={{
+						borderRadius: 15,
+						width: 128,
+						fontWeight: 'bold',
+					}}
+					onClick={handleOpenAccommodation}
+				>
+					Add Housing
 				</Button>
-			</Box>
+			</Paper>
+
 			<Modal
 				open={openActivity}
 				onClose={handleCloseActivity}

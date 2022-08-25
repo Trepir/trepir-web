@@ -13,6 +13,8 @@ import { setMarkers } from '../../app/reducers/mapSlice';
 function FilteredActivitiesList({ setSelectedActivity }: any) {
 	const dispatch = useDispatch();
 	const activities = useSelector(selectFilteredActivities);
+	const appliedTags = useSelector(selectTagsApplied);
+
 	useEffect(() => {
 		if (!activities) return;
 		const markers = parseMarkersDiscover(activities);
@@ -24,23 +26,33 @@ function FilteredActivitiesList({ setSelectedActivity }: any) {
 				// backgroundColor: 'pink',
 				display: 'flex',
 				flexDirection: 'column',
-				height: '25vh',
+				margin: '25vh 0 0 0',
+
+				// height: '25vh',
 			}}
 		>
-			<Typography variant="subtitle1" style={{ alignSelf: 'flex-start' }}>
-				{useSelector(selectTagsApplied)}:
+			<Typography
+				variant="h5"
+				noWrap
+				style={{ alignSelf: 'flex-start', width: '48vw' }}
+			>
+				{appliedTags.map((tag) => (
+					<>{tag}, </>
+				))}
 			</Typography>
 			<Box
 				sx={{
+					// backgroundColor: 'pink',
 					display: 'flex',
-					flexDirection: 'column',
+					width: '48vw',
+					padding: '20px 0 0 6px',
+					flexWrap: 'wrap',
 					gap: 2,
-					// overflow: 'scroll',
-					height: '20vh',
 				}}
 			>
 				{activities?.map((activity: any) => (
 					<Activity
+						key={activity.id}
 						activity={activity}
 						setSelectedActivity={setSelectedActivity}
 					/>

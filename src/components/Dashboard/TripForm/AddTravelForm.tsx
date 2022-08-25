@@ -12,6 +12,7 @@ import {
 	InputLabel,
 	Select,
 	MenuItem,
+	Typography,
 } from '@mui/material';
 
 import { useSelector } from 'react-redux';
@@ -27,7 +28,6 @@ import {
 	submitFlightNumber,
 } from '../../../features/createTravel/createTravelSlice';
 import { addTravel } from '../../../features/createTravel/travelListSlice';
-import { selectTripId } from '../../../features/createTrip/selectedTripSlice';
 import createTravel from '../../../features/createTravel/createTravelService';
 import { selectUid } from '../../../app/reducers/authSlice';
 
@@ -49,7 +49,11 @@ function AddTravelForm(props: Props) {
 	const dispatch = useAppDispatch();
 	const newTravel: any = useAppSelector(selectNewTravel);
 	const uid: string | null = useSelector(selectUid);
-	const tripId = useSelector(selectTripId);
+	const tripId = localStorage.getItem('tripId');
+
+	function refreshPage() {
+		if (tripId) window.location.reload();
+	}
 
 	const {
 		register,
@@ -76,17 +80,18 @@ function AddTravelForm(props: Props) {
 		console.log(isValid);
 		if (
 			!isValid ||
-			!newTravel.departureLocation ||
-			!newTravel.arrivalLocation
+			!newTravel.originLocation ||
+			!newTravel.destinationLocation
 		) {
 			alertRef.current = true;
 		}
-		if (isValid && newTravel.departureLocation && newTravel.arrivalLocation) {
+		if (isValid && newTravel.originLocation && newTravel.destinationLocation) {
 			dispatch(submitFlightNumber(data.flightNumber));
 			dispatch(addTravel(newTravel));
+			handleCloseTravel();
 			if (tripId && uid) {
 				await createTravel(newTravel, uid, tripId, data);
-				handleCloseTravel();
+				refreshPage();
 			}
 			// dispatch(submitTravelDepartureLocation(null));
 			// dispatch(submitTravelArrivalLocation(null));
@@ -100,7 +105,17 @@ function AddTravelForm(props: Props) {
 	return (
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Box mb={2} className="modal-form-container">
+				<Box
+					mb={2}
+					className="modal-form-container"
+					sx={{ alignItems: 'center' }}
+				>
+					<Typography
+						variant="h6"
+						style={{ alignSelf: 'center', fontWeight: 'bold' }}
+					>
+						Add travel details
+					</Typography>
 					<TripLocationSearch inputLabel="travelDepartureLocation" />
 					{alertRef.current ? (
 						<Alert severity="error">Please insert a departure location!</Alert>
@@ -113,7 +128,7 @@ function AddTravelForm(props: Props) {
 						id="departureDate"
 						label="Departure date"
 						type="date"
-						sx={{ width: 220 }}
+						sx={{ width: '50%' }}
 						{...register('departureDate')}
 						error={!!errors.departureDate}
 						InputLabelProps={{
@@ -121,7 +136,7 @@ function AddTravelForm(props: Props) {
 						}}
 						onChange={handleStartDate}
 					/>
-					<FormControl {...register('travelType')}>
+					<FormControl {...register('travelType')} sx={{ width: '50%' }}>
 						<InputLabel id="flightNumber">Travel Type</InputLabel>
 						<Select
 							variant="filled"
@@ -143,7 +158,7 @@ function AddTravelForm(props: Props) {
 							id="flightNumber"
 							label="Flight Number"
 							type="text"
-							sx={{ width: 220 }}
+							sx={{ width: '50%' }}
 							{...register('flightNumber')}
 							error={!!errors.flightNumber}
 							InputLabelProps={{
@@ -151,7 +166,7 @@ function AddTravelForm(props: Props) {
 							}}
 						/>
 					) : null}
-					<Button type="submit" aria-label="Save Travel">
+					<Button variant="contained" type="submit" aria-label="Save Travel">
 						Save
 					</Button>
 				</Box>

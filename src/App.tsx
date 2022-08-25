@@ -1,3 +1,6 @@
+import './assets/Gilroy-FREE/Gilroy-Light.otf';
+import './assets/Gilroy-FREE/Gilroy-ExtraBold.otf';
+
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -21,8 +24,11 @@ import Discover from './pages/Discover/Discover';
 import { setUid } from './app/reducers/authSlice';
 
 import Dashboard from './pages/Dashboard/Dashboard';
+import Playground from './pages/playground/Playground';
 
-const primaryColor = '#1CB985';
+export const primaryColor = '#1CB985';
+export const gilroyLight = './assets/Gilroy-FREE/Gilroy-Light.otf';
+export const gilroyExtra = './assets/Gilroy-FREE/Gilroy-ExtraBold.otf';
 
 const appTheme = createTheme({
 	palette: {
@@ -31,12 +37,30 @@ const appTheme = createTheme({
 			contrastText: '#fff',
 		},
 	},
+	typography: {
+		fontFamily: gilroyLight,
+	},
 	components: {
+		MuiCssBaseline: {
+			styleOverrides: `
+			@font-face {
+				font-family: gilroy;
+				src: url('./assets/Gilroy-FREE/Gilroy-ExtraBold.otf');
+				font-weight: bold;
+			}
+			@font-face {
+				font-family: gilroy;
+				src: url('./assets/Gilroy-FREE/Gilroy-Light.otf');
+				font-weight: normal;
+			}
+      `,
+		},
+
 		MuiAppBar: {
 			styleOverrides: {
 				colorPrimary: {
-					backgroundColor: 'white',
-					color: primaryColor,
+					backgroundColor: '#13996D',
+					color: 'white',
 				},
 			},
 		},
@@ -62,10 +86,11 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Navigate to="/discover" />} />
 						<Route path="/login" element={<Login />} />
-						<Route path="/dashboard/*" element={<Dashboard />} />
 						<Route path="/discover/*" element={<Discover />} />
 						<Route element={<PrivateRoutes />}>
 							<Route path="/private" element={<Private />} />
+							<Route path="/playground" element={<Playground />} />
+							<Route path="/dashboard/*" element={<Dashboard />} />
 						</Route>
 					</Routes>
 				</Router>

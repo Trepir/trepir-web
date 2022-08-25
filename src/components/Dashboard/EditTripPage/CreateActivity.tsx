@@ -32,6 +32,14 @@ import {
 } from '../../../features/createActivity/createActivitySlice';
 import { createActivity } from '../../../features/createActivity/createActivityService';
 import { selectUid } from '../../../app/reducers/authSlice';
+import {
+	saveActivityToTrip,
+	// updateFavoriteActivity,
+} from '../../../features/createActivity/favoriteActivityService';
+import {
+	selectFavoriteActivities,
+	toggleFavoriteActivity,
+} from '../../../features/createActivity/favoriteActivitySlice';
 // import { selectUid } from '../../../app/reducers/authSlice';
 
 const ITEM_HEIGHT = 48;
@@ -87,11 +95,18 @@ type Props = {
 function CreateActivityForm(props: Props) {
 	const { handleCloseActivity } = props;
 	const uid: string | null = useSelector(selectUid);
+	const tripId = localStorage.getItem('tripId');
 	const newActivity: any = useAppSelector(selectNewActivity);
+	const favoriteActivities = useSelector(selectFavoriteActivities);
 	const theme = useTheme();
 	const alertRef: React.MutableRefObject<boolean> = useRef(false);
 	const dispatch = useAppDispatch();
 
+	function refreshPage() {
+		if (tripId !== '') {
+			window.location.reload();
+		}
+	}
 	const {
 		register,
 		// setValue,
@@ -129,10 +144,23 @@ function CreateActivityForm(props: Props) {
 			await dispatch(submitActivityDurationHours(Number(durationHours)));
 			await dispatch(submitActivityDurationMinutes(Number(durationMinutes)));
 			console.log('idle?', newActivity);
-			if (uid) {
+			if (uid && tripId) {
 				const createdActivity = await createActivity(data, newActivity, uid);
 				console.log('response', createdActivity);
+				dispatch(toggleFavoriteActivity(createdActivity.id));
+				// const newFavoriteActivity = await updateFavoriteActivity(
+				// 	uid,
+				// 	createdActivity.id
+				// );
+				// console.log('response 2', newFavoriteActivity);
+				await saveActivityToTrip(
+					uid,
+					createdActivity.id,
+					tripId,
+					favoriteActivities
+				);
 				handleCloseActivity();
+				refreshPage();
 			}
 		}
 	};
@@ -146,7 +174,7 @@ function CreateActivityForm(props: Props) {
 						id="activityName"
 						label="Name"
 						type="text"
-						sx={{ width: 220 }}
+						sx={{ width: '50%' }}
 						{...register('activityName')}
 						error={!!errors.activityName}
 						InputLabelProps={{
@@ -157,7 +185,7 @@ function CreateActivityForm(props: Props) {
 						id="activityDescription"
 						label="Description"
 						type="text"
-						sx={{ width: 220 }}
+						sx={{ width: '50%' }}
 						{...register('activityDescription')}
 						error={!!errors.activityDescription}
 						InputLabelProps={{
@@ -193,14 +221,20 @@ function CreateActivityForm(props: Props) {
 						<Select
 							labelId="activityTags"
 							id="activityTags"
+							label="Tags"
 							multiple
 							value={newActivity.tag}
 							onChange={handleActivityTags}
 							input={<OutlinedInput id="activityTags" label="Activities" />}
+							sx={{ width: '100%' }}
 							renderValue={(selected) => (
 								<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
 									{selected.map((value: string) => (
-										<Chip key={value} label={value} />
+										<Chip
+											key={value}
+											label={value}
+											sx={{ width: 70, backgroundColor: '#ECCA72' }}
+										/>
 									))}
 								</Box>
 							)}

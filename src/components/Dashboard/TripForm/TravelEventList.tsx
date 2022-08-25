@@ -16,7 +16,6 @@ function TravelEventList(props: Props) {
 		<div>
 			<Card
 				sx={{ display: 'flex', width: '20vw', height: '8vw', flexShrink: 0 }}
-				elevation={10}
 				key={
 					event.location
 						? event.location.place_id

@@ -11,10 +11,13 @@ export const travelListSlice = createSlice({
 		addTravel: (state, action: PayloadAction<any>) => {
 			state.push(action.payload);
 		},
+		resetTravelList: (state) => {
+			state.length = 0;
+		},
 	},
 });
 
-export const { addTravel } = travelListSlice.actions;
+export const { addTravel, resetTravelList } = travelListSlice.actions;
 export const selectTravelList = (state: RootState) => state.travelList;
 
 export default travelListSlice.reducer;

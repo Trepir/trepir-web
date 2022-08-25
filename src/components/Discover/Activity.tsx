@@ -1,43 +1,33 @@
-import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
-import { Box, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+
+import { Avatar, Box, Chip } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { PlaylistAdd } from '@mui/icons-material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-// import * as fallbackPhoto from '../../assets/Picture_icon_BLACK.svg';
+import LikeActivityControls from './LikeActivityControls';
 
 import { selectPage, setMapPan, setMarkers } from '../../app/reducers/mapSlice';
-import {
-	selectFavoriteActivities,
-	toggleFavoriteActivity,
-} from '../../features/createActivity/favoriteActivitySlice';
+import // selectFavoriteActivities,
+'../../features/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../app/reducers/dashboardSlice';
-import {
-	saveActivityToTrip,
-	updateFavoriteActivity,
-} from '../../features/createActivity/favoriteActivityService';
-import { selectUid } from '../../app/reducers/authSlice';
-import { selectTripList } from '../../features/createTrip/tripListSlice';
+// import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
-type Props = {
-	activity: any;
-	setSelectedActivity: any;
-};
+// type Props = {
+// 	activity: any;
+// 	setSelectedActivity: any;
+// 	dragging: boolean;
+// };
 
-function Activity(props: Props) {
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const open = Boolean(anchorEl);
-	const { activity, setSelectedActivity } = props;
-	const favoriteActivities = useSelector(selectFavoriteActivities);
-	const uid: string | null = useSelector(selectUid);
-	const tripList: any = useSelector(selectTripList);
+function Activity(props: any) {
+	//	eslint-disable-next-line
+	const { activity, setSelectedActivity, dragging } = props;
+	// const isTripSelected = useSelector(selectTripId);
+	const isTripSelected = localStorage.getItem('tripId');
+
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
-
-	const favoriteColor: boolean = favoriteActivities.includes(activity.id);
-
+	console.log(activity.name, 'dragging?:', dragging);
 	function handleClick() {
 		if (page === 'discover') {
 			dispatch(
@@ -53,6 +43,9 @@ function Activity(props: Props) {
 		if (page === 'dashboard' && viewingDashboardMap === false) {
 			setSelectedActivity(activity);
 		}
+		if (page === 'dashboard' && !isTripSelected) {
+			console.log('add activity');
+		}
 		dispatch(
 			setMapPan({
 				lat: activity.location.latitude,
@@ -61,108 +54,85 @@ function Activity(props: Props) {
 		);
 	}
 
-	const handleFavorite = () => {
-		if (uid) {
-			dispatch(toggleFavoriteActivity(activity.id));
-			updateFavoriteActivity(uid, activity.id);
-		}
-	};
-
-	const handleClickMenu = (event: any) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
-	const handleAddToTrip = (tripId: string) => {
-		if (uid) {
-			saveActivityToTrip(uid, activity.id, tripId, favoriteActivities);
-		}
-	};
-
 	return (
 		<div>
-			{uid ? (
-				<div className="favorite-buttons">
-					<IconButton
-						aria-label="favorite"
-						sx={{
-							position: 'relative',
-							color: `${favoriteColor ? 'red' : 'black'}`,
-						}}
-						onClick={handleFavorite}
-					>
-						<FavoriteIcon />
-					</IconButton>
-					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip title="Save to trip">
-							<IconButton onClick={handleClickMenu} sx={{ p: 0 }}>
-								<PlaylistAdd />
-							</IconButton>
-						</Tooltip>
-						<Menu
-							sx={{ mt: '45px' }}
-							id="menu-select-trip"
-							anchorEl={anchorEl}
-							anchorOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-							}}
-							open={Boolean(open)}
-							onClose={handleClose}
-						>
-							{tripList.userTrips.length
-								? tripList.userTrips.map((trip: any) => (
-										<MenuItem
-											key={trip.id}
-											onClick={() => {
-												handleAddToTrip(trip.id);
-												handleClose();
-											}}
-										>
-											<Typography>{trip.name}</Typography>
-										</MenuItem>
-								  ))
-								: null}
-						</Menu>
-					</Box>
-				</div>
-			) : null}
 			<Card
 				sx={{
 					display: 'flex',
-					width: 250,
-					height: 140,
+					width: 340,
+					height: 160,
+					padding: '0 0 0 10px',
 					flexShrink: 0,
+					alignItems: 'center',
 					textDecoration: 'none',
+					position: 'relative',
+					borderRadius: 5,
+					// gap: 1,
 				}}
-				elevation={10}
-				onClick={() => handleClick()}
+				elevation={5}
 			>
-				{/* <img
-					src={
-						activity.location ? activity.location.photoUrl[0] : fallbackPhoto
-					}
-					alt="location pic"
-				/> */}
+				<Avatar
+					sx={{
+						bgcolor: '#DEF5ED',
+						width: 140,
+						height: 140,
+						color: '#7ED3B7',
+						borderRadius: 3,
+					}}
+					src={dragging ? '' : activity.location.photoUrl[0]}
+					onClick={() => handleClick()}
+				>
+					<EventAvailableIcon
+						style={{ width: 110, height: 110 }}
+						fill="#7ED3B7"
+					/>
+				</Avatar>
 				<Box
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
-						gap: 3,
+
+						justifyContent: 'space-between',
+						height: 140,
+						width: 165,
+						padding: '0 0 0 8px',
 					}}
+					onClick={() => handleClick()}
 				>
-					<Typography variant="h6" style={{ alignSelf: 'flex-start' }}>
+					<Typography
+						variant="h6"
+						style={{ alignSelf: 'flex-start', fontWeight: 'bold' }}
+					>
 						{activity.name}
 					</Typography>
-					<Typography variant="subtitle1">{activity.description}</Typography>
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+						}}
+					>
+						<Typography variant="subtitle1" noWrap>
+							{activity.location.locationName}
+						</Typography>
+						<div style={{ display: 'flex', gap: 10 }}>
+							{activity.tags.length ? (
+								<Chip
+									label={activity.tags[0]}
+									style={{ width: 70, backgroundColor: '#ECCA72' }}
+									size="small"
+								/>
+							) : null}
+							{activity.tags.length >= 2 ? (
+								<Chip
+									label={activity.tags[1]}
+									style={{ width: 70, backgroundColor: '#ECCA72' }}
+									size="small"
+								/>
+							) : null}
+						</div>
+					</div>
 				</Box>
+				<LikeActivityControls activity={activity} />
 			</Card>
 		</div>
 	);

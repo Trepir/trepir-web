@@ -36,11 +36,9 @@ export const discoverSlice = createSlice({
 		},
 		setFilteredActivities: (state) => {
 			state.filteredActivities = state.activities?.filter((activity) => {
-				let result: boolean = true;
-				state.tagsApplied.forEach((tag) => {
-					if (activity.tags.includes(tag)) return;
-					result = false;
-				});
+				const result = state.tagsApplied.some((tag) =>
+					activity.tags.includes(tag)
+				);
 				return result;
 			});
 		},

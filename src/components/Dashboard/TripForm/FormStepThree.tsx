@@ -1,4 +1,14 @@
-import React from 'react';
+import { Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUserFavoriteActivities } from '../../../app/reducers/userSlice';
+import { getActivitiesByCoordinates } from '../../../features/createActivity/createActivityService';
+import {
+	selectNewTrip,
+	setInitialTripFavorites,
+} from '../../../features/createTrip/createTripSlice';
+import { parseMapViewport } from '../../../utils/mapUtils';
+import Activity from '../../Discover/Activity';
 
 type Props = {
 	submitRef: any;
@@ -7,21 +17,71 @@ type Props = {
 };
 
 function FormStepThree(props: Props) {
-	// ACTIVITY FORM MODAL LOGIC TO BE REUSED ANYWHERE
-
-	// ////////////////////////////////////
+	const dispatch = useDispatch();
+	const favoriteActivities: any = useSelector(selectUserFavoriteActivities);
+	const { placeDetails } = useSelector(selectNewTrip);
 
 	const { submitRef, setValidated, setActiveStep } = props;
+	const [activitiesbyCoordinates, setActivitiesbyCoordinates] = useState<any>(
+		[]
+	);
+	const [initialActivities, setInitialActivities] = useState<any[]>([]);
+
+	useEffect(() => {
+		const getLocationActivities = async () => {
+			const parsedViewport = await parseMapViewport(
+				placeDetails.geometry.viewport
+			);
+			const activityListByCoord = await getActivitiesByCoordinates(
+				parsedViewport
+			);
+			console.log('locActivities', activityListByCoord);
+			console.log('favActivities', favoriteActivities.activityList);
+			const filteredActivities = favoriteActivities.activityList.filter(
+				(favActivity: any) =>
+					activityListByCoord.some(
+						(locActivity: any) => favActivity.activityId === locActivity.id
+					)
+			);
+			console.log(filteredActivities);
+			setActivitiesbyCoordinates(filteredActivities);
+		};
+		getLocationActivities();
+	}, []);
 
 	const handleClick = () => {
 		console.log('hello');
 		setValidated(true);
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
+	const handleAddToTrip = (id: any) => {
+		console.log(id);
+		dispatch(setInitialTripFavorites(id));
+		setInitialActivities((prev: any) => [...prev, id]);
+	};
 
 	return (
 		<div className="step-container">
-			<div className="favorite-activities-container">Hello</div>
+			<div className="favorite-activities-container">
+				{activitiesbyCoordinates.length
+					? activitiesbyCoordinates.map((favoriteActivity: any) => (
+							<div>
+								<Button
+									variant="contained"
+									sx={{ mb: '0.2rem', borderRadius: '18px' }}
+									onClick={() => handleAddToTrip(favoriteActivity.id)}
+									disabled={initialActivities.includes(favoriteActivity.id)}
+								>
+									Add
+								</Button>
+								<Activity
+									activity={favoriteActivity.activity}
+									setSelectedActivity={() => null}
+								/>
+							</div>
+					  ))
+					: null}
+			</div>
 			<button
 				ref={submitRef}
 				type="button"

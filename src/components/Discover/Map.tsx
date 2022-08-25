@@ -8,12 +8,35 @@ import {
 	selectViewportCoords,
 	setMapViewport,
 } from '../../app/reducers/mapSlice';
+// import mapStyle from '../../utils/googleMaps/mapStyle';
+// import mapStyle from '../../utils/googleMaps/mapStyle2';
 
 //	We set these up outside of the googlemaps component becasue the map will accidentally rerender
 const mapContainerStyle = {
 	width: '51vw',
-	height: '100vh',
+	height: '93vh',
 };
+
+const options = {
+	// styles: mapStyle,
+	disableDefaultUI: true,
+	fullscreenControl: true,
+	// fullScreenControlOptions: {
+	// 	position: map,
+	// },
+	// minZoom: 2,
+	// maxZoom: 20,
+	// restriction: {
+	// 	latLngBounds: {
+	// 		east: 179.9999,
+	// 		north: 85,
+	// 		south: -85,
+	// 		west: -179.9999,
+	// 	},
+	// strictBounds: true,
+	// },
+};
+
 const center = { lat: 0, lng: 0 };
 
 function Map() {
@@ -65,7 +88,7 @@ function Map() {
 			zoom={2}
 			center={center}
 			onLoad={onMapLoad}
-			// options={options}
+			options={options}
 		>
 			{markers?.map((marker) => (
 				<MarkerF position={marker} />

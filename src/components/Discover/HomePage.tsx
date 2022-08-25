@@ -1,4 +1,6 @@
 import { Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
+
 import SearchGooglePlaces from './SearchGooglePlaces';
 
 function HomePage() {
@@ -6,20 +8,30 @@ function HomePage() {
 		<Box
 			sx={{
 				width: '100vw',
-				height: '100vh',
+				height: '0vh',
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				gap: '10vw',
-				backgroundColor: 'black',
+				gap: '4vh',
+				// backgroundColor: 'black',
 			}}
 		>
 			<img
-				src="globe.gif"
+				src="globe.png"
 				alt="globe"
-				style={{ position: 'absolute', width: '130vh', height: '100vh' }}
+				style={{
+					position: 'absolute',
+					width: '100vw',
+					height: '93vh',
+					filter: 'blur(8px)',
+				}}
 			/>
-			<div style={{ zIndex: 2, color: 'white' }}>Where do you want to go?</div>
+			<Typography
+				variant="h4"
+				style={{ zIndex: 2, margin: '30vh 0 0 0', fontWeight: 'bold' }}
+			>
+				Where do you want to go?
+			</Typography>
 			<SearchGooglePlaces />
 		</Box>
 	);
