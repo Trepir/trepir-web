@@ -75,9 +75,7 @@ function AddTravelForm(props: Props) {
 	};
 
 	const onSubmit = async (data: any) => {
-		console.log('in', data);
 		const isValid = await AddTravelSchema.isValid(data);
-		console.log(isValid);
 		if (
 			!isValid ||
 			!newTravel.originLocation ||

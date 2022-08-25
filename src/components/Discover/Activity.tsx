@@ -22,12 +22,10 @@ function Activity(props: any) {
 	//	eslint-disable-next-line
 	const { activity, setSelectedActivity, dragging } = props;
 	// const isTripSelected = useSelector(selectTripId);
-	const isTripSelected = localStorage.getItem('tripId');
 
 	const page = useSelector(selectPage);
 	const viewingDashboardMap = useSelector(selectViewingMap);
 	const dispatch = useDispatch();
-	console.log(activity.name, 'dragging?:', dragging);
 	function handleClick() {
 		if (page === 'discover') {
 			dispatch(
@@ -43,9 +41,7 @@ function Activity(props: any) {
 		if (page === 'dashboard' && viewingDashboardMap === false) {
 			setSelectedActivity(activity);
 		}
-		if (page === 'dashboard' && !isTripSelected) {
-			console.log('add activity');
-		}
+
 		dispatch(
 			setMapPan({
 				lat: activity.location.latitude,
