@@ -1,9 +1,10 @@
 export const parseMapViewport = async (viewport: any) => {
+	console.log(viewport);
 	const viewportCoords = {
-		latitudeLow: viewport.zb.lo,
-		latitudeHigh: viewport.zb.hi,
-		longitudeLow: viewport.Ra.lo,
-		longitudeHigh: viewport.Ra.hi,
+		latitudeLow: viewport.yb.lo,
+		latitudeHigh: viewport.yb.hi,
+		longitudeLow: viewport.Qa.lo,
+		longitudeHigh: viewport.Qa.hi,
 	};
 	return viewportCoords;
 };
@@ -48,6 +49,7 @@ export const parseMarkersDiscover = (activities: any[]) => {
 
 export const parseMarkersPlayground = (activities: any[]) => {
 	const markers: any[] = [];
+	console.log(activities);
 	activities.forEach((activity) => {
 		markers.push({
 			lat: activity.activity.location.latitude,

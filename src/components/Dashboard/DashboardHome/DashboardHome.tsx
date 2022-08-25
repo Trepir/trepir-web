@@ -63,7 +63,6 @@ function DashboardHome() {
 				elevation={20}
 			>
 				{userTrips.length ? (
-
 					<>
 						<Typography style={{ fontWeight: 'bold' }} variant="h4">
 							Select trip to view
@@ -112,6 +111,7 @@ function DashboardHome() {
 					</Typography>
 				)}
 				<Fab
+					onClick={() => localStorage.setItem('tripId', '')}
 					variant="extended"
 					component={Link}
 					to="createtrip"
@@ -129,7 +129,6 @@ function DashboardHome() {
 					Create New Trip
 				</Fab>
 			</Paper>
-
 		</Box>
 	);
 }
