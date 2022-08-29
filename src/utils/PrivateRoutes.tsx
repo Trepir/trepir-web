@@ -2,10 +2,10 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Outlet, Navigate } from 'react-router-dom';
-import { selectUid } from '../Redux/reducers/authSlice';
-import { setUserFavoriteActivities } from '../Redux/reducers/userSlice';
-import { getUserFavoriteActivities } from '../features/createActivity/favoriteActivityService';
-import { fetchFavoriteActivities } from '../features/createActivity/favoriteActivitySlice';
+import { selectUid } from '../redux/reducers/authSlice';
+import { setUserFavoriteActivities } from '../redux/reducers/userSlice';
+import { getUserFavoriteActivities } from '../services/favoriteActivityService';
+import { fetchFavoriteActivities } from '../redux/reducers/createActivity/favoriteActivitySlice';
 import auth from './firebase/firebaseConfig';
 
 function PrivateRoutes() {

@@ -1,15 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import createTripReducer from '../features/createTrip/createTripSlice';
-import createAccommodationReducer from '../features/createAccommodation/createAccommodationSlice';
-import accommodationListReducer from '../features/createAccommodation/accommodationList';
-import createTravelReducer from '../features/createTravel/createTravelSlice';
-import createActivityReducer from '../features/createActivity/createActivitySlice';
-import favoriteActivityReducer from '../features/createActivity/favoriteActivitySlice';
+import createTripReducer from './reducers/createTrip/createTripSlice';
+import createAccommodationReducer from './reducers/createAccommodation/createAccommodationSlice';
+import accommodationListReducer from './reducers/createAccommodation/accommodationListSlice';
+import createTravelReducer from './reducers/createTravel/createTravelSlice';
+import createActivityReducer from './reducers/createActivity/createActivitySlice';
+import favoriteActivityReducer from './reducers/createActivity/favoriteActivitySlice';
 import userFavoriteActivityReducer from './reducers/userSlice';
-import travelListReducer from '../features/createTravel/travelListSlice';
-import tripListReducer from '../features/createTrip/tripListSlice';
-import selectedTripReducer from '../features/createTrip/selectedTripSlice';
+import travelListReducer from './reducers/createTravel/travelListSlice';
+import tripListReducer from './reducers/createTrip/tripListSlice';
+import selectedTripReducer from './reducers/createTrip/selectedTripSlice';
 import mapReducer from './reducers/mapSlice';
 import discoverReducer from './reducers/discoverSlice';
 import dashboardReducer from './reducers/dashboardSlice';
@@ -18,7 +17,6 @@ import authReducer from './reducers/authSlice';
 
 export const store = configureStore({
 	reducer: {
-		counter: counterReducer,
 		newTrip: createTripReducer,
 		newAccommodation: createAccommodationReducer,
 		accommodationList: accommodationListReducer,
