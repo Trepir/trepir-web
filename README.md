@@ -1,46 +1,62 @@
-# Getting Started with Create React App
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+# Trepir
 
-## Available Scripts
+## Where to?
 
-In the project directory, you can run:
+Trepir allows users to create and edit trip itineraries with thousands of modular, user-generated activities around the world
 
-### `npm start`
+<p align="center">
+  <img src="./public/screenshots/discoverbarcelona (1).png" />
+  <img src="./public/screenshots/dashboardhome (1).png" />
+  <img src="./public/screenshots/dashboardedittrip (1).png" />
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Developed with...
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<p align="left">
+<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" /></a>
+<a href="https://reactjs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg" width="36" height="36" alt="React" /></a>
+<a href="https://www.npmjs.com/package/redux" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/reduxjs/redux/master/logo/logo.png" width="36" height="36" alt="Redux" /></a>
+<a href="https://mui.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/materialui-colored.svg" width="36" height="36" alt="Material UI" /></a>
+<a href="https://firebase.google.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/firebase-colored.svg" width="36" height="36" alt="Firebase" /></a>
+<a href="https://developers.google.com/maps" target="_blank" rel="noreferrer"><img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" width="36" height="36" alt="Google Maps API" /></a>
+<a href="https://www.npmjs.com/package/react-beautiful-dnd" target="_blank" rel="noreferrer"><img src="https://user-images.githubusercontent.com/2182637/53611918-54c1ff80-3c24-11e9-9917-66ac3cef513d.png" width="36" height="36" alt="Beautiful Drag N Drop" /></a>
+</p>
 
-### `npm test`
+## Getting started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repo
 
-### `npm run build`
+```
+git clone https://github.com/Trepir/trepir-web.git
+cd trepir-web
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install dependencies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Fill out your API keys
 
-### `npm run eject`
+```
+/* Create a .env file and fill in the relevant keys according to the existing .env.example file */
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. Start development server
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## What makes Trepir Different
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- ### Shared Content
+  - Users can create activities for other users to add to their trips.
+- ### Modify Your Trips
+  - Easy drag and drop UI for ease of use
+  - Dates modify automatically for the user when an accommodation or travel is moved to a new day.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### See live on <a href="https://www.trepir.com/" target="_blank" rel="noreferrer">trepir.com</a>
