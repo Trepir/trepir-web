@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { Box, Fab, Modal } from '@mui/material';
 
-import AddAccommodationForm from './AddAccommodationForm';
-import AddTravelForm from './AddTravelForm';
-import { primaryColor } from '../../../pages/TopNavigation';
+import AddAccommodationForm from '../../Shared/Forms/AddAccommodationForm';
+import AddTravelForm from '../../Shared/Forms/AddTravelForm';
+import { primaryColor } from '../../Shared/TopNavigation';
 
 type Props = {
 	submitRef: any;

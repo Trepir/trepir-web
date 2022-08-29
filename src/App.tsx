@@ -16,17 +16,16 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { createTheme } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import TopNavigation from './pages/TopNavigation';
+import TopNavigation from './components/Shared/TopNavigation';
 import PrivateRoutes from './utils/PrivateRoutes';
-import Private from './pages/Private';
-import Login from './pages/Login';
-import Discover from './pages/Discover/Discover';
+import Login from './pages/Login/Login';
+import Discover from './routers/Discover';
 
-import { setUid } from './app/reducers/authSlice';
+import { setUid } from './Redux/reducers/authSlice';
 
-import Dashboard from './pages/Dashboard/Dashboard';
-import Playground from './pages/playground/Playground';
+import Dashboard from './routers/Dashboard';
 import LandingMobile from './components/LandingMobile';
+import Playground from './pages/Temp/Playground';
 
 export const primaryColor = '#1CB985';
 export const gilroyLight = './assets/Gilroy-FREE/Gilroy-Light.otf';
@@ -99,7 +98,6 @@ function App() {
 								<Route path="/login" element={<Login />} />
 								<Route path="/discover/*" element={<Discover />} />
 								<Route element={<PrivateRoutes />}>
-									<Route path="/private" element={<Private />} />
 									<Route path="/playground" element={<Playground />} />
 									<Route path="/dashboard/*" element={<Dashboard />} />
 								</Route>

@@ -1,0 +1,15 @@
+.modal-form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 2rem;
+	padding: 2rem;
+}
+
+.form-row {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	width: fit-content;
+}

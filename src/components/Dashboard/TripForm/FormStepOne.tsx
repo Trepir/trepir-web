@@ -5,14 +5,14 @@ import * as yup from 'yup';
 
 import { Box, TextField } from '@mui/material';
 
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Redux/hooks';
 import {
 	changeEndDate,
 	changeStartDate,
 	selectNewTrip,
 	submitTripName,
-} from '../../../features/createTrip/createTripSlice';
-import TripLocationSearch from './TripLocationSearch';
+} from '../../../Redux/reducers/createTrip/createTripSlice';
+import TripLocationSearch from '../../Shared/TripLocationSearch';
 
 type Props = {
 	submitRef: any;

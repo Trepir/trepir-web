@@ -1,14 +1,14 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUserFavoriteActivities } from '../../../app/reducers/userSlice';
-import { getActivitiesByCoordinates } from '../../../features/createActivity/createActivityService';
+import { selectUserFavoriteActivities } from '../../../Redux/reducers/userSlice';
+import { getActivitiesByCoordinates } from '../../../services/createActivityService';
 import {
 	selectNewTrip,
 	setInitialTripFavorites,
-} from '../../../features/createTrip/createTripSlice';
+} from '../../../Redux/reducers/createTrip/createTripSlice';
 import { parseMapViewport } from '../../../utils/mapUtils';
-import Activity from '../../Discover/Activity';
+import Activity from '../../Shared/Cards/ActivityCard';
 
 type Props = {
 	submitRef: any;
