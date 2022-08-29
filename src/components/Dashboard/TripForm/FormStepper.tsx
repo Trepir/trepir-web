@@ -13,7 +13,7 @@ import { DateTime } from 'luxon';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../Redux/hooks';
 import {
 	selectNewTrip,
 	submitTripLocation,
@@ -34,7 +34,7 @@ import {
 	addInitialActivities,
 } from '../../../features/createTrip/createTripService';
 import { addTrip } from '../../../features/createTrip/tripListSlice';
-import { selectUid } from '../../../app/reducers/authSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 import {
 	setSelectedTrip,
 	setSelectedTripId,

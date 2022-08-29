@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Box, Fab, Modal } from '@mui/material';
 
-import { useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../Redux/hooks';
 
 import { selectNewAccommodation } from '../../../features/createAccommodation/createAccommodationSlice';
 

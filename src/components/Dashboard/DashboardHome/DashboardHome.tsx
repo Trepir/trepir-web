@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Trip from './Trip';
-import { resetMap } from '../../../app/reducers/mapSlice';
+import { resetMap } from '../../../Redux/reducers/mapSlice';
 import { selectTripList } from '../../../features/createTrip/tripListSlice';
 
 function DashboardHome() {

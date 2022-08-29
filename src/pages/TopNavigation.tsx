@@ -16,7 +16,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { AppBar, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUid, setUid } from '../app/reducers/authSlice';
+import { selectUid, setUid } from '../Redux/reducers/authSlice';
 import { logOut } from '../utils/firebase/firebaseFunctions';
 import { gilroyExtra } from '../App';
 import auth from '../utils/firebase/firebaseConfig';

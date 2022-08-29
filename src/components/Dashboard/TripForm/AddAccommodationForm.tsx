@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import { Box, Button, TextField, Alert, Typography } from '@mui/material';
 
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Redux/hooks';
 
 import TripLocationSearch from './TripLocationSearch';
 import {
@@ -17,7 +17,7 @@ import {
 } from '../../../features/createAccommodation/createAccommodationSlice';
 import { addAccommodation } from '../../../features/createAccommodation/accommodationList';
 import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
-import { selectUid } from '../../../app/reducers/authSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 
 type Props = {
 	handleCloseAccommodation: () => void;

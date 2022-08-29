@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectViewportCoords, setMarkers } from '../../app/reducers/mapSlice';
+import {
+	selectViewportCoords,
+	setMarkers,
+} from '../../Redux/reducers/mapSlice';
 import {
 	selectActivities,
 	setActivities,
-} from '../../app/reducers/discoverSlice';
+} from '../../Redux/reducers/discoverSlice';
 import { getActivitiesByCoordinates } from '../../features/createActivity/createActivityService';
 import { parseMapViewport, parseMarkersDiscover } from '../../utils/mapUtils';
 import ActivitiesList from './ActivitiesList';

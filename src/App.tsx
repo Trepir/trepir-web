@@ -21,7 +21,7 @@ import Private from './pages/Private';
 import Login from './pages/Login';
 import Discover from './pages/Discover/Discover';
 
-import { setUid } from './app/reducers/authSlice';
+import { setUid } from './Redux/reducers/authSlice';
 
 import Dashboard from './pages/Dashboard/Dashboard';
 import Playground from './pages/playground/Playground';

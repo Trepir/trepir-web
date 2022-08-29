@@ -20,12 +20,12 @@ import {
 	selectPrevViewportCoords,
 	setMapViewport,
 	setSpecificMarkers,
-} from '../../../app/reducers/mapSlice';
+} from '../../../Redux/reducers/mapSlice';
 import { getViewportWithId } from '../../../utils/googleMaps/googleService';
 import {
 	selectViewingMap,
 	setViewingMap,
-} from '../../../app/reducers/dashboardSlice';
+} from '../../../Redux/reducers/dashboardSlice';
 import {
 	addActivityToTrip,
 	removeActivityFromTrip,
@@ -33,7 +33,7 @@ import {
 	sortDay,
 } from '../../../utils/editTripUtils';
 import { getUserFavoriteActivities } from '../../../features/createActivity/favoriteActivityService';
-import { selectUid } from '../../../app/reducers/authSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = async (

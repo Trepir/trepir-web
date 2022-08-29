@@ -10,7 +10,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { PlaylistAdd } from '@mui/icons-material';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUid } from '../../app/reducers/authSlice';
+import { selectUid } from '../../Redux/reducers/authSlice';
 import { selectTripList } from '../../features/createTrip/tripListSlice';
 import {
 	selectFavoriteActivities,

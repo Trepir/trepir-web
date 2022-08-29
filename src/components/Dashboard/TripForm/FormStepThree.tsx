@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUserFavoriteActivities } from '../../../app/reducers/userSlice';
+import { selectUserFavoriteActivities } from '../../../Redux/reducers/userSlice';
 import { getActivitiesByCoordinates } from '../../../features/createActivity/createActivityService';
 import {
 	selectNewTrip,

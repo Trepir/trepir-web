@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 
 import { useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Redux/hooks';
 
 import TripLocationSearch from './TripLocationSearch';
 import {
@@ -29,7 +29,7 @@ import {
 } from '../../../features/createTravel/createTravelSlice';
 import { addTravel } from '../../../features/createTravel/travelListSlice';
 import createTravel from '../../../features/createTravel/createTravelService';
-import { selectUid } from '../../../app/reducers/authSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 
 type Props = {
 	handleCloseTravel: () => void;

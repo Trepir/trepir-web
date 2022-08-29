@@ -7,7 +7,7 @@ import {
 	selectPanCoords,
 	selectViewportCoords,
 	setMapViewport,
-} from '../../app/reducers/mapSlice';
+} from '../../Redux/reducers/mapSlice';
 // import mapStyle from '../../utils/googleMaps/mapStyle';
 // import mapStyle from '../../utils/googleMaps/mapStyle2';
 

@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import { Avatar, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { setMapPan } from '../../../app/reducers/mapSlice';
+import { setMapPan } from '../../../Redux/reducers/mapSlice';
 import { ReactComponent as Airplane } from '../../../assets/airplane.svg';
 
 type Props = {

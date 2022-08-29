@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUid } from '../../app/reducers/authSlice';
+import { selectUid } from '../../Redux/reducers/authSlice';
 import { BASE_URL } from '../../features/createTrip/createTripService';
 import { loadGoogleApi } from '../../utils/googleMaps/googleService';
 
@@ -12,7 +12,7 @@ import {
 import TripForm from './TripForm';
 import DashboardHome from '../../components/Dashboard/DashboardHome/DashboardHome';
 import EditTripPage from '../../components/Dashboard/EditTripPage/EditTripPage';
-import { resetMap } from '../../app/reducers/mapSlice';
+import { resetMap } from '../../Redux/reducers/mapSlice';
 import { fetchFavoriteActivities } from '../../features/createActivity/favoriteActivitySlice';
 
 function Dashboard() {

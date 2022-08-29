@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import { Avatar, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { setMapPan } from '../../../app/reducers/mapSlice';
+import { setMapPan } from '../../../Redux/reducers/mapSlice';
 import { ReactComponent as Hotel } from '../../../assets/Hotel.svg';
 
 type Props = {

@@ -19,7 +19,7 @@ import {
 
 import { useTheme } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Redux/hooks';
 import TripLocationSearch from '../TripForm/TripLocationSearch';
 
 import {
@@ -31,7 +31,7 @@ import {
 	submitActivityTag,
 } from '../../../features/createActivity/createActivitySlice';
 import { createActivity } from '../../../features/createActivity/createActivityService';
-import { selectUid } from '../../../app/reducers/authSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 import {
 	saveActivityToTrip,
 	// updateFavoriteActivity,

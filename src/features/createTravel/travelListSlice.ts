@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { RootState } from '../../Redux/store';
 import { NewTravelState } from './createTravelSlice';
 
 const initialState: NewTravelState[] = [];

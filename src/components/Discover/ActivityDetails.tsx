@@ -5,7 +5,7 @@ import {
 	selectPrevViewportCoords,
 	setMapViewport,
 	// setMarkers,
-} from '../../app/reducers/mapSlice';
+} from '../../Redux/reducers/mapSlice';
 
 function ActivityDetails({ setSelectedActivity, activity }: any) {
 	const dispatch = useDispatch();

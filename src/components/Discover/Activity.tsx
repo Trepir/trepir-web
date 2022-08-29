@@ -6,10 +6,14 @@ import { Avatar, Box, Chip } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import LikeActivityControls from './LikeActivityControls';
 
-import { selectPage, setMapPan, setMarkers } from '../../app/reducers/mapSlice';
+import {
+	selectPage,
+	setMapPan,
+	setMarkers,
+} from '../../Redux/reducers/mapSlice';
 import // selectFavoriteActivities,
 '../../features/createActivity/favoriteActivitySlice';
-import { selectViewingMap } from '../../app/reducers/dashboardSlice';
+import { selectViewingMap } from '../../Redux/reducers/dashboardSlice';
 // import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
 // type Props = {

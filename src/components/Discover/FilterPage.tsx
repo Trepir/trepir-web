@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Button, Divider, Typography } from '@mui/material';
-import { selectTagsApplied } from '../../app/reducers/discoverSlice';
+import { selectTagsApplied } from '../../Redux/reducers/discoverSlice';
 import ActivitiesListContainer from './ActivitiesListContainer';
 import ActivityDetails from './ActivityDetails';
 import FilteredActivitiesList from './FilteredActivitiesList';

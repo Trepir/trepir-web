@@ -1,8 +1,8 @@
 import { Box, Divider, Paper, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetMap, setMarkers } from '../../app/reducers/mapSlice';
-import { selectUserFavoriteActivities } from '../../app/reducers/userSlice';
+import { resetMap, setMarkers } from '../../Redux/reducers/mapSlice';
+import { selectUserFavoriteActivities } from '../../Redux/reducers/userSlice';
 import Activity from '../../components/Discover/Activity';
 import Map from '../../components/Discover/Map';
 import { loadGoogleApi } from '../../utils/googleMaps/googleService';

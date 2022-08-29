@@ -13,7 +13,7 @@ import {
 	loginEmailAndPassword,
 	loginGoogle,
 } from '../utils/firebase/firebaseFunctions';
-import { selectUid, setDisplayName } from '../app/reducers/authSlice';
+import { selectUid, setDisplayName } from '../Redux/reducers/authSlice';
 
 function Login() {
 	const navigate = useNavigate();
