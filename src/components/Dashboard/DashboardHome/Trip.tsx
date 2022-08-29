@@ -26,10 +26,7 @@ function Trip(props: Props) {
 		.toUTC()
 		.toFormat('MMM dd, yyyy');
 
-	console.log(trip);
-
 	function handleClick() {
-		console.log('clicked');
 		dispatch(setSelectedTripId(trip.id));
 		localStorage.setItem('tripId', '');
 		localStorage.setItem('tripId', trip.id);

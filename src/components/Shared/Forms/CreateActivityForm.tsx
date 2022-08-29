@@ -126,13 +126,11 @@ function CreateActivityForm(props: Props) {
 	};
 
 	const onSubmit = async (data: any) => {
-		console.log('in');
 		const isValid = await AddActivitySchema.isValid(data);
 		if (!isValid || !newActivity.location) {
 			alertRef.current = true;
 		}
 		if (isValid && newActivity.location) {
-			console.log('clicked');
 			const {
 				activityName,
 				activityDescription,
@@ -143,16 +141,10 @@ function CreateActivityForm(props: Props) {
 			await dispatch(submitActivityDescription(activityDescription));
 			await dispatch(submitActivityDurationHours(Number(durationHours)));
 			await dispatch(submitActivityDurationMinutes(Number(durationMinutes)));
-			console.log('idle?', newActivity);
 			if (uid && tripId) {
 				const createdActivity = await createActivity(data, newActivity, uid);
-				console.log('response', createdActivity);
 				dispatch(toggleFavoriteActivity(createdActivity.id));
-				// const newFavoriteActivity = await updateFavoriteActivity(
-				// 	uid,
-				// 	createdActivity.id
-				// );
-				// console.log('response 2', newFavoriteActivity);
+
 				await saveActivityToTrip(
 					uid,
 					createdActivity.id,

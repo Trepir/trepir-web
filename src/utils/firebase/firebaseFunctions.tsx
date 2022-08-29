@@ -22,7 +22,6 @@ export const createEmailUser = async (
 			email,
 			password
 		);
-
 		//	send formatted user to backend
 		const result = await fetch(`${baseURL}/user/signup`, {
 			method: 'POST',
@@ -41,7 +40,6 @@ export const createEmailUser = async (
 		});
 
 		const jsonResult = await result.json();
-		console.log(jsonResult);
 		return jsonResult;
 	} catch (error) {
 		console.log(error);
@@ -69,7 +67,6 @@ export const loginEmailAndPassword = async (
 
 		const jsonResult = await result.json();
 
-		console.log(jsonResult);
 		return jsonResult;
 	} catch (error) {
 		console.log(error);
@@ -81,24 +78,39 @@ export const loginGoogle = async () => {
 	try {
 		const provider = new GoogleAuthProvider();
 		const googleUser = await signInWithPopup(auth, provider);
-		console.log('googleuser:', googleUser);
 		if (googleUser?.user?.photoURL) {
 			localStorage.setItem('photoURL', googleUser.user.photoURL);
 		}
 		//	google does not split the first and last name for us
 		const user: any = {
-			firstName: '',
-			lastName: '',
+			firstName: 'FirstName',
+			lastName: 'lastName',
 			displayName: googleUser.user.displayName,
 			email: googleUser.user.email,
 			uid: googleUser.user.uid,
 			photoUrl: googleUser.user.photoURL,
 			emailVerified: googleUser.user.emailVerified,
 		};
-		console.log(user);
+		const result = await fetch(`${baseURL}/user/signup`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(user),
+		});
+		// @ts-ignore
+		if (result.statusCode) {
+			const newResult = await fetch(`${baseURL}/user/signin`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(user.uid),
+			});
+			return newResult;
+		}
 		return user;
 	} catch (error) {
-		console.log(error);
 		return error;
 	}
 };

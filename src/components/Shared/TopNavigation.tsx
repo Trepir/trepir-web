@@ -103,11 +103,10 @@ function TopNavigation() {
 			auth,
 			(user) => {
 				if (user) setCurrentUser(user);
-				console.log(user?.photoURL);
 				setPending(false);
 			},
 			(error) => {
-				console.log('not logged in', error);
+				console.log(error);
 				setPending(false);
 			}
 		);

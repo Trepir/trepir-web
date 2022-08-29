@@ -14,7 +14,6 @@ function ActivityDetails({ setSelectedActivity, activity }: any) {
 		dispatch(setMapViewport(prevViewport));
 		setSelectedActivity(false);
 	}
-	console.log(activity);
 	return (
 		<Box sx={{ width: '45vw' }}>
 			<Box

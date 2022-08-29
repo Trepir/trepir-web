@@ -58,9 +58,7 @@ function AddAccommodationForm(props: Props) {
 	};
 
 	const onSubmit = async (data: any) => {
-		console.log('in', data);
 		const isValid = await AddAccommodationSchema.isValid(data);
-		console.log(isValid);
 		if (!isValid || !newAccommodation.location) {
 			alertRef.current = true;
 		}

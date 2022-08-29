@@ -16,7 +16,6 @@ function DashboardHome() {
 		userTrips: any[];
 	};
 	const { userTrips }: returnedTrips = useSelector(selectTripList);
-	console.log(userTrips);
 
 	const dispatch = useDispatch();
 	useEffect(() => {

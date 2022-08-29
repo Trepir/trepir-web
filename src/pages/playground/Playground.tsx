@@ -16,7 +16,6 @@ function Playground() {
 		selectUserFavoriteActivities
 	);
 	const favoritedActivities: any[] = favoritedActivitiesObject.activityList;
-	console.log(favoritedActivities);
 
 	useEffect(() => {
 		dispatch(resetMap('playground'));

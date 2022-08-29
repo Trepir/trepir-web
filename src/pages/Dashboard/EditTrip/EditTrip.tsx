@@ -70,7 +70,6 @@ const onDragEnd = async (
 		setLocalMarkers(newMarkers);
 		//	////
 
-		console.log('remove me!');
 		return;
 	}
 
@@ -80,7 +79,6 @@ const onDragEnd = async (
 		source.droppableId === 'favoritedActivities' &&
 		destination.droppableId === 'favoritedActivities'
 	) {
-		console.log('Dont Drop Here');
 		return;
 	}
 
@@ -109,7 +107,6 @@ const onDragEnd = async (
 		setLocalMarkers(newMarkers);
 		//	////
 
-		console.log('remove me!');
 		return;
 	}
 	//	/////////SUCCESS/////////////////////
@@ -127,13 +124,11 @@ const onDragEnd = async (
 		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
 
 		const sourceActivities = [...savedActivities.ActivitiesList];
-		const destActivities = [...days[destination.droppableId]];
 		const [removed] = sourceActivities.splice(source.index, 1);
 		const removedCopy = { ...removed };
 		const addedActivityId = removedCopy.id;
 		const tripDayId = dayIdMap[destination.droppableId];
 		const { index } = destination;
-		console.log(destActivities);
 		//	///////////////WORKING HERE BACKEND LOGIC/////////////////////
 		// BEFORE CALLING BE QUICKLY SET STATE
 		setDays({
@@ -197,9 +192,6 @@ const onDragEnd = async (
 		const sourceActivities = [...days[source.droppableId]];
 		const tripDayActivity = sourceActivities[source.index];
 		const tripDayActivityId = tripDayActivity.id;
-		console.log(tripDayActivity);
-
-		console.log(typeof tripDayActivityId);
 
 		//	identify destactivities
 		const destActivities = [...days[destination.droppableId]];
@@ -254,8 +246,6 @@ const onDragEnd = async (
 		source.droppableId !== 'favoritedActivities' &&
 		source.droppableId === destination.droppableId
 	) {
-		console.log('source:', source);
-		console.log('dest:', destination);
 		//	///////////////FIRST SET STATE QUICKLY/////////////////////
 		const activitiesQuick = [...days[source.droppableId]];
 		const [removedQuick] = activitiesQuick.splice(source.index, 1);

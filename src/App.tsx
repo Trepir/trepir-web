@@ -1,5 +1,6 @@
 import './assets/Gilroy-FREE/Gilroy-Light.otf';
 import './assets/Gilroy-FREE/Gilroy-ExtraBold.otf';
+import { useEffect, useState } from 'react';
 
 import {
 	BrowserRouter as Router,
@@ -22,8 +23,14 @@ import Discover from './routers/Discover';
 
 import { setUid } from './redux/reducers/authSlice';
 
+<<<<<<< HEAD
 import Dashboard from './routers/Dashboard';
 import Playground from './pages/Playground/Playground';
+=======
+import Dashboard from './pages/Dashboard/Dashboard';
+import Playground from './pages/playground/Playground';
+import LandingMobile from './components/LandingMobile';
+>>>>>>> dev
 
 export const primaryColor = '#1CB985';
 export const gilroyLight = './assets/Gilroy-FREE/Gilroy-Light.otf';
@@ -67,17 +74,25 @@ const appTheme = createTheme({
 });
 
 function App() {
+	const [matches, setMatches] = useState(
+		window.matchMedia('(min-width: 950px)').matches
+	);
+
+	useEffect(() => {
+		window
+			.matchMedia('(min-width: 950px)')
+			.addEventListener('change', (e) => setMatches(e.matches));
+	}, []);
 	const dispatch = useDispatch();
 	const auth = getAuth();
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			dispatch(setUid(user.uid));
-		} else {
-			console.log('not logged in');
 		}
 	});
 
 	return (
+<<<<<<< HEAD
 		<LocalizationProvider dateAdapter={AdapterLuxon}>
 			<ThemeProvider theme={appTheme}>
 				<Router>
@@ -94,7 +109,30 @@ function App() {
 				</Router>
 			</ThemeProvider>
 		</LocalizationProvider>
+=======
+		<div>
+			{matches && (
+				<LocalizationProvider dateAdapter={AdapterLuxon}>
+					<ThemeProvider theme={appTheme}>
+						<Router>
+							<TopNavigation />
+							<Routes>
+								<Route path="/" element={<Navigate to="/discover" />} />
+								<Route path="/login" element={<Login />} />
+								<Route path="/discover/*" element={<Discover />} />
+								<Route element={<PrivateRoutes />}>
+									<Route path="/private" element={<Private />} />
+									<Route path="/playground" element={<Playground />} />
+									<Route path="/dashboard/*" element={<Dashboard />} />
+								</Route>
+							</Routes>
+						</Router>
+					</ThemeProvider>
+				</LocalizationProvider>
+			)}
+			{!matches && <LandingMobile />}
+		</div>
+>>>>>>> dev
 	);
 }
-
 export default App;

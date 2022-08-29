@@ -35,27 +35,22 @@ function FormStepThree(props: Props) {
 			const activityListByCoord = await getActivitiesByCoordinates(
 				parsedViewport
 			);
-			console.log('locActivities', activityListByCoord);
-			console.log('favActivities', favoriteActivities.activityList);
 			const filteredActivities = favoriteActivities.activityList.filter(
 				(favActivity: any) =>
 					activityListByCoord.some(
 						(locActivity: any) => favActivity.activityId === locActivity.id
 					)
 			);
-			console.log(filteredActivities);
 			setActivitiesbyCoordinates(filteredActivities);
 		};
 		getLocationActivities();
 	}, []);
 
 	const handleClick = () => {
-		console.log('hello');
 		setValidated(true);
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
 	const handleAddToTrip = (id: any) => {
-		console.log(id);
 		dispatch(setInitialTripFavorites(id));
 		setInitialActivities((prev: any) => [...prev, id]);
 	};
