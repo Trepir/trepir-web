@@ -5,7 +5,7 @@ import {
 	selectTagsApplied,
 	setFilteredActivities,
 	setTagsApplied,
-} from '../../../redux/reducers/discoverSlice';
+} from '../../../Redux/reducers/discoverSlice';
 
 function Tag({ label }: any) {
 	const [selected, setSelected] = useState(false);

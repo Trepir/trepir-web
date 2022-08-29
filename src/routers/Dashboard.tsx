@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUid } from '../redux/reducers/authSlice';
+import { selectUid } from '../Redux/reducers/authSlice';
 import { BASE_URL } from '../services/createTripService';
 import { loadGoogleApi } from '../services/googleService';
 
 import {
 	addAllTrips,
 	selectTripList,
-} from '../redux/reducers/createTrip/tripListSlice';
+} from '../Redux/reducers/createTrip/tripListSlice';
 import TripForm from '../pages/Dashboard/TripForm/TripForm';
 import DashboardHome from '../pages/Dashboard/DashboardHome/DashboardHome';
 import EditTripPage from '../pages/Dashboard/EditTrip/EditTrip';
-import { resetMap } from '../redux/reducers/mapSlice';
-import { fetchFavoriteActivities } from '../redux/reducers/createActivity/favoriteActivitySlice';
+import { resetMap } from '../Redux/reducers/mapSlice';
+import { fetchFavoriteActivities } from '../Redux/reducers/createActivity/favoriteActivitySlice';
 
 function Dashboard() {
 	// ////LOAD MAP

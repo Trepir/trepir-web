@@ -10,7 +10,7 @@ import { tripDateFormatter } from '../../../utils/dateUtils';
 import {
 	selectTripDetails,
 	setSelectedTrip,
-} from '../../../redux/reducers/createTrip/selectedTripSlice';
+} from '../../../Redux/reducers/createTrip/selectedTripSlice';
 import { BASE_URL } from '../../../services/createTripService';
 import AddEventsControls from '../../../components/Dashboard/EditTrip/AddEventsControls';
 import Map from '../../../components/Shared/GoogleMap';
@@ -20,12 +20,12 @@ import {
 	selectPrevViewportCoords,
 	setMapViewport,
 	setSpecificMarkers,
-} from '../../../redux/reducers/mapSlice';
+} from '../../../Redux/reducers/mapSlice';
 import { getViewportWithId } from '../../../services/googleService';
 import {
 	selectViewingMap,
 	setViewingMap,
-} from '../../../redux/reducers/dashboardSlice';
+} from '../../../Redux/reducers/dashboardSlice';
 import {
 	addActivityToTrip,
 	removeActivityFromTrip,
@@ -33,7 +33,7 @@ import {
 	sortDay,
 } from '../../../utils/editTripUtils';
 import { getUserFavoriteActivities } from '../../../services/favoriteActivityService';
-import { selectUid } from '../../../redux/reducers/authSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 
 //	Handle All Of The Drag Logic
 const onDragEnd = async (

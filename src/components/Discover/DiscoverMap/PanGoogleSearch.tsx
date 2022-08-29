@@ -12,7 +12,7 @@ import throttle from 'lodash/throttle';
 import { getDetails } from 'use-places-autocomplete';
 //  REDUX IMPORTS
 import { useDispatch } from 'react-redux';
-import { setMapViewport } from '../../../redux/reducers/mapSlice';
+import { setMapViewport } from '../../../Redux/reducers/mapSlice';
 
 const CssTextField = styled(TextField)({
 	fieldset: {

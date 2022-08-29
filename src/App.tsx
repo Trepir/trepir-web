@@ -21,7 +21,7 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import Login from './pages/Login/Login';
 import Discover from './routers/Discover';
 
-import { setUid } from './redux/reducers/authSlice';
+import { setUid } from './Redux/reducers/authSlice';
 
 import Dashboard from './routers/Dashboard';
 import Playground from './pages/Playground/Playground';

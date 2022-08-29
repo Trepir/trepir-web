@@ -4,11 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 	selectViewportCoords,
 	setMarkers,
-} from '../../../redux/reducers/mapSlice';
+} from '../../../Redux/reducers/mapSlice';
 import {
 	selectActivities,
 	setActivities,
-} from '../../../redux/reducers/discoverSlice';
+} from '../../../Redux/reducers/discoverSlice';
 import { getActivitiesByCoordinates } from '../../../services/createActivityService';
 import {
 	parseMapViewport,

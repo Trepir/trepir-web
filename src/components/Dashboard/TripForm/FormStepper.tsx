@@ -13,32 +13,32 @@ import { DateTime } from 'luxon';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppSelector } from '../../../Redux/hooks';
 import {
 	selectNewTrip,
 	submitTripLocation,
-} from '../../../redux/reducers/createTrip/createTripSlice';
+} from '../../../Redux/reducers/createTrip/createTripSlice';
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
 import {
 	resetAccommodationList,
 	selectAccommodationList,
-} from '../../../redux/reducers/createAccommodation/accommodationListSlice';
+} from '../../../Redux/reducers/createAccommodation/accommodationListSlice';
 import {
 	resetTravelList,
 	selectTravelList,
-} from '../../../redux/reducers/createTravel/travelListSlice';
+} from '../../../Redux/reducers/createTravel/travelListSlice';
 import {
 	createTrip,
 	addInitialActivities,
 } from '../../../services/createTripService';
-import { addTrip } from '../../../redux/reducers/createTrip/tripListSlice';
-import { selectUid } from '../../../redux/reducers/authSlice';
+import { addTrip } from '../../../Redux/reducers/createTrip/tripListSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 import {
 	setSelectedTrip,
 	setSelectedTripId,
-} from '../../../redux/reducers/createTrip/selectedTripSlice';
+} from '../../../Redux/reducers/createTrip/selectedTripSlice';
 import createTravel from '../../../services/createTravelService';
 import createAccommodation from '../../../services/createAccommodationService';
 import FormStepThree from './FormStepThree';

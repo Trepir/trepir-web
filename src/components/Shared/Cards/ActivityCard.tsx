@@ -10,10 +10,10 @@ import {
 	selectPage,
 	setMapPan,
 	setMarkers,
-} from '../../../redux/reducers/mapSlice';
+} from '../../../Redux/reducers/mapSlice';
 import // selectFavoriteActivities,
-'../../../redux/reducers/createActivity/favoriteActivitySlice';
-import { selectViewingMap } from '../../../redux/reducers/dashboardSlice';
+'../../../Redux/reducers/createActivity/favoriteActivitySlice';
+import { selectViewingMap } from '../../../Redux/reducers/dashboardSlice';
 // import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
 // type Props = {

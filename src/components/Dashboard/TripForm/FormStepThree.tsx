@@ -1,12 +1,12 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUserFavoriteActivities } from '../../../redux/reducers/userSlice';
+import { selectUserFavoriteActivities } from '../../../Redux/reducers/userSlice';
 import { getActivitiesByCoordinates } from '../../../services/createActivityService';
 import {
 	selectNewTrip,
 	setInitialTripFavorites,
-} from '../../../redux/reducers/createTrip/createTripSlice';
+} from '../../../Redux/reducers/createTrip/createTripSlice';
 import { parseMapViewport } from '../../../utils/mapUtils';
 import Activity from '../../Shared/Cards/ActivityCard';
 

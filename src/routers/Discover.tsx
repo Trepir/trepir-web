@@ -3,16 +3,16 @@ import './Discover.css';
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUid } from '../redux/reducers/authSlice';
-import { resetDiscover } from '../redux/reducers/discoverSlice';
-import { resetMap } from '../redux/reducers/mapSlice';
+import { selectUid } from '../Redux/reducers/authSlice';
+import { resetDiscover } from '../Redux/reducers/discoverSlice';
+import { resetMap } from '../Redux/reducers/mapSlice';
 import HomePage from '../pages/Discover/DiscoverHome/DiscoverHome';
 import MapPage from '../pages/Discover/DiscoverMap/DiscoverMap';
 import { loadGoogleApi } from '../services/googleService';
 import { getUserFavoriteActivities } from '../services/favoriteActivityService';
-import { setUserFavoriteActivities } from '../redux/reducers/userSlice';
-import { fetchFavoriteActivities } from '../redux/reducers/createActivity/favoriteActivitySlice';
-import { addAllTrips } from '../redux/reducers/createTrip/tripListSlice';
+import { setUserFavoriteActivities } from '../Redux/reducers/userSlice';
+import { fetchFavoriteActivities } from '../Redux/reducers/createActivity/favoriteActivitySlice';
+import { addAllTrips } from '../Redux/reducers/createTrip/tripListSlice';
 import { BASE_URL } from '../utils/editTripUtils';
 
 function Discover() {

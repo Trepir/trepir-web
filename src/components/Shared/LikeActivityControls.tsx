@@ -10,12 +10,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { PlaylistAdd } from '@mui/icons-material';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUid } from '../../redux/reducers/authSlice';
-import { selectTripList } from '../../redux/reducers/createTrip/tripListSlice';
+import { selectUid } from '../../Redux/reducers/authSlice';
+import { selectTripList } from '../../Redux/reducers/createTrip/tripListSlice';
 import {
 	selectFavoriteActivities,
 	toggleFavoriteActivity,
-} from '../../redux/reducers/createActivity/favoriteActivitySlice';
+} from '../../Redux/reducers/createActivity/favoriteActivitySlice';
 import {
 	saveActivityToTrip,
 	updateFavoriteActivity,

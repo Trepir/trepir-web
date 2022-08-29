@@ -9,13 +9,13 @@ import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import { getDetails } from 'use-places-autocomplete';
 import { useDispatch } from 'react-redux';
-import { submitTripLocation } from '../../redux/reducers/createTrip/createTripSlice';
-import { submitAccommodationLocation } from '../../redux/reducers/createAccommodation/createAccommodationSlice';
+import { submitTripLocation } from '../../Redux/reducers/createTrip/createTripSlice';
+import { submitAccommodationLocation } from '../../Redux/reducers/createAccommodation/createAccommodationSlice';
 import {
 	submitTravelDestinationLocation,
 	submitTravelOriginLocation,
-} from '../../redux/reducers/createTravel/createTravelSlice';
-import { submitActivityLocation } from '../../redux/reducers/createActivity/createActivitySlice';
+} from '../../Redux/reducers/createTravel/createTravelSlice';
+import { submitActivityLocation } from '../../Redux/reducers/createActivity/createActivitySlice';
 
 type Props = {
 	inputLabel: string;

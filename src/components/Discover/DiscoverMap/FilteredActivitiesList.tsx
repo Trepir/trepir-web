@@ -5,10 +5,10 @@ import Typography from '@mui/material/Typography';
 import {
 	selectFilteredActivities,
 	selectTagsApplied,
-} from '../../../redux/reducers/discoverSlice';
+} from '../../../Redux/reducers/discoverSlice';
 import Activity from '../../Shared/Cards/ActivityCard';
 import { parseMarkersDiscover } from '../../../utils/mapUtils';
-import { setMarkers } from '../../../redux/reducers/mapSlice';
+import { setMarkers } from '../../../Redux/reducers/mapSlice';
 
 function FilteredActivitiesList({ setSelectedActivity }: any) {
 	const dispatch = useDispatch();

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { Box, Fab, Modal } from '@mui/material';
 
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppSelector } from '../../../Redux/hooks';
 
-import { selectNewAccommodation } from '../../../redux/reducers/createAccommodation/createAccommodationSlice';
+import { selectNewAccommodation } from '../../../Redux/reducers/createAccommodation/createAccommodationSlice';
 
 import AddAccommodationForm from '../../Shared/Forms/AddAccommodationForm';
 import AddTravelForm from '../../Shared/Forms/AddTravelForm';

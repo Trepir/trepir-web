@@ -19,7 +19,7 @@ import {
 
 import { useTheme } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Redux/hooks';
 import TripLocationSearch from '../TripLocationSearch';
 
 import {
@@ -29,9 +29,9 @@ import {
 	submitActivityDurationMinutes,
 	submitActivityName,
 	submitActivityTag,
-} from '../../../redux/reducers/createActivity/createActivitySlice';
+} from '../../../Redux/reducers/createActivity/createActivitySlice';
 import { createActivity } from '../../../services/createActivityService';
-import { selectUid } from '../../../redux/reducers/authSlice';
+import { selectUid } from '../../../Redux/reducers/authSlice';
 import {
 	saveActivityToTrip,
 	// updateFavoriteActivity,
@@ -39,7 +39,7 @@ import {
 import {
 	selectFavoriteActivities,
 	toggleFavoriteActivity,
-} from '../../../redux/reducers/createActivity/favoriteActivitySlice';
+} from '../../../Redux/reducers/createActivity/favoriteActivitySlice';
 // import { selectUid } from '../../../app/reducers/authSlice';
 
 const ITEM_HEIGHT = 48;
