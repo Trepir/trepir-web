@@ -1,11 +1,11 @@
 import { Box, Divider, Paper, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetMap, setMarkers } from '../../app/reducers/mapSlice';
-import { selectUserFavoriteActivities } from '../../app/reducers/userSlice';
-import Activity from '../../components/Discover/Activity';
-import Map from '../../components/Discover/Map';
-import { loadGoogleApi } from '../../utils/googleMaps/googleService';
+import { resetMap, setMarkers } from '../../redux/reducers/mapSlice';
+import { selectUserFavoriteActivities } from '../../redux/reducers/userSlice';
+import Activity from '../../components/Shared/Cards/ActivityCard';
+import Map from '../../components/Shared/GoogleMap';
+import { loadGoogleApi } from '../../services/googleService';
 import { parseMarkersPlayground } from '../../utils/mapUtils';
 
 function Playground() {

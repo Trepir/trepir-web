@@ -13,37 +13,37 @@ import { DateTime } from 'luxon';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../redux/hooks';
 import {
 	selectNewTrip,
 	submitTripLocation,
-} from '../../../features/createTrip/createTripSlice';
+} from '../../../redux/reducers/createTrip/createTripSlice';
 import { StepProps } from '../../../types/FormTypes';
 import FormStepOne from './FormStepOne';
 import FormStepTwo from './FormStepTwo';
 import {
 	resetAccommodationList,
 	selectAccommodationList,
-} from '../../../features/createAccommodation/accommodationList';
+} from '../../../redux/reducers/createAccommodation/accommodationListSlice';
 import {
 	resetTravelList,
 	selectTravelList,
-} from '../../../features/createTravel/travelListSlice';
+} from '../../../redux/reducers/createTravel/travelListSlice';
 import {
 	createTrip,
 	addInitialActivities,
-} from '../../../features/createTrip/createTripService';
-import { addTrip } from '../../../features/createTrip/tripListSlice';
-import { selectUid } from '../../../app/reducers/authSlice';
+} from '../../../services/createTripService';
+import { addTrip } from '../../../redux/reducers/createTrip/tripListSlice';
+import { selectUid } from '../../../redux/reducers/authSlice';
 import {
 	setSelectedTrip,
 	setSelectedTripId,
-} from '../../../features/createTrip/selectedTripSlice';
-import createTravel from '../../../features/createTravel/createTravelService';
-import createAccommodation from '../../../features/createAccommodation/createAccommodationService';
+} from '../../../redux/reducers/createTrip/selectedTripSlice';
+import createTravel from '../../../services/createTravelService';
+import createAccommodation from '../../../services/createAccommodationService';
 import FormStepThree from './FormStepThree';
-import TravelEvent from '../EditTripPage/TravelEvent';
-import AccommodationEvent from '../EditTripPage/AccommodationEvent';
+import TravelEvent from '../../Shared/Cards/TravelCard';
+import AccommodationEvent from '../../Shared/Cards/AccommodationCard';
 
 // import {
 // 	submitNewTrip,

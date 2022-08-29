@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { DateTime } from 'luxon';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setSelectedTripId } from '../../../features/createTrip/selectedTripSlice';
+import { setSelectedTripId } from '../../../redux/reducers/createTrip/selectedTripSlice';
 
 type Props = {
 	trip: any;
