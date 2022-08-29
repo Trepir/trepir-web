@@ -25,6 +25,7 @@ import { setUid } from './Redux/reducers/authSlice';
 
 import Dashboard from './routers/Dashboard';
 import Playground from './pages/Playground/Playground';
+import LandingMobile from './components/LandingMobile';
 
 export const primaryColor = '#1CB985';
 export const gilroyLight = './assets/Gilroy-FREE/Gilroy-Light.otf';
@@ -86,22 +87,27 @@ function App() {
 	});
 
 	return (
-		<LocalizationProvider dateAdapter={AdapterLuxon}>
-			<ThemeProvider theme={appTheme}>
-				<Router>
-					<TopNavigation />
-					<Routes>
-						<Route path="/" element={<Navigate to="/discover" />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/discover/*" element={<Discover />} />
-						<Route element={<PrivateRoutes />}>
-							<Route path="/playground" element={<Playground />} />
-							<Route path="/dashboard/*" element={<Dashboard />} />
-						</Route>
-					</Routes>
-				</Router>
-			</ThemeProvider>
-		</LocalizationProvider>
+		<div>
+			{matches && (
+				<LocalizationProvider dateAdapter={AdapterLuxon}>
+					<ThemeProvider theme={appTheme}>
+						<Router>
+							<TopNavigation />
+							<Routes>
+								<Route path="/" element={<Navigate to="/discover" />} />
+								<Route path="/login" element={<Login />} />
+								<Route path="/discover/*" element={<Discover />} />
+								<Route element={<PrivateRoutes />}>
+									<Route path="/playground" element={<Playground />} />
+									<Route path="/dashboard/*" element={<Dashboard />} />
+								</Route>
+							</Routes>
+						</Router>
+					</ThemeProvider>
+				</LocalizationProvider>
+			)}
+			{!matches && <LandingMobile />}
+		</div>
 	);
 }
 export default App;
