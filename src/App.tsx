@@ -24,8 +24,8 @@ import Discover from './routers/Discover';
 import { setUid } from './Redux/reducers/authSlice';
 
 import Dashboard from './routers/Dashboard';
-import Playground from './pages/Playground/Playground';
 import LandingMobile from './components/LandingMobile';
+import Playground from './pages/Playground/Playground';
 
 export const primaryColor = '#1CB985';
 export const gilroyLight = './assets/Gilroy-FREE/Gilroy-Light.otf';
