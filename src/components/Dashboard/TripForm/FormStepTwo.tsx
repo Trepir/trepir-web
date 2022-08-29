@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { Box, Fab, Modal } from '@mui/material';
 
-<<<<<<< HEAD
 import { useAppSelector } from '../../../redux/hooks';
 
 import { selectNewAccommodation } from '../../../redux/reducers/createAccommodation/createAccommodationSlice';
@@ -10,11 +9,6 @@ import { selectNewAccommodation } from '../../../redux/reducers/createAccommodat
 import AddAccommodationForm from '../../Shared/Forms/AddAccommodationForm';
 import AddTravelForm from '../../Shared/Forms/AddTravelForm';
 import { primaryColor } from '../../Shared/TopNavigation';
-=======
-import AddAccommodationForm from './AddAccommodationForm';
-import AddTravelForm from './AddTravelForm';
-import { primaryColor } from '../../../pages/TopNavigation';
->>>>>>> dev
 
 type Props = {
 	submitRef: any;
