@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
-import { MapOptions, Maps } from 'google-map-react';
+import { MapOptions } from 'google-map-react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	selectMarkers,
@@ -31,8 +31,10 @@ function Map() {
 
 	//	create a reference to the map itself
 	//	ref lets you change states without causing app to rerender
+	// eslint-disable-next-line
 	const mapRef: { current: google.maps.Map | undefined } = React.useRef();
 	//	/////////WHEN MAP IS LOADED DO THIS ///////////////
+	// eslint-disable-next-line
 	const onMapLoad = React.useCallback((map: google.maps.Map) => {
 		mapRef.current = map;
 		if (viewport) mapRef.current.fitBounds(viewport);
