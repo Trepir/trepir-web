@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { PlaylistAdd } from '@mui/icons-material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUid } from '../../Redux/reducers/authSlice';
 import { selectTripList } from '../../Redux/reducers/createTrip/tripListSlice';
@@ -20,12 +20,19 @@ import {
 	saveActivityToTrip,
 	updateFavoriteActivity,
 } from '../../services/favoriteActivityService';
+import { ActivityEvent } from '../../types/ActivityTypes';
+import { Trip } from '../../types/TripTypes';
 
-function LikeActivityControls({ activity }: any) {
+interface Props {
+	activity: ActivityEvent;
+}
+
+function LikeActivityControls(props: Props) {
+	const { activity } = props;
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const uid: string | null = useSelector(selectUid);
-	const tripList: any = useSelector(selectTripList);
+	const tripList = useSelector(selectTripList);
 	const favoriteActivities = useSelector(selectFavoriteActivities);
 	const favoriteColor: boolean = favoriteActivities.includes(activity.id);
 
@@ -37,7 +44,9 @@ function LikeActivityControls({ activity }: any) {
 		}
 	};
 
-	const handleClickMenu = (event: any) => {
+	const handleClickMenu = (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
@@ -98,7 +107,7 @@ function LikeActivityControls({ activity }: any) {
 							onClose={handleClose}
 						>
 							{tripList.userTrips.length
-								? tripList.userTrips.map((trip: any) => (
+								? tripList.userTrips.map((trip: Trip) => (
 										<MenuItem
 											key={trip.id}
 											onClick={() => {

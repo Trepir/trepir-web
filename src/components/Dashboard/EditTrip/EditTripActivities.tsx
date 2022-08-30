@@ -1,5 +1,5 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import Activity from '../../Shared/Cards/ActivityCard';
+import ActivityCard from '../../Shared/Cards/ActivityCard';
 
 function EditTripActivitiesContainer({
 	savedActivities,
@@ -49,7 +49,7 @@ function EditTripActivitiesContainer({
 													...provided.draggableProps.style,
 												}}
 											>
-												<Activity
+												<ActivityCard
 													activity={activity}
 													setSelectedActivity={setSelectedActivity}
 													dragging={isDragging}

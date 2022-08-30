@@ -8,7 +8,7 @@ import {
 	setInitialTripFavorites,
 } from '../../../Redux/reducers/createTrip/createTripSlice';
 import { parseMapViewport } from '../../../utils/mapUtils';
-import Activity from '../../Shared/Cards/ActivityCard';
+import ActivityCard from '../../Shared/Cards/ActivityCard';
 
 type Props = {
 	submitRef: any;
@@ -69,9 +69,10 @@ function FormStepThree(props: Props) {
 								>
 									Add
 								</Button>
-								<Activity
+								<ActivityCard
 									activity={favoriteActivity.activity}
 									setSelectedActivity={() => null}
+									dragging={false}
 								/>
 							</div>
 					  ))

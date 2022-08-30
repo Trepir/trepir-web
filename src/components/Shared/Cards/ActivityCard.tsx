@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
@@ -14,17 +16,21 @@ import {
 import // selectFavoriteActivities,
 '../../../Redux/reducers/createActivity/favoriteActivitySlice';
 import { selectViewingMap } from '../../../Redux/reducers/dashboardSlice';
+import { ActivityEvent, Location } from '../../../types/ActivityTypes';
 // import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
-// type Props = {
-// 	activity: any;
-// 	setSelectedActivity: any;
-// 	dragging: boolean;
-// };
+type Props = {
+	activity: ActivityEvent;
+	setSelectedActivity: React.Dispatch<
+		React.SetStateAction<ActivityEvent | null>
+	>;
+	dragging: boolean;
+};
 
-function Activity(props: any) {
+function ActivityCards(props: Props) {
 	//	eslint-disable-next-line
 	const { activity, setSelectedActivity, dragging } = props;
+	const location = activity.location as Location;
 	// const isTripSelected = useSelector(selectTripId);
 
 	const page = useSelector(selectPage);
@@ -35,15 +41,15 @@ function Activity(props: any) {
 			dispatch(
 				setMarkers([
 					{
-						lat: activity.location.latitude,
-						lng: activity.location.longitude,
+						lat: location.latitude,
+						lng: location.longitude,
 					},
 				])
 			);
 			setSelectedActivity(activity);
 		}
 		if (page === 'dashboard' && viewingDashboardMap === false) {
-			setSelectedActivity(activity);
+			if (activity) setSelectedActivity(activity);
 		}
 
 		dispatch(
@@ -138,4 +144,4 @@ function Activity(props: any) {
 	);
 }
 
-export default Activity;
+export default ActivityCards;

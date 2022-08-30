@@ -2,7 +2,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import Activity from '../../Shared/Cards/ActivityCard';
+import ActivityCard from '../../Shared/Cards/ActivityCard';
 import TravelEvent from '../../Shared/Cards/TravelCard';
 import AccommodationEvent from '../../Shared/Cards/AccommodationCard';
 
@@ -110,15 +110,16 @@ function SelectedTrip({ days, tripName, setSelectedActivity }: any) {
 																	activity={activity.accommodation}
 																/>
 															) : activity.dayActivity ? (
-																<Activity
+																<ActivityCard
 																	activity={activity.dayActivity.activity}
 																	setSelectedActivity={setSelectedActivity}
 																	dragging={isDragging}
 																/>
 															) : (
-																<Activity
+																<ActivityCard
 																	activity={activity}
 																	setSelectedActivity={setSelectedActivity}
+																	dragging={isDragging}
 																/>
 															)}
 														</div>

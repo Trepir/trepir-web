@@ -23,6 +23,7 @@ function ActivitiesList({ setSelectedActivity, activities, title }: any) {
 							<Activity
 								activity={activity}
 								setSelectedActivity={setSelectedActivity}
+								dragging={false}
 							/>
 						))}
 					</Box>

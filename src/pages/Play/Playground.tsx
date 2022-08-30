@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetMap, setMarkers } from '../../Redux/reducers/mapSlice';
 import { selectUserFavoriteActivities } from '../../Redux/reducers/userSlice';
-import Activity from '../../components/Shared/Cards/ActivityCard';
+import ActivityCard from '../../components/Shared/Cards/ActivityCard';
 import Map from '../../components/Shared/GoogleMap';
 import { loadGoogleApi } from '../../services/googleService';
 import { parseMarkersPlayground } from '../../utils/mapUtils';
@@ -88,9 +88,10 @@ function Playground() {
 						>
 							{favoritedActivities
 								? favoritedActivities.map((activity) => (
-										<Activity
+										<ActivityCard
 											activity={activity.activity}
-											setSelectedActivity={() => console.log('placeholder')}
+											setSelectedActivity={() => null}
+											dragging={false}
 										/>
 								  ))
 								: null}

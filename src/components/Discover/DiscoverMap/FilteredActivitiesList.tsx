@@ -6,7 +6,7 @@ import {
 	selectFilteredActivities,
 	selectTagsApplied,
 } from '../../../Redux/reducers/discoverSlice';
-import Activity from '../../Shared/Cards/ActivityCard';
+import ActivityCard from '../../Shared/Cards/ActivityCard';
 import { parseMarkersDiscover } from '../../../utils/mapUtils';
 import { setMarkers } from '../../../Redux/reducers/mapSlice';
 
@@ -51,10 +51,11 @@ function FilteredActivitiesList({ setSelectedActivity }: any) {
 				}}
 			>
 				{activities?.map((activity: any) => (
-					<Activity
+					<ActivityCard
 						key={activity.id}
 						activity={activity}
 						setSelectedActivity={setSelectedActivity}
+						dragging={false}
 					/>
 				))}
 			</Box>
