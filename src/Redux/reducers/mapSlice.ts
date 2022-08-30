@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Coords } from '../../types/MapTypes';
+import { Coords, ViewpointCoords } from '../../types/MapTypes';
 import { RootState } from '../store';
 
 export interface mapState {
 	page: 'discover' | 'dashboard' | 'playground' | null;
 	panCoords: Coords | null;
-	viewportCoords: any;
-	prevViewportCoords: any;
+	viewportCoords: ViewpointCoords | null;
+	prevViewportCoords: ViewpointCoords | null;
 	markers: Coords[] | null;
 }
 

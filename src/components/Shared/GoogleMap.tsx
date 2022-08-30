@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import { MapOptions, Maps } from 'google-map-react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	selectMarkers,
@@ -8,47 +9,31 @@ import {
 	selectViewportCoords,
 	setMapViewport,
 } from '../../Redux/reducers/mapSlice';
-// import mapStyle from '../../utils/googleMaps/mapStyle';
-// import mapStyle from '../../utils/googleMaps/mapStyle2';
+import { Coords, ViewpointCoords } from '../../types/MapTypes';
 
 //	We set these up outside of the googlemaps component becasue the map will accidentally rerender
-const mapContainerStyle = {
+const mapContainerStyle: { width: string; height: string } = {
 	width: '51vw',
 	height: '93vh',
 };
 
-const options = {
-	// styles: mapStyle,
+const options: MapOptions = {
 	disableDefaultUI: true,
 	fullscreenControl: true,
-	// fullScreenControlOptions: {
-	// 	position: map,
-	// },
-	// minZoom: 2,
-	// maxZoom: 20,
-	// restriction: {
-	// 	latLngBounds: {
-	// 		east: 179.9999,
-	// 		north: 85,
-	// 		south: -85,
-	// 		west: -179.9999,
-	// 	},
-	// strictBounds: true,
-	// },
 };
 
-const center = { lat: 0, lng: 0 };
+const center: Coords = { lat: 0, lng: 0 };
 
 function Map() {
 	const dispatch = useDispatch();
-	const viewport = useSelector(selectViewportCoords);
-	const panCoords = useSelector(selectPanCoords);
+	const viewport: ViewpointCoords | null = useSelector(selectViewportCoords);
+	const panCoords: Coords | null = useSelector(selectPanCoords);
 
 	//	create a reference to the map itself
 	//	ref lets you change states without causing app to rerender
-	const mapRef: any = React.useRef();
+	const mapRef: { current: google.maps.Map | undefined } = React.useRef();
 	//	/////////WHEN MAP IS LOADED DO THIS ///////////////
-	const onMapLoad = React.useCallback((map: any) => {
+	const onMapLoad = React.useCallback((map: google.maps.Map) => {
 		mapRef.current = map;
 		if (viewport) mapRef.current.fitBounds(viewport);
 	}, []);
@@ -62,9 +47,11 @@ function Map() {
 	}, [viewport]);
 	//	/////////////////////////////////////////////////////////////////
 	// ///////////////FOR PAN/ZOOM ON SELECT ACTIVITY///////////////
-	const panTo = React.useCallback(({ lat, lng }: any) => {
-		mapRef.current.panTo({ lat, lng });
-		mapRef.current.setZoom(15);
+	const panTo = React.useCallback(({ lat, lng }: Coords) => {
+		if (mapRef.current) {
+			mapRef.current.panTo({ lat, lng });
+			mapRef.current.setZoom(15);
+		}
 	}, []);
 
 	React.useEffect(() => {
@@ -75,7 +62,7 @@ function Map() {
 	}, [panCoords]);
 
 	// ///////////////////////FOR MARKERS//////////////////////////////
-	const markers = useSelector(selectMarkers);
+	const markers: Coords[] | null = useSelector(selectMarkers);
 	//	/////////////////////////////////////////////////////////////////
 
 	// if (loadError) alert('Error loading maps');
