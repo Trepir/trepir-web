@@ -23,12 +23,11 @@ import {
 import { ActivityEvent } from '../../types/ActivityTypes';
 import { Trip } from '../../types/TripTypes';
 
-interface Props {
+interface LikeActivityControlsProps {
 	activity: ActivityEvent;
 }
 
-function LikeActivityControls(props: Props) {
-	const { activity } = props;
+function LikeActivityControls({ activity }: LikeActivityControlsProps) {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const uid: string | null = useSelector(selectUid);

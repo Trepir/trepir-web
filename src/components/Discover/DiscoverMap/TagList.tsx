@@ -1,8 +1,9 @@
 import { Box } from '@mui/material';
-import Tag from './Tag';
+import { Tag } from '../../../types/ActivityTypes';
+import TagChip from './Tag';
 
 function TagList() {
-	const tags = [
+	const tags: Tag[] = [
 		'Relax',
 		'Landmark',
 		'Entertainment',
@@ -18,7 +19,6 @@ function TagList() {
 		'Nature',
 		'Festivity',
 		'Sport',
-		'Kebab',
 	];
 	return (
 		<Box
@@ -29,8 +29,8 @@ function TagList() {
 				flexWrap: 'wrap',
 			}}
 		>
-			{tags.map((tag) => (
-				<Tag label={tag} />
+			{tags.map((tag: Tag) => (
+				<TagChip label={tag} />
 			))}
 		</Box>
 	);

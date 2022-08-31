@@ -6,10 +6,14 @@ import {
 	setFilteredActivities,
 	setTagsApplied,
 } from '../../../Redux/reducers/discoverSlice';
+import { Tag } from '../../../types/ActivityTypes';
 
-function Tag({ label }: any) {
+type Props = {
+	label: Tag;
+};
+function TagChip({ label }: Props) {
 	const [selected, setSelected] = useState(false);
-	const tagsApplied: any = useSelector(selectTagsApplied);
+	const tagsApplied: Tag[] = useSelector(selectTagsApplied);
 
 	useEffect(() => {
 		if (tagsApplied?.includes(label)) setSelected(true);
@@ -17,7 +21,7 @@ function Tag({ label }: any) {
 	//  FOR REUX
 	const dispatch = useDispatch();
 
-	function handleClick(tag: any) {
+	function handleClick(tag: Tag) {
 		if (selected) setSelected(false);
 		if (!selected) setSelected(true);
 		dispatch(setTagsApplied(tag));
@@ -35,4 +39,4 @@ function Tag({ label }: any) {
 	);
 }
 
-export default Tag;
+export default TagChip;

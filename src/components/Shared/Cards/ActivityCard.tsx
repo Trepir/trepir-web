@@ -19,7 +19,7 @@ import { selectViewingMap } from '../../../Redux/reducers/dashboardSlice';
 import { ActivityEvent, Location } from '../../../types/ActivityTypes';
 // import { selectTripId } from '../../features/createTrip/selectedTripSlice';
 
-type Props = {
+type ActivityCardsProps = {
 	activity: ActivityEvent;
 	setSelectedActivity: React.Dispatch<
 		React.SetStateAction<ActivityEvent | null>
@@ -27,10 +27,13 @@ type Props = {
 	dragging: boolean;
 };
 
-function ActivityCards(props: Props) {
+function ActivityCards({
+	activity,
+	setSelectedActivity,
+	dragging,
+}: ActivityCardsProps) {
 	//	eslint-disable-next-line
-	const { activity, setSelectedActivity, dragging } = props;
-	const location = activity.location as Location;
+	const location: Location = activity.location;
 	// const isTripSelected = useSelector(selectTripId);
 
 	const page = useSelector(selectPage);
